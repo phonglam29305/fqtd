@@ -19,12 +19,12 @@
 var myplace;
 var directionsDisplay;
 var locations = [
-    [10.81510,106.58592],
-    [10.79284,106.68549],
-    [10.83634,106.60669],
-    [10.85421,106.57408],
-	[10.64981,106.72668],
-	[10.35545,107.09198]
+    [10.81510,106.58592,"<h2>You are here 1</h2><p>Nice with geolocation, ain't it?</p>"],
+    [10.79284,106.68549,"<h2>You are here 2</h2><p>Nice with geolocation, ain't it?</p>"],
+    [10.83634,106.60669,"<h2>You are here 3</h2><p>Nice with geolocation, ain't it?</p>"],
+    [10.85421,106.57408,"<h2>You are here 4</h2><p>Nice with geolocation, ain't it?</p>"],
+	[10.64981,106.72668,"<h2>You are here 5</h2><p>Nice with geolocation, ain't it?</p>"],
+	[10.35545,107.09198,"<h2>You are here 6</h2><p>Nice with geolocation, ain't it?</p>"]
 ];
 
 $("form").submit(function() {  
@@ -75,20 +75,20 @@ function showPosition(position, status)
 		for( i=0;i<locations.length; i++ ) {
 			var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));		
 			if (distance >= compareDistance){
-				markOutLocation(locations[i][0],locations[i][1],map);
+				markOutLocation(locations[i][0],locations[i][1],map,locations[i][2]);
 			}
 		}	
 	}	
 }
 
-function markOutLocation (lat, long, map) {
+function markOutLocation (lat, long, map, contentPopup) {
 	var place = new google.maps.LatLng(lat, long);
 	var marker = new google.maps.Marker({
 	  position: place,
 	  title:'Click to zoom'
 	  });
 	var infowindow = new google.maps.InfoWindow({
-	  content:"<h2>You are here</h2><p>Nice with geolocation, ain't it?</p><button onclick='calcRoute("+lat+","+long+")'>Direction to here</button>"
+	  content:contentPopup+"<button onclick='calcRoute("+lat+","+long+")'>Direction to here</button>"
 	  });
 	google.maps.event.addListener(marker, 'click', function() {	  
 	  infowindow.open(map,marker);
