@@ -5,16 +5,12 @@
 </head>
 
 <body> 
-<form id="form1" action="javascript:getLocation();">
+
 <div id="googleMap" style="width: 700px;height: 500px;margin: 50px auto;"></div>
 <input id="distance" type="text" style="width:100px" value="5000"/>metre(s)
-<input type="submit"/>
-</form>
+<button onclick="getLocation()">Try It</button>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
 <script type="text/javascript" src="js/jquery-1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui/jquery.ui.map.js"></script>
-<script type="text/javascript" src="js/jquery-ui/jquery.ui.map.overlays.js"></script>
-<script type="text/javascript" src="js/jquery-ui/jquery.ui.map.extensions.js"></script>
 <script>
 var myplace;
 var directionsDisplay;
@@ -25,28 +21,26 @@ var locations = [
     [10.85421,106.57408],
 	[10.64981,106.72668],
 	[10.35545,107.09198]
-];
-
-$("form").submit(function() {  
-  return true;
-});
-	 
+];	 
 function getLocation()
-{
-	$('#googleMap').gmap({ 'callback': function() {
-	
-		var self = this;
-		self.getCurrentPosition(showPosition);  
-		
-	}});
+{	
+	if (navigator.geolocation) 
+	{
+		// Get current position
+		navigator.geolocation.getCurrentPosition(showPosition);
+	}
+	else {
+		// No geolocation fallback: Defaults to Eeaster Island, Chile
+		alert("Please turn on your location service so we can locate where you are.");
+	};
+
 }
 
 function showPosition(position, status)
 {	
-	if (status === "OK")
-	{
+	
 		myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		distance = document.getElementById("distance").value;
+		distance = $("#distance").val();
 		
 		//set map
 		var mapProp = {
@@ -78,7 +72,7 @@ function showPosition(position, status)
 				markOutLocation(locations[i][0],locations[i][1],map);
 			}
 		}	
-	}	
+		
 }
 
 function markOutLocation (lat, long, map) {
