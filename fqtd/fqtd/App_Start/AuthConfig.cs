@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using fqtd.Models;
+using fqtd.Areas.Admin.Models;
 
 namespace fqtd
 {
