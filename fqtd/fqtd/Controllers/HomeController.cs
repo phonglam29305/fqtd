@@ -28,5 +28,12 @@ namespace fqtd.Controllers
 
             return View();
         }
+
+        public ActionResult Geolocation()
+        {
+            ViewBag.Message = "This is test geolocation.";
+
+            return View();
+        }
     }
 }
