@@ -528,6 +528,7 @@
     <Content Include="Areas\Admin\Views\Property\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Property\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Property\Delete.cshtml" />
+    <Compile Include="Areas\Admin\Models\BaseModels.cs" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

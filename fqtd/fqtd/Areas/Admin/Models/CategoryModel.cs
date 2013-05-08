@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace fqtd.Areas.Admin.Models
 {
     [Table("tbl_Categories")]
-    public class CategoryModel
+    public class CategoryModel:BaseModels
     {
         [Key]
         public int CategoryID { get; set; }
@@ -16,12 +16,5 @@ namespace fqtd.Areas.Admin.Models
         public string Description { get; set; }
         public string CategoryName_EN { get; set; }
         public string Description_EN { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int CreateUser { get; set; }
-        public DateTime ModifyDate { get; set; }
-        public int ModifyUser { get; set; }
-        public DateTime DeleteDate { get; set; }
-        public int DeleteUser { get; set; }
     }
 }
