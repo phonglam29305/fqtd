@@ -29,9 +29,9 @@ namespace fqtd.Controllers
             return View();
         }
 
-        public ActionResult Geolocation()
+        public ActionResult Result()
         {
-            ViewBag.Message = "This is test geolocation.";
+            ViewBag.Message = "This is test geolocation.";            
 
             return View();
         }

@@ -1,45 +1,122 @@
 ﻿@{
-    ViewBag.Title = "test";
+    ViewBag.Title = "This is step 1";
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
-            </p>
+<style>
+    .error input, .error select
+    {
+        border-color: #b94a48;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        color: #b94a48;
+    }
+
+    select
+    {
+        -webkit-border-radius: 4px 0 0 4px;
+        -moz-border-radius: 4px 0 0 4px;
+        border-radius: 4px 0 0 4px;
+        height: 30px;
+        line-height: 30px;
+    }
+        
+</style>
+<section style="width: 500px; position: relative; overflow: hidden; margin: 0 auto">
+    <article style="overflow: hidden; width: 50000px;" id="equityBlock">
+        <div style="float: left; width: 500px" id="step1" class="inner">
+            <form id="form1" action="/home/result" method="post">
+                <div>
+                    <input id="textbox1" style="width: 450px" data-required="true" />
+                </div>
+                <div style="float:left">
+                    <select data-required="true">
+                        <option value>Choose</option>
+                        <option value="Fast food">Fast food</option>
+                        <option value="Coffee">Coffee</option>
+                        <option value="Restaurant">Restaurant</option>
+                        <option value="Pizza">Pizza</option>
+                        <option value="Super market">Super market</option>
+                        <option value="Cinema">Cinema</option>
+                        <option value="Cream">Cream</option>
+                    </select>
+                </div>
+                <div>
+                    <select data-required="true">
+                        <option value>Choose</option>
+                        <option value="KFC">KFC</option>
+                        <option value="Lotteria">Lotteria</option>
+                        <option value="Burger King">Burger King</option>
+                        <option value="Pizza hut">Pizza hut</option>
+                        <option value="Sumo BBQ">Sumo BBQ</option>
+                        <option value="Highland Coffee">Highland Coffee</option>
+                        <option value="Gloria Jean's">Gloria Jean's</option>
+                    </select>
+
+                </div>
+                <div>
+                    <input id="range" style="width: 100px" data-required="true" />
+                </div>
+               
+                <input type="submit" value="Submit" />
+                <a class="next" href="JavaScript:void(0);" title="Next">You want to find a specific place ?</a>
+            </form>
         </div>
-    </section>
+        <div style="float: left; width: 500px" id="step2" class="inner">
+            <form id="form2" action="/home/result" method="post">
+                <div>
+                    <input id="textbox2" style="width: 450px" data-required="true" />
+                </div>
+                <input type="submit" value="Submit" />
+                <a class="pre" href="JavaScript:void(0);" title="Back">You want to find places around a position ?</a>
+            </form>
+        </div>
+    </article>
+</section>
+
+<ul style="display: none;" id="index">
+    <li class="active"><a href="JavaScript:void(0);">&nbsp;</a></li>
+    <li><a href="JavaScript:void(0);">&nbsp;</a></li>
+</ul>
+
+@section scripts
+ {
+    <script>
+        jQuery(document).ready(function ($) {
+            var chartsBlock = $('#equityBlock');
+
+            chartsBlock.smSlideChart({
+                btnNext: $('.next'),
+                btnPrev: $('.pre'),
+                thumbs: $('#index'),
+                callback: function (t, f) { }
+            });
+
+            $("#textbox1").watermark("Please input your current position");
+            $("#textbox2").watermark("Please enter address you want to find");
+            $("#range").watermark("Range");
+            $("#form1").validate({
+                onChange: true,
+                eachValidField: function () {
+
+                    $(this).closest('div').removeClass('error').addClass('success');
+                },
+                eachInvalidField: function () {
+
+                    $(this).closest('div').removeClass('success').addClass('error');
+                }
+            });
+            $("#form2").validate({
+                onChange: true,
+                eachValidField: function () {
+
+                    $(this).closest('div').removeClass('error').addClass('success');
+                },
+                eachInvalidField: function () {
+
+                    $(this).closest('div').removeClass('success').addClass('error');
+                }
+            });
+
+        });
+    </script>
 }
-<h3>We suggest the following:</h3>
-<ol class="round">
-    <li class="one">
-        <h5>Getting Started</h5>
-        ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-        enables a clean separation of concerns and that gives you full control over markup
-        for enjoyable, agile development. ASP.NET MVC includes many features that enable
-        fast, TDD-friendly development for creating sophisticated applications that use
-        the latest web standards.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245151">Learn more…</a>
-    </li>
-
-    <li class="two">
-        <h5>Add NuGet packages and jump-start your coding</h5>
-        NuGet makes it easy to install and update free libraries and tools.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245153">Learn more…</a>
-    </li>
-
-    <li class="three">
-        <h5>Find Web Hosting</h5>
-        You can easily find a web hosting company that offers the right mix of features
-        and price for your applications.
-        <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn more…</a>
-    </li>
-</ol>
