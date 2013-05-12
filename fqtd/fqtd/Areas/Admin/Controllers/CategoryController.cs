@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,14 +13,15 @@ namespace fqtd.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private TimDauEntity db = new TimDauEntity();
+        private TimDauEntities db = new TimDauEntities();
 
         //
         // GET: /Category/
 
         public ActionResult Index()
         {
-            return View(db.Category.Where(a=>a.IsActive).ToList());
+            var result = db.Categories.ToList();
+            return View(result);
         }
 
         //
@@ -27,12 +29,12 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            CategoryModel categorymodel = db.Category.Where(a=>a.IsActive && a.CategoryID==id).FirstOrDefault();
-            if (categorymodel == null)
+            Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
+            if (Categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categorymodel);
+            return View(Categories);
         }
 
         //
@@ -46,20 +48,20 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Category/Create
 
-        [HttpPost]
-        public ActionResult Create(CategoryModel categorymodel)
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Create(Categories Categories)
         {
             if (ModelState.IsValid)
             {
-                categorymodel.IsActive = true;
-                categorymodel.ModifyDate = DateTime.Now;
-                categorymodel.ModifyUser = (int)Membership.GetUser(User.Identity.Name).ProviderUserKey;
-                db.Category.Add(categorymodel);
+                Categories.IsActive = true;
+                Categories.CreateDate = DateTime.Now;
+                Categories.CreateUser = User.Identity.Name;
+                db.Categories.Add(Categories);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categorymodel);
+            return View(Categories);
         }
 
         //
@@ -67,30 +69,46 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            CategoryModel categorymodel = db.Category.Where(a=>a.IsActive && a.CategoryID == id).FirstOrDefault();
-            if (categorymodel == null)
+            Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
+            if (Categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categorymodel);
+            return View(Categories);
         }
 
         //
         // POST: /Category/Edit/5
 
-        [HttpPost]
-        public ActionResult Edit(CategoryModel categorymodel)
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Edit(Categories Categories)
         {
-            if (ModelState.IsValid)
+            try
             {
-                categorymodel.IsActive = true;
-                categorymodel.ModifyDate = DateTime.Now;
-                categorymodel.ModifyUser = (int)Membership.GetUser(User.Identity.Name).ProviderUserKey;
-                db.Entry(categorymodel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Categories.ModifyDate = DateTime.Now;
+                    Categories.ModifyUser = User.Identity.Name;
+                    db.Entry(Categories).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            return View(categorymodel);
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return View(Categories);
         }
 
         //
@@ -98,12 +116,12 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            CategoryModel categorymodel = db.Category.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
-            if (categorymodel == null)
+            Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
+            if (Categories == null)
             {
                 return HttpNotFound();
             }
-            return View(categorymodel);
+            return View(Categories);
         }
 
         //
@@ -112,15 +130,15 @@ namespace fqtd.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            CategoryModel categorymodel = db.Category.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
-            if (categorymodel == null)
+            Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
+            if (Categories == null)
             {
                 return HttpNotFound();
             }
-            categorymodel.IsActive = false;
-            categorymodel.DeleteDate = DateTime.Now;
-            categorymodel.DeleteUser = (int)Membership.GetUser(User.Identity.Name).ProviderUserKey;
-            db.Entry(categorymodel).State = EntityState.Modified;
+            Categories.IsActive = false;
+            //Categories.DeleteDate = DateTime.Now;
+            //Categories.DeleteUser = User.Identity.Name;
+            db.Entry(Categories).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

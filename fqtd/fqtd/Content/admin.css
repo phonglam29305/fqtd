@@ -1,0 +1,29 @@
+﻿.editor-label
+{
+    float: left;
+    min-height: 30px;
+    width: 20%;
+}
+.editor-field
+{
+    float: left;
+    min-height: 30px;
+    width: 80%;
+}
+.editor-field-htmleditor
+{
+    float: left;
+    min-height: 30px;
+    width: 80%;
+}
+.display-label
+{
+    float: left;
+    min-height: 30px;
+    width: 20%;
+}
+.display-field
+{
+    min-height: 30px;
+    width: 80%;
+}

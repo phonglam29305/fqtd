@@ -11,7 +11,7 @@ using WebMatrix.WebData;
 using fqtd.Filters;
 using fqtd.Areas.Admin.Models;
 
-namespace fqtd.Admin.Controllers
+namespace fqtd.Areas.Admin.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

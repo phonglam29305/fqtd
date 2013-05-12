@@ -1,0 +1,632 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TimDauModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TimDauModelStoreContainer">
+          <EntitySet Name="tbl_Brand_Items" EntityType="TimDauModel.Store.tbl_Brand_Items" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Brands" EntityType="TimDauModel.Store.tbl_Brands" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Categories" EntityType="TimDauModel.Store.tbl_Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Category_Properties" EntityType="TimDauModel.Store.tbl_Category_Properties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Item_Location" EntityType="TimDauModel.Store.tbl_Item_Location" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Item_Properties" EntityType="TimDauModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Properties" EntityType="TimDauModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="TimDauModel.Store.FK_tbl_Brand_Items_tbl_Brands">
+            <End Role="tbl_Brands" EntitySet="tbl_Brands" />
+            <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="TimDauModel.Store.FK_tbl_Brands_tbl_Categories">
+            <End Role="tbl_Categories" EntitySet="tbl_Categories" />
+            <End Role="tbl_Brands" EntitySet="tbl_Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Categories" Association="TimDauModel.Store.FK_tbl_Category_Properties_tbl_Categories">
+            <End Role="tbl_Categories" EntitySet="tbl_Categories" />
+            <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties" Association="TimDauModel.Store.FK_tbl_Category_Properties_tbl_Properties">
+            <End Role="tbl_Properties" EntitySet="tbl_Properties" />
+            <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="TimDauModel.Store.FK_tbl_Item_Location_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
+            <End Role="tbl_Item_Location" EntitySet="tbl_Item_Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="TimDauModel.Store.FK_tbl_Item_Properties_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
+            <End Role="tbl_Item_Properties" EntitySet="tbl_Item_Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="TimDauModel.Store.FK_tbl_Item_Properties_tbl_Properties">
+            <End Role="tbl_Properties" EntitySet="tbl_Properties" />
+            <End Role="tbl_Item_Properties" EntitySet="tbl_Item_Properties" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_Brand_Items">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="550" />
+          <Property Name="ItemName_EN" Type="nvarchar" MaxLength="550" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Description_EN" Type="nvarchar(max)" />
+          <Property Name="OpenTime" Type="nvarchar" MaxLength="150" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Website" Type="nvarchar" MaxLength="250" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="SearchCount" Type="decimal" />
+          <Property Name="ClickCount" Type="decimal" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tbl_Brands">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="nvarchar" MaxLength="550" />
+          <Property Name="BrandName_EN" Type="nvarchar" MaxLength="550" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="BrandType" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tbl_Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CategoryName_EN" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description_EN" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tbl_Category_Properties">
+          <Key>
+            <PropertyRef Name="CatetoryID" />
+            <PropertyRef Name="PropertyID" />
+          </Key>
+          <Property Name="CatetoryID" Type="int" Nullable="false" />
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Item_Location">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FullAddress_USign" Type="nvarchar" MaxLength="1000" />
+          <Property Name="AddressNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Street" Type="nvarchar" MaxLength="250" />
+          <Property Name="Ward" Type="nvarchar" MaxLength="250" />
+          <Property Name="Distrist" Type="nvarchar" MaxLength="250" />
+          <Property Name="City" Type="nvarchar" MaxLength="250" />
+          <Property Name="Country" Type="nvarchar" MaxLength="250" />
+          <Property Name="Street_USign" Type="nvarchar" MaxLength="250" />
+          <Property Name="Ward_USign" Type="nvarchar" MaxLength="250" />
+          <Property Name="Distrist_USign" Type="nvarchar" MaxLength="250" />
+          <Property Name="City_USign" Type="nvarchar" MaxLength="250" />
+          <Property Name="Country_USign" Type="nvarchar" MaxLength="250" />
+          <Property Name="MapAddress" Type="nvarchar" MaxLength="550" />
+          <Property Name="Latitude" Type="varchar" MaxLength="50" />
+          <Property Name="Longitude" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tbl_Item_Properties">
+          <Key>
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="PropertyID" />
+          </Key>
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+          <Property Name="PropertyValue" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Properties">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+          </Key>
+          <Property Name="PropertyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyName" Type="nvarchar" MaxLength="250" />
+          <Property Name="PropertyName_EN" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="OrderNumber" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <Association Name="FK_tbl_Brand_Items_tbl_Brands">
+          <End Role="tbl_Brands" Type="TimDauModel.Store.tbl_Brands" Multiplicity="1" />
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brands">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="tbl_Brand_Items">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Brands_tbl_Categories">
+          <End Role="tbl_Categories" Type="TimDauModel.Store.tbl_Categories" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="TimDauModel.Store.tbl_Brands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tbl_Brands">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Category_Properties_tbl_Categories">
+          <End Role="tbl_Categories" Type="TimDauModel.Store.tbl_Categories" Multiplicity="1" />
+          <End Role="tbl_Category_Properties" Type="TimDauModel.Store.tbl_Category_Properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tbl_Category_Properties">
+              <PropertyRef Name="CatetoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Category_Properties_tbl_Properties">
+          <End Role="tbl_Properties" Type="TimDauModel.Store.tbl_Properties" Multiplicity="1" />
+          <End Role="tbl_Category_Properties" Type="TimDauModel.Store.tbl_Category_Properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="tbl_Category_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Location_tbl_Brand_Items">
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="1" />
+          <End Role="tbl_Item_Location" Type="TimDauModel.Store.tbl_Item_Location" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brand_Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Location">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Properties_tbl_Brand_Items">
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="TimDauModel.Store.tbl_Item_Properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brand_Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Properties">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Properties_tbl_Properties">
+          <End Role="tbl_Properties" Type="TimDauModel.Store.tbl_Properties" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="TimDauModel.Store.tbl_Item_Properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimDauModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TimDauEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="TimDauModel.Items" />
+          <EntitySet Name="Brands" EntityType="TimDauModel.Brands" />
+          <EntitySet Name="Categories" EntityType="TimDauModel.Categories" />
+          <EntitySet Name="ItemLocations" EntityType="TimDauModel.ItemLocation" />
+          <EntitySet Name="ItemProperties" EntityType="TimDauModel.ItemProperties" />
+          <EntitySet Name="Properties" EntityType="TimDauModel.Properties" />
+          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="TimDauModel.FK_tbl_Brand_Items_tbl_Brands">
+            <End Role="tbl_Brands" EntitySet="Brands" />
+            <End Role="tbl_Brand_Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="Items" />
+            <End Role="tbl_Item_Location" EntitySet="ItemLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="Items" />
+            <End Role="tbl_Item_Properties" EntitySet="ItemProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="TimDauModel.FK_tbl_Brands_tbl_Categories">
+            <End Role="tbl_Categories" EntitySet="Categories" />
+            <End Role="tbl_Brands" EntitySet="Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="TimDauModel.FK_tbl_Item_Properties_tbl_Properties">
+            <End Role="tbl_Properties" EntitySet="Properties" />
+            <End Role="tbl_Item_Properties" EntitySet="ItemProperties" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_Category_Properties" Association="TimDauModel.tbl_Category_Properties">
+            <End Role="tbl_Categories" EntitySet="Categories" />
+            <End Role="tbl_Properties" EntitySet="Properties" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
+          <Property Name="ItemName_EN" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description_EN" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="OpenTime" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Website" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="SearchCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ClickCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Brands" Relationship="TimDauModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brand_Items" ToRole="tbl_Brands" />
+          <NavigationProperty Name="tbl_Item_Location" Relationship="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Location" />
+          <NavigationProperty Name="tbl_Item_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Name="BrandID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
+          <Property Name="BrandName_EN" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="BrandType" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brands" ToRole="tbl_Brand_Items" />
+          <NavigationProperty Name="tbl_Categories" Relationship="TimDauModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CategoryName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Description_EN" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Brands" Relationship="TimDauModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
+          <NavigationProperty Name="tbl_Properties" Relationship="TimDauModel.tbl_Category_Properties" FromRole="tbl_Categories" ToRole="tbl_Properties" />
+        </EntityType>
+        <EntityType Name="ItemLocation">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="FullAddress" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="FullAddress_USign" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="AddressNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Street" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Ward" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Distrist" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Country" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Street_USign" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Ward_USign" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Distrist_USign" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="City_USign" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Country_USign" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="MapAddress" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
+          <Property Name="Latitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Longitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Item_Location" ToRole="tbl_Brand_Items" />
+        </EntityType>
+        <EntityType Name="ItemProperties">
+          <Key>
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="PropertyID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyValue" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Item_Properties" ToRole="tbl_Brand_Items" />
+          <NavigationProperty Name="tbl_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Item_Properties" ToRole="tbl_Properties" />
+        </EntityType>
+        <EntityType Name="Properties">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+          </Key>
+          <Property Name="PropertyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PropertyName" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="PropertyName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Item_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Properties" ToRole="tbl_Item_Properties" />
+          <NavigationProperty Name="tbl_Categories" Relationship="TimDauModel.tbl_Category_Properties" FromRole="tbl_Properties" ToRole="tbl_Categories" />
+        </EntityType>
+        <Association Name="FK_tbl_Brand_Items_tbl_Brands">
+          <End Role="tbl_Brands" Type="TimDauModel.Brands" Multiplicity="1" />
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brands">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="tbl_Brand_Items">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Location_tbl_Brand_Items">
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="1" />
+          <End Role="tbl_Item_Location" Type="TimDauModel.ItemLocation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brand_Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Location">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Properties_tbl_Brand_Items">
+          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="TimDauModel.ItemProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Brand_Items">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Properties">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Brands_tbl_Categories">
+          <End Role="tbl_Categories" Type="TimDauModel.Categories" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="TimDauModel.Brands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tbl_Brands">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Item_Properties_tbl_Properties">
+          <End Role="tbl_Properties" Type="TimDauModel.Properties" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="TimDauModel.ItemProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="tbl_Item_Properties">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tbl_Category_Properties">
+          <End Role="tbl_Categories" Type="TimDauModel.Categories" Multiplicity="*" />
+          <End Role="tbl_Properties" Type="TimDauModel.Properties" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimDauModelStoreContainer" CdmEntityContainer="TimDauEntities1">
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="TimDauModel.Items">
+              <MappingFragment StoreEntitySet="tbl_Brand_Items">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemName_EN" ColumnName="ItemName_EN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Description_EN" ColumnName="Description_EN" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="SearchCount" ColumnName="SearchCount" />
+                <ScalarProperty Name="ClickCount" ColumnName="ClickCount" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="TimDauModel.Brands">
+              <MappingFragment StoreEntitySet="tbl_Brands">
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandName_EN" ColumnName="BrandName_EN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BrandType" ColumnName="BrandType" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="TimDauModel.Categories">
+              <MappingFragment StoreEntitySet="tbl_Categories">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryName_EN" ColumnName="CategoryName_EN" />
+                <ScalarProperty Name="Description_EN" ColumnName="Description_EN" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemLocations">
+            <EntityTypeMapping TypeName="TimDauModel.ItemLocation">
+              <MappingFragment StoreEntitySet="tbl_Item_Location">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="FullAddress_USign" ColumnName="FullAddress_USign" />
+                <ScalarProperty Name="AddressNumber" ColumnName="AddressNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Ward" ColumnName="Ward" />
+                <ScalarProperty Name="Distrist" ColumnName="Distrist" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Street_USign" ColumnName="Street_USign" />
+                <ScalarProperty Name="Ward_USign" ColumnName="Ward_USign" />
+                <ScalarProperty Name="Distrist_USign" ColumnName="Distrist_USign" />
+                <ScalarProperty Name="City_USign" ColumnName="City_USign" />
+                <ScalarProperty Name="Country_USign" ColumnName="Country_USign" />
+                <ScalarProperty Name="MapAddress" ColumnName="MapAddress" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemProperties">
+            <EntityTypeMapping TypeName="TimDauModel.ItemProperties">
+              <MappingFragment StoreEntitySet="tbl_Item_Properties">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Properties">
+            <EntityTypeMapping TypeName="TimDauModel.Properties">
+              <MappingFragment StoreEntitySet="tbl_Properties">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyName_EN" ColumnName="PropertyName_EN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="tbl_Category_Properties" TypeName="TimDauModel.tbl_Category_Properties" StoreEntitySet="tbl_Category_Properties">
+            <EndProperty Name="tbl_Categories">
+              <ScalarProperty Name="CategoryID" ColumnName="CatetoryID" />
+            </EndProperty>
+            <EndProperty Name="tbl_Properties">
+              <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

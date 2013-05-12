@@ -1,20 +1,26 @@
-﻿@model fqtd.Areas.Admin.Models.Categories
+﻿@model fqtd.Areas.Admin.Models.Brands
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
 }
 
-<h2>Delete</h2>
+<h2>Details</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <fieldset>
-    <legend>Categories</legend>
+    <legend>Brands</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.CategoryName)
+         @Html.DisplayNameFor(model => model.BrandName)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CategoryName)
+        @Html.DisplayFor(model => model.BrandName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BrandName_EN)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BrandName_EN)
     </div>
 
     <div class="display-label">
@@ -25,17 +31,17 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.CategoryName_EN)
+         @Html.DisplayNameFor(model => model.BrandType)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CategoryName_EN)
+        @Html.DisplayFor(model => model.BrandType)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description_EN)
+         @Html.DisplayNameFor(model => model.tbl_Categories.CategoryName)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Description_EN)
+        @Html.DisplayFor(model => model.tbl_Categories.CategoryName)
     </div>
 
     <div class="display-label">
@@ -87,9 +93,7 @@
         @Html.DisplayFor(model => model.DeleteUser)
     </div>
 </fieldset>
-@using (Html.BeginForm()) {
-    <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.BrandID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

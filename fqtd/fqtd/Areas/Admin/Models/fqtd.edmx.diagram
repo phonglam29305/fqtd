@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="03b6b67a9fe241aba98a2cd49f63c8df" Name="Diagram1">
+        <EntityTypeShape EntityType="TimDauModel.Items" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimDauModel.Brands" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimDauModel.Categories" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimDauModel.ItemLocation" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimDauModel.ItemProperties" Width="1.5" PointX="9.875" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimDauModel.Properties" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <AssociationConnector Association="TimDauModel.FK_tbl_Brand_Items_tbl_Brands" ManuallyRouted="false" />
+        <AssociationConnector Association="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="TimDauModel.FK_tbl_Brands_tbl_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="TimDauModel.FK_tbl_Item_Properties_tbl_Properties" ManuallyRouted="false" />
+        <AssociationConnector Association="TimDauModel.tbl_Category_Properties" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

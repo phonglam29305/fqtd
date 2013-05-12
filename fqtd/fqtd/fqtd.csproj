@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -163,17 +165,47 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BrandsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PropertyController.cs" />
-    <Compile Include="Areas\Admin\Models\PropertyModel.cs" />
+    <Compile Include="Areas\Admin\Models\Brands.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Categories.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\fqtd.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fqtd.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\fqtd.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\fqtd.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>fqtd.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\ItemLocation.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\ItemProperties.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Items.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\Properties.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\AccountModels.cs" />
-    <Compile Include="Areas\Admin\Models\CategoryModel.cs" />
-    <Compile Include="Areas\Admin\Models\TimDauEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +487,7 @@
     <Content Include="ckeditor\skins\moono\images\close.png" />
     <Content Include="ckeditor\skins\moono\images\mini.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="Content\admin.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -528,7 +561,30 @@
     <Content Include="Areas\Admin\Views\Property\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Property\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Property\Delete.cshtml" />
-    <Compile Include="Areas\Admin\Models\BaseModels.cs" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Areas\Admin\Models\fqtd.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>fqtd.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Admin\Models\fqtd.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>fqtd.edmx</DependentUpon>
+      <LastGenOutput>fqtd.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Admin\Models\fqtd.edmx.diagram">
+      <DependentUpon>fqtd.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Models\fqtd.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>fqtd.edmx</DependentUpon>
+      <LastGenOutput>fqtd.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Admin\Views\Brands\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Brands\Delete.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
@@ -592,11 +648,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

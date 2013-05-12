@@ -1,4 +1,4 @@
-﻿@model IEnumerable<fqtd.Areas.Admin.Models.CategoryModel>
+﻿@model IEnumerable<fqtd.Areas.Admin.Models.Categories>
 
 @{
     ViewBag.Title = "Index";
@@ -23,27 +23,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Description_EN)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifyDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifyUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeleteDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeleteUser)
-        </th>*@
         <th></th>
     </tr>
 
@@ -61,27 +40,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description_EN)
         </td>
-       @* <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifyDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifyUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteUser)
-        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CategoryID }) |
             @Html.ActionLink("Details", "Details", new { id=item.CategoryID }) |

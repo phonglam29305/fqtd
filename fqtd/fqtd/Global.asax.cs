@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -17,8 +18,9 @@ namespace fqtd
     {
         protected void Application_Start()
         {
+            //Database.SetInitializer<fqtd.Areas.Admin.Models.TimDauEntity>(null);
+
             AreaRegistration.RegisterAllAreas();
-            //AdminAreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
