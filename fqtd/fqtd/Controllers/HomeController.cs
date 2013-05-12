@@ -33,6 +33,7 @@ namespace fqtd.Controllers
         {
             ViewBag.Message = "This is test geolocation.";            
 
+
             return View();
         }
     }
