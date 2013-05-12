@@ -19,7 +19,22 @@
         height: 30px;
         line-height: 30px;
     }
-        
+
+    .ui-tooltip
+    {
+        padding: 8px;
+        position: absolute;
+        z-index: 9999;
+        max-width: 300px;
+        -webkit-box-shadow: 0 0 5px #aaa;
+        box-shadow: 0 0 5px #aaa;
+        background-color:white;
+    }
+
+    body .ui-tooltip
+    {
+        border-width: 2px;
+    }
 </style>
 <section style="width: 500px; position: relative; overflow: hidden; margin: 0 auto">
     <article style="overflow: hidden; width: 50000px;" id="equityBlock">
@@ -28,7 +43,7 @@
                 <div>
                     <input id="textbox1" style="width: 450px" data-required="true" />
                 </div>
-                <div style="float:left">
+                <div style="float: left">
                     <select data-required="true">
                         <option value>Choose</option>
                         <option value="Fast food">Fast food</option>
@@ -55,8 +70,9 @@
                 </div>
                 <div>
                     <input id="range" style="width: 100px" data-required="true" />
+                    <a id="tryit" href="JavaScript:void(0);" title="Geolocation only work exactly with the mobile devices such as Tablet, Cellphone, Laptop.">Get current location</a>
                 </div>
-               
+
                 <input type="submit" value="Submit" />
                 <a class="next" href="JavaScript:void(0);" title="Next">You want to find a specific place ?</a>
             </form>
@@ -80,10 +96,11 @@
 
 @section scripts
  {
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
     <script>
         jQuery(document).ready(function ($) {
+            ///event slide
             var chartsBlock = $('#equityBlock');
-
             chartsBlock.smSlideChart({
                 btnNext: $('.next'),
                 btnPrev: $('.pre'),
@@ -91,6 +108,7 @@
                 callback: function (t, f) { }
             });
 
+            //watermark and validation
             $("#textbox1").watermark("Please input your current position");
             $("#textbox2").watermark("Please enter address you want to find");
             $("#range").watermark("Range");
@@ -117,6 +135,50 @@
                 }
             });
 
+
+            ///Bind tooltip
+            $("#tryit").tooltip({
+                show: null,
+                position: {
+                    my: "left top",
+                    at: "left bottom"
+                },
+                open: function (event, ui) {
+                    ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast");
+                }
+            });
+
+            ///bind event to get current position
+            $("#tryit").click(function () {
+                if (navigator.geolocation) {
+                    // Get current position
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                }
+                else {
+                    // No geolocation fallback: Defaults to Eeaster Island, Chile
+                    alert("Please turn on your location service so we can locate where you are.");
+                };
+            });
+
+            function showPosition(position, status) {
+                var geocoder = new google.maps.Geocoder();
+
+                myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                if (geocoder) {
+                    geocoder.geocode({ 'latLng': myplace }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#textbox1").val(results[0].formatted_address);
+                        }
+                        else {
+                            console.log("Geocoding failed: " + status);
+                        }
+                    });
+                }
+            }
+
         });
+
+
     </script>
 }
