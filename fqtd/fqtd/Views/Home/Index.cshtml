@@ -70,7 +70,7 @@
                 </div>
                 <div>
                     <input id="range" style="width: 100px" data-required="true" />
-                    <a id="tryit" href="JavaScript:void(0);" title="Geolocation only work exactly with the mobile devices such as Tablet, Cellphone, Laptop.">Get current location</a>
+                    <a id="tryit" href="JavaScript:void(0);" title="Geolocation only work exactly with the mobile devices such as Tablet, Cellphone, Laptop.">Get current location</a>                    
                 </div>
 
                 <input type="submit" value="Submit" />
@@ -96,7 +96,7 @@
 
 @section scripts
  {
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false&libraries=places"></script>
     <script>
         jQuery(document).ready(function ($) {
             ///event slide
@@ -152,31 +152,31 @@
             $("#tryit").click(function () {
                 if (navigator.geolocation) {
                     // Get current position
-                    navigator.geolocation.getCurrentPosition(showPosition);
+                    navigator.geolocation.getCurrentPosition(function (position, status) {
+                        var geocoder = new google.maps.Geocoder();
+                        myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                        if (geocoder) {
+                            geocoder.geocode({ 'latLng': myplace }, function (results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    $("#textbox1").val(results[0].formatted_address);
+                                }
+                                else {
+                                    console.log("Geocoding failed: " + status);
+                                }
+                            });
+                        }
+                    });
                 }
                 else {
                     // No geolocation fallback: Defaults to Eeaster Island, Chile
                     alert("Please turn on your location service so we can locate where you are.");
                 };
-            });
+            });           
 
-            function showPosition(position, status) {
-                var geocoder = new google.maps.Geocoder();
-
-                myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-                if (geocoder) {
-                    geocoder.geocode({ 'latLng': myplace }, function (results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            $("#textbox1").val(results[0].formatted_address);
-                        }
-                        else {
-                            console.log("Geocoding failed: " + status);
-                        }
-                    });
-                }
-            }
-
+            //bind places autocomplete
+            $("#textbox1").geocomplete();
+            
         });
 
 

@@ -4,8 +4,9 @@
 <h2>@ViewBag.Message</h2>
 
 <div id="googleMap" style="width: 700px;height: 500px;margin: 50px auto;"></div>
+<input id="address" type="text" style="width:500px" value="18/48 Trần quang diệu, phường 14, quận 3, Hồ chí minh, Vietnam" />
 <input id="distance" type="text" style="width:100px" value="5000"/>metre(s)
-<button onclick="getLocation()">Try It</button>
+<button onclick="showPosition()">Try It</button>
 
 @section scripts
 {
@@ -22,52 +23,52 @@
             [10.35545, 107.09198, "<h2>You are here 6</h2><p>Nice with geolocation, ain't it?</p>"]
         ];
 
-        function getLocation() {
-            if (navigator.geolocation) {
-                // Get current position
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                // No geolocation fallback: Defaults to Eeaster Island, Chile
-                alert("Please turn on your location service so we can locate where you are.");
-            }           
-
-        }
-
-        function showPosition(position, status) {
-
-            myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
+        function showPosition() {
+                         
             distance = $("#distance").val();
+            
+            var address = $("#address").val();
+            var geocoder = new google.maps.Geocoder();
+            if (geocoder) {
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        //set map
+                        var mapProp = {
+                            center: results[0].geometry.location,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-            //set map
-            var mapProp = {
-                center: myplace,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                        //set my city
+                        var myCity = new google.maps.Circle({
+                            center: results[0].geometry.location,
+                            radius: parseInt(distance),
+                            strokeWeight: 0,
+                            fillColor: "#0000FF",
+                            fillOpacity: 0.1
+                        });
+                        myCity.setMap(map);
 
-            //set my city
-            var myCity = new google.maps.Circle({
-                center: myplace,
-                radius: parseInt(distance),
-                strokeWeight: 0,
-                fillColor: "#0000FF",
-                fillOpacity: 0.1
-            });
-            myCity.setMap(map);
+                        //set direction
+                        directionsDisplay = new google.maps.DirectionsRenderer();
+                        directionsDisplay.setMap(map);
 
-            //set direction
-            directionsDisplay = new google.maps.DirectionsRenderer();
-            directionsDisplay.setMap(map);
+                        map.fitBounds(myCity.getBounds());
+                        markOutLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng(), map);
 
-            map.fitBounds(myCity.getBounds());
-            markOutLocation(position.coords.latitude, position.coords.longitude, map);
+                        for (i = 0; i < locations.length; i++) {
+                            var compareDistance = return_Distance(results[0].geometry.location, new google.maps.LatLng(locations[i][0], locations[i][1]));
+                            if (distance >= compareDistance) {
+                                markOutLocation(locations[i][0], locations[i][1], map, locations[i][2]);
+                            }
+                        }
 
-            for (i = 0; i < locations.length; i++) {
-                var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
-                if (distance >= compareDistance) {
-                    markOutLocation(locations[i][0], locations[i][1], map, locations[i][2]);
-                }
-            }
+                    } else {
+                        alert("Geocode was not successful for the following reason: " + status);
+                    }
+                });
+            }           
 
         }
 
