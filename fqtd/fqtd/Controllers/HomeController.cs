@@ -31,9 +31,9 @@ namespace fqtd.Controllers
 
         public ActionResult Result()
         {
-            ViewBag.Message = "This is test geolocation.";            
+            ViewBag.Message = "This is test geolocation.";
 
-
+            int a= Request.Form.Count;
             return View();
         }
     }
