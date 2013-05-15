@@ -586,6 +586,8 @@
     <Content Include="Areas\Admin\Views\Brands\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brands\Delete.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Images\square%402x.png" />
+    <Content Include="Images\square.png" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
