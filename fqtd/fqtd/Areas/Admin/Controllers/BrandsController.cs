@@ -26,23 +26,28 @@ namespace fqtd.Areas.Admin.Controllers
         }
 
         
-        public ActionResult Brands()
+        public ActionResult Brands(int vn0_en1=0)
         {
             var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
-                                     select new {a.BrandID, a.BrandName, a.BrandName_EN};
-
+                                     select new {a.BrandID, a.BrandName, a.Description};
+            if (vn0_en1 == 1)
+                jsonNetResult.Data = from a in brands
+                                     select new { a.BrandID, BrandName=a.BrandName_EN, Description= a.Description_EN };
             return jsonNetResult;
         }
-        public ActionResult BrandsByCategory(int id=0)
+        public ActionResult BrandsByCategory(int id = 0, int vn0_en1 = 0)
         {
             var brands = db.Brands.Where(a => a.IsActive && a.CategoryID==id).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
-                                 select new { a.BrandID, a.BrandName, a.BrandName_EN };
+                                 select new { a.BrandID, a.BrandName, a.Description };
+            if (vn0_en1 == 1)
+                jsonNetResult.Data = from a in brands
+                                     select new { a.BrandID, BrandName = a.BrandName_EN, Description = a.Description_EN };
 
             return jsonNetResult;
         }

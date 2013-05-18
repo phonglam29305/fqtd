@@ -7,7 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using fqtd.App_Start;
 using fqtd.Areas.Admin.Models;
+using Newtonsoft.Json;
 
 namespace fqtd.Areas.Admin.Controllers
 {
@@ -22,6 +24,20 @@ namespace fqtd.Areas.Admin.Controllers
         {
             var result = db.Categories.Where(a => a.IsActive).ToList();
             return View(result);
+        }
+
+        public ActionResult Categories(int vn0_en1 = 0)
+        {
+            var categories = db.Categories.Where(a => a.IsActive);
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            jsonNetResult.Data = from a in categories
+                                 select new { a.CategoryID, a.CategoryName};
+            if (vn0_en1 == 1)
+                jsonNetResult.Data = from a in categories
+                                     select new { a.CategoryID, CategoryName = a.CategoryName_EN };
+
+            return jsonNetResult;
         }
 
         //
