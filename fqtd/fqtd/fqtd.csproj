@@ -612,6 +612,7 @@
     <Content Include="Intro.html" />
     <Content Include="Images\square%402x.png" />
     <Content Include="Images\square.png" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
