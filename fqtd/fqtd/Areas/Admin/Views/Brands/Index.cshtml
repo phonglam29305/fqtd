@@ -18,16 +18,10 @@
             @Html.DisplayNameFor(model => model.BrandName_EN)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BrandType)
+            @Html.DisplayNameFor(model => model.tbl_BrandType.BrandTypeName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.tbl_Categories.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreateDate)
@@ -41,12 +35,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ModifyUser)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeleteDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeleteUser)
-        </th>
         <th></th>
     </tr>
 
@@ -59,16 +47,10 @@
             @Html.DisplayFor(modelItem => item.BrandName_EN)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BrandType)
+            @Html.DisplayFor(modelItem => item.tbl_BrandType.BrandTypeName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tbl_Categories.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreateDate)
@@ -81,12 +63,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ModifyUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeleteUser)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.BrandID }) |

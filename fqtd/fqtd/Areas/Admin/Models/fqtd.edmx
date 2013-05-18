@@ -4,40 +4,45 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TimDauModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="TimDauModelStoreContainer">
-          <EntitySet Name="tbl_Brand_Items" EntityType="TimDauModel.Store.tbl_Brand_Items" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Brands" EntityType="TimDauModel.Store.tbl_Brands" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Categories" EntityType="TimDauModel.Store.tbl_Categories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Category_Properties" EntityType="TimDauModel.Store.tbl_Category_Properties" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Item_Location" EntityType="TimDauModel.Store.tbl_Item_Location" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Item_Properties" EntityType="TimDauModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Properties" EntityType="TimDauModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="TimDauModel.Store.FK_tbl_Brand_Items_tbl_Brands">
+      <Schema Namespace="fqtdModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="fqtdModelStoreContainer">
+          <EntitySet Name="tbl_Brand_Items" EntityType="fqtdModel.Store.tbl_Brand_Items" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Brands" EntityType="fqtdModel.Store.tbl_Brands" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_BrandType" EntityType="fqtdModel.Store.tbl_BrandType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Categories" EntityType="fqtdModel.Store.tbl_Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Category_Properties" EntityType="fqtdModel.Store.tbl_Category_Properties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Item_Location" EntityType="fqtdModel.Store.tbl_Item_Location" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Item_Properties" EntityType="fqtdModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_Properties" EntityType="fqtdModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="fqtdModel.Store.FK_tbl_Brand_Items_tbl_Brands">
             <End Role="tbl_Brands" EntitySet="tbl_Brands" />
             <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="TimDauModel.Store.FK_tbl_Brands_tbl_Categories">
+          <AssociationSet Name="FK_tbl_Brands_tbl_BrandType" Association="fqtdModel.Store.FK_tbl_Brands_tbl_BrandType">
+            <End Role="tbl_BrandType" EntitySet="tbl_BrandType" />
+            <End Role="tbl_Brands" EntitySet="tbl_Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="fqtdModel.Store.FK_tbl_Brands_tbl_Categories">
             <End Role="tbl_Categories" EntitySet="tbl_Categories" />
             <End Role="tbl_Brands" EntitySet="tbl_Brands" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Categories" Association="TimDauModel.Store.FK_tbl_Category_Properties_tbl_Categories">
+          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Categories" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Categories">
             <End Role="tbl_Categories" EntitySet="tbl_Categories" />
             <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties" Association="TimDauModel.Store.FK_tbl_Category_Properties_tbl_Properties">
+          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Properties">
             <End Role="tbl_Properties" EntitySet="tbl_Properties" />
             <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="TimDauModel.Store.FK_tbl_Item_Location_tbl_Brand_Items">
+          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="fqtdModel.Store.FK_tbl_Item_Location_tbl_Brand_Items">
             <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
             <End Role="tbl_Item_Location" EntitySet="tbl_Item_Location" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="TimDauModel.Store.FK_tbl_Item_Properties_tbl_Brand_Items">
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="fqtdModel.Store.FK_tbl_Item_Properties_tbl_Brand_Items">
             <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
             <End Role="tbl_Item_Properties" EntitySet="tbl_Item_Properties" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="TimDauModel.Store.FK_tbl_Item_Properties_tbl_Properties">
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="fqtdModel.Store.FK_tbl_Item_Properties_tbl_Properties">
             <End Role="tbl_Properties" EntitySet="tbl_Properties" />
             <End Role="tbl_Item_Properties" EntitySet="tbl_Item_Properties" />
           </AssociationSet>
@@ -73,8 +78,25 @@
           <Property Name="BrandName" Type="nvarchar" MaxLength="550" />
           <Property Name="BrandName_EN" Type="nvarchar" MaxLength="550" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="BrandType" Type="int" />
+          <Property Name="Description_EN" Type="nvarchar(max)" />
+          <Property Name="BrandTypeID" Type="int" />
           <Property Name="CategoryID" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="tbl_BrandType">
+          <Key>
+            <PropertyRef Name="BrandTypeID" />
+          </Key>
+          <Property Name="BrandTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BrandTypeName" Type="nvarchar" MaxLength="250" />
+          <Property Name="BrandTypeName_EN" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -165,8 +187,8 @@
           <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <Association Name="FK_tbl_Brand_Items_tbl_Brands">
-          <End Role="tbl_Brands" Type="TimDauModel.Store.tbl_Brands" Multiplicity="1" />
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="*" />
+          <End Role="tbl_Brands" Type="fqtdModel.Store.tbl_Brands" Multiplicity="1" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.Store.tbl_Brand_Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brands">
               <PropertyRef Name="BrandID" />
@@ -176,9 +198,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_Brands_tbl_BrandType">
+          <End Role="tbl_BrandType" Type="fqtdModel.Store.tbl_BrandType" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="fqtdModel.Store.tbl_Brands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BrandType">
+              <PropertyRef Name="BrandTypeID" />
+            </Principal>
+            <Dependent Role="tbl_Brands">
+              <PropertyRef Name="BrandTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Brands_tbl_Categories">
-          <End Role="tbl_Categories" Type="TimDauModel.Store.tbl_Categories" Multiplicity="0..1" />
-          <End Role="tbl_Brands" Type="TimDauModel.Store.tbl_Brands" Multiplicity="*" />
+          <End Role="tbl_Categories" Type="fqtdModel.Store.tbl_Categories" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="fqtdModel.Store.tbl_Brands" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Categories">
               <PropertyRef Name="CategoryID" />
@@ -189,8 +223,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Category_Properties_tbl_Categories">
-          <End Role="tbl_Categories" Type="TimDauModel.Store.tbl_Categories" Multiplicity="1" />
-          <End Role="tbl_Category_Properties" Type="TimDauModel.Store.tbl_Category_Properties" Multiplicity="*" />
+          <End Role="tbl_Categories" Type="fqtdModel.Store.tbl_Categories" Multiplicity="1" />
+          <End Role="tbl_Category_Properties" Type="fqtdModel.Store.tbl_Category_Properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Categories">
               <PropertyRef Name="CategoryID" />
@@ -201,8 +235,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Category_Properties_tbl_Properties">
-          <End Role="tbl_Properties" Type="TimDauModel.Store.tbl_Properties" Multiplicity="1" />
-          <End Role="tbl_Category_Properties" Type="TimDauModel.Store.tbl_Category_Properties" Multiplicity="*" />
+          <End Role="tbl_Properties" Type="fqtdModel.Store.tbl_Properties" Multiplicity="1" />
+          <End Role="tbl_Category_Properties" Type="fqtdModel.Store.tbl_Category_Properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Properties">
               <PropertyRef Name="PropertyID" />
@@ -213,8 +247,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Location_tbl_Brand_Items">
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="1" />
-          <End Role="tbl_Item_Location" Type="TimDauModel.Store.tbl_Item_Location" Multiplicity="0..1" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.Store.tbl_Brand_Items" Multiplicity="1" />
+          <End Role="tbl_Item_Location" Type="fqtdModel.Store.tbl_Item_Location" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brand_Items">
               <PropertyRef Name="ItemID" />
@@ -225,8 +259,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Properties_tbl_Brand_Items">
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Store.tbl_Brand_Items" Multiplicity="1" />
-          <End Role="tbl_Item_Properties" Type="TimDauModel.Store.tbl_Item_Properties" Multiplicity="*" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.Store.tbl_Brand_Items" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="fqtdModel.Store.tbl_Item_Properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brand_Items">
               <PropertyRef Name="ItemID" />
@@ -237,8 +271,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Properties_tbl_Properties">
-          <End Role="tbl_Properties" Type="TimDauModel.Store.tbl_Properties" Multiplicity="1" />
-          <End Role="tbl_Item_Properties" Type="TimDauModel.Store.tbl_Item_Properties" Multiplicity="*" />
+          <End Role="tbl_Properties" Type="fqtdModel.Store.tbl_Properties" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="fqtdModel.Store.tbl_Item_Properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Properties">
               <PropertyRef Name="PropertyID" />
@@ -248,43 +282,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TimDauModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="TimDauEntities1" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Items" EntityType="TimDauModel.Items" />
-          <EntitySet Name="Brands" EntityType="TimDauModel.Brands" />
-          <EntitySet Name="Categories" EntityType="TimDauModel.Categories" />
-          <EntitySet Name="ItemLocations" EntityType="TimDauModel.ItemLocation" />
-          <EntitySet Name="ItemProperties" EntityType="TimDauModel.ItemProperties" />
-          <EntitySet Name="Properties" EntityType="TimDauModel.Properties" />
-          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="TimDauModel.FK_tbl_Brand_Items_tbl_Brands">
+      <Schema Namespace="fqtdModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="fqtdEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="BrandItems" EntityType="fqtdModel.BrandItems" />
+          <EntitySet Name="Brands" EntityType="fqtdModel.Brands" />
+          <EntitySet Name="BrandTypes" EntityType="fqtdModel.BrandType" />
+          <EntitySet Name="Categories" EntityType="fqtdModel.Categories" />
+          <EntitySet Name="ItemLocations" EntityType="fqtdModel.ItemLocation" />
+          <EntitySet Name="ItemProperties" EntityType="fqtdModel.ItemProperties" />
+          <EntitySet Name="Properties" EntityType="fqtdModel.Properties" />
+          <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="fqtdModel.FK_tbl_Brand_Items_tbl_Brands">
             <End Role="tbl_Brands" EntitySet="Brands" />
-            <End Role="tbl_Brand_Items" EntitySet="Items" />
+            <End Role="tbl_Brand_Items" EntitySet="BrandItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items">
-            <End Role="tbl_Brand_Items" EntitySet="Items" />
+          <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="BrandItems" />
             <End Role="tbl_Item_Location" EntitySet="ItemLocations" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items">
-            <End Role="tbl_Brand_Items" EntitySet="Items" />
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Brand_Items" Association="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items">
+            <End Role="tbl_Brand_Items" EntitySet="BrandItems" />
             <End Role="tbl_Item_Properties" EntitySet="ItemProperties" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="TimDauModel.FK_tbl_Brands_tbl_Categories">
+          <AssociationSet Name="FK_tbl_Brands_tbl_BrandType" Association="fqtdModel.FK_tbl_Brands_tbl_BrandType">
+            <End Role="tbl_BrandType" EntitySet="BrandTypes" />
+            <End Role="tbl_Brands" EntitySet="Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="fqtdModel.FK_tbl_Brands_tbl_Categories">
             <End Role="tbl_Categories" EntitySet="Categories" />
             <End Role="tbl_Brands" EntitySet="Brands" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="TimDauModel.FK_tbl_Item_Properties_tbl_Properties">
+          <AssociationSet Name="FK_tbl_Item_Properties_tbl_Properties" Association="fqtdModel.FK_tbl_Item_Properties_tbl_Properties">
             <End Role="tbl_Properties" EntitySet="Properties" />
             <End Role="tbl_Item_Properties" EntitySet="ItemProperties" />
           </AssociationSet>
-          <AssociationSet Name="tbl_Category_Properties" Association="TimDauModel.tbl_Category_Properties">
+          <AssociationSet Name="tbl_Category_Properties" Association="fqtdModel.tbl_Category_Properties">
             <End Role="tbl_Categories" EntitySet="Categories" />
             <End Role="tbl_Properties" EntitySet="Properties" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Items">
+        <EntityType Name="BrandItems">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
@@ -300,15 +340,15 @@
           <Property Name="SearchCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ClickCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="tbl_Brands" Relationship="TimDauModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brand_Items" ToRole="tbl_Brands" />
-          <NavigationProperty Name="tbl_Item_Location" Relationship="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Location" />
-          <NavigationProperty Name="tbl_Item_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
+          <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brand_Items" ToRole="tbl_Brands" />
+          <NavigationProperty Name="tbl_Item_Location" Relationship="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Location" />
+          <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -318,17 +358,36 @@
           <Property Name="BrandName" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
           <Property Name="BrandName_EN" Type="String" MaxLength="550" Unicode="true" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="BrandType" Type="Int32" />
+          <Property Name="Description_EN" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="BrandTypeID" Type="Int32" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brands" ToRole="tbl_Brand_Items" />
-          <NavigationProperty Name="tbl_Categories" Relationship="TimDauModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="fqtdModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brands" ToRole="tbl_Brand_Items" />
+          <NavigationProperty Name="tbl_BrandType" Relationship="fqtdModel.FK_tbl_Brands_tbl_BrandType" FromRole="tbl_Brands" ToRole="tbl_BrandType" />
+          <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
+        </EntityType>
+        <EntityType Name="BrandType">
+          <Key>
+            <PropertyRef Name="BrandTypeID" />
+          </Key>
+          <Property Name="BrandTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandTypeName" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="BrandTypeName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brands_tbl_BrandType" FromRole="tbl_BrandType" ToRole="tbl_Brands" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -340,14 +399,14 @@
           <Property Name="CategoryName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="Description_EN" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="tbl_Brands" Relationship="TimDauModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
-          <NavigationProperty Name="tbl_Properties" Relationship="TimDauModel.tbl_Category_Properties" FromRole="tbl_Categories" ToRole="tbl_Properties" />
+          <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
+          <NavigationProperty Name="tbl_Properties" Relationship="fqtdModel.tbl_Category_Properties" FromRole="tbl_Categories" ToRole="tbl_Properties" />
         </EntityType>
         <EntityType Name="ItemLocation">
           <Key>
@@ -371,13 +430,13 @@
           <Property Name="Latitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Item_Location" ToRole="tbl_Brand_Items" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Item_Location" ToRole="tbl_Brand_Items" />
         </EntityType>
         <EntityType Name="ItemProperties">
           <Key>
@@ -387,8 +446,8 @@
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="PropertyID" Type="Int32" Nullable="false" />
           <Property Name="PropertyValue" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tbl_Brand_Items" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Item_Properties" ToRole="tbl_Brand_Items" />
-          <NavigationProperty Name="tbl_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Item_Properties" ToRole="tbl_Properties" />
+          <NavigationProperty Name="tbl_Brand_Items" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Item_Properties" ToRole="tbl_Brand_Items" />
+          <NavigationProperty Name="tbl_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Item_Properties" ToRole="tbl_Properties" />
         </EntityType>
         <EntityType Name="Properties">
           <Key>
@@ -401,18 +460,18 @@
           <Property Name="ParentID" Type="Int32" />
           <Property Name="OrderNumber" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="tbl_Item_Properties" Relationship="TimDauModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Properties" ToRole="tbl_Item_Properties" />
-          <NavigationProperty Name="tbl_Categories" Relationship="TimDauModel.tbl_Category_Properties" FromRole="tbl_Properties" ToRole="tbl_Categories" />
+          <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Properties" ToRole="tbl_Item_Properties" />
+          <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.tbl_Category_Properties" FromRole="tbl_Properties" ToRole="tbl_Categories" />
         </EntityType>
         <Association Name="FK_tbl_Brand_Items_tbl_Brands">
-          <End Role="tbl_Brands" Type="TimDauModel.Brands" Multiplicity="1" />
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="*" />
+          <End Role="tbl_Brands" Type="fqtdModel.Brands" Multiplicity="1" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.BrandItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brands">
               <PropertyRef Name="BrandID" />
@@ -423,8 +482,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Location_tbl_Brand_Items">
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="1" />
-          <End Role="tbl_Item_Location" Type="TimDauModel.ItemLocation" Multiplicity="0..1" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.BrandItems" Multiplicity="1" />
+          <End Role="tbl_Item_Location" Type="fqtdModel.ItemLocation" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brand_Items">
               <PropertyRef Name="ItemID" />
@@ -435,8 +494,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Properties_tbl_Brand_Items">
-          <End Role="tbl_Brand_Items" Type="TimDauModel.Items" Multiplicity="1" />
-          <End Role="tbl_Item_Properties" Type="TimDauModel.ItemProperties" Multiplicity="*" />
+          <End Role="tbl_Brand_Items" Type="fqtdModel.BrandItems" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="fqtdModel.ItemProperties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Brand_Items">
               <PropertyRef Name="ItemID" />
@@ -446,9 +505,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_Brands_tbl_BrandType">
+          <End Role="tbl_BrandType" Type="fqtdModel.BrandType" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="fqtdModel.Brands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BrandType">
+              <PropertyRef Name="BrandTypeID" />
+            </Principal>
+            <Dependent Role="tbl_Brands">
+              <PropertyRef Name="BrandTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Brands_tbl_Categories">
-          <End Role="tbl_Categories" Type="TimDauModel.Categories" Multiplicity="0..1" />
-          <End Role="tbl_Brands" Type="TimDauModel.Brands" Multiplicity="*" />
+          <End Role="tbl_Categories" Type="fqtdModel.Categories" Multiplicity="0..1" />
+          <End Role="tbl_Brands" Type="fqtdModel.Brands" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Categories">
               <PropertyRef Name="CategoryID" />
@@ -459,8 +530,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_Item_Properties_tbl_Properties">
-          <End Role="tbl_Properties" Type="TimDauModel.Properties" Multiplicity="1" />
-          <End Role="tbl_Item_Properties" Type="TimDauModel.ItemProperties" Multiplicity="*" />
+          <End Role="tbl_Properties" Type="fqtdModel.Properties" Multiplicity="1" />
+          <End Role="tbl_Item_Properties" Type="fqtdModel.ItemProperties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Properties">
               <PropertyRef Name="PropertyID" />
@@ -471,17 +542,17 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="tbl_Category_Properties">
-          <End Role="tbl_Categories" Type="TimDauModel.Categories" Multiplicity="*" />
-          <End Role="tbl_Properties" Type="TimDauModel.Properties" Multiplicity="*" />
+          <End Role="tbl_Categories" Type="fqtdModel.Categories" Multiplicity="*" />
+          <End Role="tbl_Properties" Type="fqtdModel.Properties" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TimDauModelStoreContainer" CdmEntityContainer="TimDauEntities1">
-          <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="TimDauModel.Items">
+        <EntityContainerMapping StorageEntityContainer="fqtdModelStoreContainer" CdmEntityContainer="fqtdEntities">
+          <EntitySetMapping Name="BrandItems">
+            <EntityTypeMapping TypeName="fqtdModel.BrandItems">
               <MappingFragment StoreEntitySet="tbl_Brand_Items">
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
@@ -505,13 +576,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Brands">
-            <EntityTypeMapping TypeName="TimDauModel.Brands">
+            <EntityTypeMapping TypeName="fqtdModel.Brands">
               <MappingFragment StoreEntitySet="tbl_Brands">
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="BrandName_EN" ColumnName="BrandName_EN" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="BrandType" ColumnName="BrandType" />
+                <ScalarProperty Name="Description_EN" ColumnName="Description_EN" />
+                <ScalarProperty Name="BrandTypeID" ColumnName="BrandTypeID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -523,8 +595,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BrandTypes">
+            <EntityTypeMapping TypeName="fqtdModel.BrandType">
+              <MappingFragment StoreEntitySet="tbl_BrandType">
+                <ScalarProperty Name="BrandTypeID" ColumnName="BrandTypeID" />
+                <ScalarProperty Name="BrandTypeName" ColumnName="BrandTypeName" />
+                <ScalarProperty Name="BrandTypeName_EN" ColumnName="BrandTypeName_EN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="DeleteUser" ColumnName="DeleteUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="TimDauModel.Categories">
+            <EntityTypeMapping TypeName="fqtdModel.Categories">
               <MappingFragment StoreEntitySet="tbl_Categories">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -542,7 +631,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ItemLocations">
-            <EntityTypeMapping TypeName="TimDauModel.ItemLocation">
+            <EntityTypeMapping TypeName="fqtdModel.ItemLocation">
               <MappingFragment StoreEntitySet="tbl_Item_Location">
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
@@ -572,7 +661,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ItemProperties">
-            <EntityTypeMapping TypeName="TimDauModel.ItemProperties">
+            <EntityTypeMapping TypeName="fqtdModel.ItemProperties">
               <MappingFragment StoreEntitySet="tbl_Item_Properties">
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
@@ -581,7 +670,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Properties">
-            <EntityTypeMapping TypeName="TimDauModel.Properties">
+            <EntityTypeMapping TypeName="fqtdModel.Properties">
               <MappingFragment StoreEntitySet="tbl_Properties">
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
                 <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
@@ -599,7 +688,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="tbl_Category_Properties" TypeName="TimDauModel.tbl_Category_Properties" StoreEntitySet="tbl_Category_Properties">
+          <AssociationSetMapping Name="tbl_Category_Properties" TypeName="fqtdModel.tbl_Category_Properties" StoreEntitySet="tbl_Category_Properties">
             <EndProperty Name="tbl_Categories">
               <ScalarProperty Name="CategoryID" ColumnName="CatetoryID" />
             </EndProperty>

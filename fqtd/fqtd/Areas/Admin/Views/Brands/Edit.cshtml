@@ -6,7 +6,8 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -14,6 +15,9 @@
         <legend>Brands</legend>
 
         @Html.HiddenFor(model => model.BrandID)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.CreateUser)
+        @Html.HiddenFor(model => model.IsActive)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.BrandName)
@@ -32,19 +36,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
+            @Html.LabelFor(model => model.BrandTypeID)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BrandType)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BrandType)
-            @Html.ValidationMessageFor(model => model.BrandType)
+            @Html.DropDownList("BrandTypeID", string.Empty)
+            @Html.ValidationMessageFor(model => model.BrandTypeID)
         </div>
 
         <div class="editor-label">
@@ -55,62 +51,32 @@
             @Html.ValidationMessageFor(model => model.CategoryID)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
+         <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
+            @Html.TextAreaFor(model => model.Description, new { @id = "Description" })
+           <script type="text/javascript">
+               CKEDITOR.replace("Description");
+            </script>
+            @Html.ValidationMessageFor(model => model.Description)
         </div>
+
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.CreateDate)
+            @Html.LabelFor(model => model.Description_EN)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CreateDate)
-            @Html.ValidationMessageFor(model => model.CreateDate)
+            @Html.TextAreaFor(model => model.Description_EN, new { @id = "Description_EN" })
+           <script type="text/javascript">
+               CKEDITOR.replace("Description_EN");
+            </script>
+            @Html.ValidationMessageFor(model => model.Description_EN)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreateUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreateUser)
-            @Html.ValidationMessageFor(model => model.CreateUser)
-        </div>
+        
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ModifyDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ModifyDate)
-            @Html.ValidationMessageFor(model => model.ModifyDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ModifyUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ModifyUser)
-            @Html.ValidationMessageFor(model => model.ModifyUser)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DeleteDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DeleteDate)
-            @Html.ValidationMessageFor(model => model.DeleteDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DeleteUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DeleteUser)
-            @Html.ValidationMessageFor(model => model.DeleteUser)
-        </div>
-
+       
         <p>
             <input type="submit" value="Save" />
         </p>

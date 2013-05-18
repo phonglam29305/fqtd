@@ -54,7 +54,7 @@ namespace fqtd.Areas.Admin.Controllers
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Categories");
         }
 
         //
@@ -337,7 +337,7 @@ namespace fqtd.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Categories");
             }
         }
 

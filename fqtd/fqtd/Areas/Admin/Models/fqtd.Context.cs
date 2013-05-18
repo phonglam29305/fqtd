@@ -13,10 +13,10 @@ namespace fqtd.Areas.Admin.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TimDauEntities : DbContext
+    public partial class fqtdEntities : DbContext
     {
-        public TimDauEntities()
-            : base("name=TimDauEntities1")
+        public fqtdEntities()
+            : base("name=fqtdEntities")
         {
         }
     
@@ -25,8 +25,9 @@ namespace fqtd.Areas.Admin.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Items> Items { get; set; }
+        public DbSet<BrandItems> BrandItems { get; set; }
         public DbSet<Brands> Brands { get; set; }
+        public DbSet<BrandType> BrandTypes { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<ItemLocation> ItemLocations { get; set; }
         public DbSet<ItemProperties> ItemProperties { get; set; }

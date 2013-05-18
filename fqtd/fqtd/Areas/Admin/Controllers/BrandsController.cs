@@ -2,24 +2,49 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using fqtd.App_Start;
 using fqtd.Areas.Admin.Models;
+using Newtonsoft.Json;
 
 namespace fqtd.Areas.Admin.Controllers
 {
     public class BrandsController : Controller
     {
-        private TimDauEntities db = new TimDauEntities();
+        private fqtdEntities db = new fqtdEntities();
 
         //
         // GET: /Admin/Brands/
 
         public ActionResult Index()
         {
-            var brands = db.Brands.Include(b => b.tbl_Categories);
+            var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
             return View(brands.ToList());
+        }
+
+        
+        public ActionResult Brands()
+        {
+            var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            jsonNetResult.Data = from a in brands
+                                     select new {a.BrandID, a.BrandName, a.BrandName_EN};
+
+            return jsonNetResult;
+        }
+        public ActionResult BrandsByCategory(int id=0)
+        {
+            var brands = db.Brands.Where(a => a.IsActive && a.CategoryID==id).Include(b => b.tbl_Categories);
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            jsonNetResult.Data = from a in brands
+                                 select new { a.BrandID, a.BrandName, a.BrandName_EN };
+
+            return jsonNetResult;
         }
 
         //
@@ -40,25 +65,30 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName");
+            ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName");
             return View();
         }
 
         //
         // POST: /Admin/Brands/Create
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Create(Brands brands)
         {
             if (ModelState.IsValid)
             {
+                brands.IsActive = true;
+                brands.CreateDate = DateTime.Now;
+                brands.CreateUser = User.Identity.Name;
                 db.Brands.Add(brands);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName", brands.BrandTypeID);
             return View(brands);
         }
 
@@ -72,24 +102,28 @@ namespace fqtd.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName", brands.BrandTypeID);
             return View(brands);
         }
 
         //
         // POST: /Admin/Brands/Edit/5
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Edit(Brands brands)
         {
             if (ModelState.IsValid)
             {
+                brands.ModifyDate = DateTime.Now;
+                brands.ModifyUser = User.Identity.Name;
                 db.Entry(brands).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
+            ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName", brands.BrandTypeID);
             return View(brands);
         }
 
@@ -114,7 +148,11 @@ namespace fqtd.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Brands brands = db.Brands.Find(id);
-            db.Brands.Remove(brands);
+
+            brands.IsActive = true;
+            brands.DeleteDate = DateTime.Now;
+            brands.DeleteUser = User.Identity.Name;
+            db.Entry(brands).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

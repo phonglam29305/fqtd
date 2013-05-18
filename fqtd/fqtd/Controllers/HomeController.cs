@@ -28,7 +28,7 @@ namespace fqtd.Controllers
 
             return View();
         }
-
+        [HttpPost]
         public ActionResult Result()
         {
             ViewBag.Message = "This is test geolocation.";

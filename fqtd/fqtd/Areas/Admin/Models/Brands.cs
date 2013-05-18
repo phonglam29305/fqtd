@@ -11,23 +11,20 @@ namespace fqtd.Areas.Admin.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Brands
     {
         public Brands()
         {
-            this.tbl_Brand_Items = new HashSet<Items>();
+            this.tbl_Brand_Items = new HashSet<BrandItems>();
         }
-
-        [Key]
+    
         public int BrandID { get; set; }
-        [Required]
         public string BrandName { get; set; }
-        [Required]
         public string BrandName_EN { get; set; }
         public string Description { get; set; }
-        public Nullable<int> BrandType { get; set; }
+        public string Description_EN { get; set; }
+        public Nullable<int> BrandTypeID { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime CreateDate { get; set; }
@@ -36,8 +33,9 @@ namespace fqtd.Areas.Admin.Models
         public string ModifyUser { get; set; }
         public Nullable<System.DateTime> DeleteDate { get; set; }
         public string DeleteUser { get; set; }
-
-        public virtual ICollection<Items> tbl_Brand_Items { get; set; }
+    
+        public virtual ICollection<BrandItems> tbl_Brand_Items { get; set; }
+        public virtual BrandType tbl_BrandType { get; set; }
         public virtual Categories tbl_Categories { get; set; }
     }
 }

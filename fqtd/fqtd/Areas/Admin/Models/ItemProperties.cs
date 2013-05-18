@@ -18,7 +18,7 @@ namespace fqtd.Areas.Admin.Models
         public int PropertyID { get; set; }
         public bool PropertyValue { get; set; }
     
-        public virtual Items tbl_Brand_Items { get; set; }
+        public virtual BrandItems tbl_Brand_Items { get; set; }
         public virtual Properties tbl_Properties { get; set; }
     }
 }
