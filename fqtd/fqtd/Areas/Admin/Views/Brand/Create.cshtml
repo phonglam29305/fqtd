@@ -6,7 +6,8 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Create", "Brands", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -44,7 +45,13 @@
             @Html.DropDownList("CategoryID", String.Empty)
             @Html.ValidationMessageFor(model => model.CategoryID)
         </div>
-
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MarkerIcon)
+        </div>
+        <div class="editor-field">
+             <input type="file" name="file" />
+            @Html.ValidationMessageFor(model => model.MarkerIcon)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>

@@ -33,6 +33,7 @@ namespace fqtd.Areas.Admin.Models
         public string ModifyUser { get; set; }
         public Nullable<System.DateTime> DeleteDate { get; set; }
         public string DeleteUser { get; set; }
+        public string MarkerIcon { get; set; }
     
         public virtual ICollection<BrandItems> tbl_Brand_Items { get; set; }
         public virtual BrandType tbl_BrandType { get; set; }

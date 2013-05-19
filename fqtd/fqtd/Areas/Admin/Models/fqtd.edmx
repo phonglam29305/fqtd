@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="fqtdModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="fqtdModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="fqtdModelStoreContainer">
           <EntitySet Name="tbl_Brand_Items" EntityType="fqtdModel.Store.tbl_Brand_Items" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Brands" EntityType="fqtdModel.Store.tbl_Brands" store:Type="Tables" Schema="dbo" />
@@ -62,6 +62,7 @@
           <Property Name="BrandID" Type="int" Nullable="false" />
           <Property Name="SearchCount" Type="decimal" />
           <Property Name="ClickCount" Type="decimal" />
+          <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -81,6 +82,7 @@
           <Property Name="Description_EN" Type="nvarchar(max)" />
           <Property Name="BrandTypeID" Type="int" />
           <Property Name="CategoryID" Type="int" />
+          <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -94,9 +96,9 @@
             <PropertyRef Name="BrandTypeID" />
           </Key>
           <Property Name="BrandTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="BrandTypeName" Type="nvarchar" MaxLength="250" />
-          <Property Name="BrandTypeName_EN" Type="nvarchar" MaxLength="250" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="BrandTypeName" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="BrandTypeName_EN" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -114,6 +116,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CategoryName_EN" Type="nvarchar" MaxLength="250" />
           <Property Name="Description_EN" Type="nvarchar(max)" />
+          <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -282,8 +285,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="fqtdModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -349,6 +351,7 @@
           <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brand_Items" ToRole="tbl_Brands" />
           <NavigationProperty Name="tbl_Item_Location" Relationship="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Location" />
           <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
+          <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -371,15 +374,16 @@
           <NavigationProperty Name="tbl_Brand_Items" Relationship="fqtdModel.FK_tbl_Brand_Items_tbl_Brands" FromRole="tbl_Brands" ToRole="tbl_Brand_Items" />
           <NavigationProperty Name="tbl_BrandType" Relationship="fqtdModel.FK_tbl_Brands_tbl_BrandType" FromRole="tbl_Brands" ToRole="tbl_BrandType" />
           <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
+          <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BrandType">
           <Key>
             <PropertyRef Name="BrandTypeID" />
           </Key>
           <Property Name="BrandTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="BrandTypeName" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="BrandTypeName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="BrandTypeName" Type="String" MaxLength="250" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="BrandTypeName_EN" Type="String" MaxLength="250" Unicode="true" FixedLength="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
@@ -407,6 +411,7 @@
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
           <NavigationProperty Name="tbl_Properties" Relationship="fqtdModel.tbl_Category_Properties" FromRole="tbl_Categories" ToRole="tbl_Properties" />
+          <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ItemLocation">
           <Key>
@@ -554,6 +559,7 @@
           <EntitySetMapping Name="BrandItems">
             <EntityTypeMapping TypeName="fqtdModel.BrandItems">
               <MappingFragment StoreEntitySet="tbl_Brand_Items">
+                <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemName_EN" ColumnName="ItemName_EN" />
@@ -578,6 +584,7 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="fqtdModel.Brands">
               <MappingFragment StoreEntitySet="tbl_Brands">
+                <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="BrandName_EN" ColumnName="BrandName_EN" />
@@ -615,6 +622,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="fqtdModel.Categories">
               <MappingFragment StoreEntitySet="tbl_Categories">
+                <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

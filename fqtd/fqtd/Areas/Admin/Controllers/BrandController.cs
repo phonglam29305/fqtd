@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Globalization;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using fqtd.App_Start;
+using System.Web.Security;
+using fqtd.Utils;
 using fqtd.Areas.Admin.Models;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace fqtd.Areas.Admin.Controllers
 {
-    public class BrandsController : Controller
+    public class BrandController : Controller
     {
         private fqtdEntities db = new fqtdEntities();
 
@@ -26,7 +28,7 @@ namespace fqtd.Areas.Admin.Controllers
         }
 
         
-        public ActionResult Brands(int vn0_en1=0)
+        public ActionResult BrandList(int vn0_en1=0)
         {
             var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
@@ -80,15 +82,31 @@ namespace fqtd.Areas.Admin.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(Brands brands)
+        public ActionResult Create(Brands brands, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
                 brands.IsActive = true;
                 brands.CreateDate = DateTime.Now;
                 brands.CreateUser = User.Identity.Name;
+                string filesPath="", full_path = "";
+                if (file != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath = ConfigurationManager.AppSettings["BrandMarkerIconLocaion"];
+                    full_path = Server.MapPath(filesPath).Replace("Brands","").Replace("Admin","");
+                    brands.MarkerIcon = FileUpload.UploadFile(file, full_path);
+                }
+
                 db.Brands.Add(brands);
                 db.SaveChanges();
+                if (file != null)
+                {
+                    string filename = brands.BrandID + "_" + file.FileName.Replace(" ", "_").Replace("-", "_");
+                    brands.MarkerIcon = FileUpload.UploadFile(file, filename, full_path);
+                    db.Entry(brands).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 
