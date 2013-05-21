@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace fqtd.Controllers
 {
-    public class HomeController : Controller
+    public class ContactController : Controller
     {
         public ActionResult Index()
         {

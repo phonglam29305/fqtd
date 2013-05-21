@@ -39,9 +39,9 @@
 <section style="width: 500px; position: relative; overflow: hidden; margin: 0 auto">
     <article style="overflow: hidden; width: 50000px;" id="equityBlock">
         <div style="float: left; width: 500px" id="step1" class="inner">
-            <form id="form1" action="/home/result" method="post">
+            <form id="form1" action="result" method="post">
                 <div>
-                    <input id="textbox1" style="width: 450px" data-required="true" />
+                    <input id="address" style="width: 450px" data-required="true" name="address" />
                 </div>
                 <div style="float: left">
                     <select data-required="true">
@@ -69,7 +69,7 @@
 
                 </div>
                 <div>
-                    <input id="range" style="width: 100px" data-required="true" data-pattern="^(?:R\$)?\s*(\d+)(?:[,\.](\d)(\d)?)?\d*$" />
+                    <input id="range" name="range" style="width: 100px" data-required="true" data-pattern="^(?:R\$)?\s*(\d+)(?:[,\.](\d)(\d)?)?\d*$" />
                     <a id="tryit" href="JavaScript:void(0);" title="Geolocation only work exactly with the mobile devices such as Tablet, Cellphone, Laptop.">Get current location</a>                    
                 </div>
 
@@ -78,9 +78,9 @@
             </form>
         </div>
         <div style="float: left; width: 500px" id="step2" class="inner">
-            <form id="form2" action="/home/result" method="post">
+            <form id="form2" action="result" method="post">
                 <div>
-                    <input id="textbox2" style="width: 450px" data-required="true" />
+                    <input id="search" style="width: 450px" data-required="true" />
                 </div>
                 <input type="submit" value="Submit" />
                 <a class="pre" href="JavaScript:void(0);" title="Back">You want to find places around a position ?</a>
@@ -109,8 +109,8 @@
             });
 
             //watermark and validation
-            $("#textbox1").watermark("Please input your current position");
-            $("#textbox2").watermark("Please enter address you want to find");
+            $("#address").watermark("Please input your current position");
+            $("#search").watermark("Please enter address you want to find");
             $("#range").watermark("Range");
             $("#form1").validate({
                 onChange: true,
@@ -159,7 +159,7 @@
                         if (geocoder) {
                             geocoder.geocode({ 'latLng': myplace }, function (results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) {
-                                    $("#textbox1").val(results[0].formatted_address);
+                                    $("#address").val(results[0].formatted_address);
                                 }
                                 else {
                                     console.log("Geocoding failed: " + status);
@@ -175,7 +175,7 @@
             });           
 
             //bind places autocomplete
-            $("#textbox1").geocomplete();
+            $("#address").geocomplete();
             
         });
 
