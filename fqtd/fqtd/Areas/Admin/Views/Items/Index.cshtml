@@ -1,0 +1,141 @@
+﻿@model IEnumerable<fqtd.Areas.Admin.Models.BrandItems>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_Item_Location.FullAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName_EN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description_EN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpenTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_Brands.BrandName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SearchCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClickCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifyDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifyUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeleteDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeleteUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarkerIcon)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbl_Item_Location.FullAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName_EN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description_EN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OpenTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbl_Brands.BrandName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SearchCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClickCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifyDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModifyUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeleteDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeleteUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarkerIcon)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

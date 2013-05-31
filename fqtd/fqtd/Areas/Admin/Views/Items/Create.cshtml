@@ -1,0 +1,180 @@
+﻿@model fqtd.Areas.Admin.Models.BrandItems
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>BrandItems</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemID, "tbl_Item_Location")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ItemID", String.Empty)
+            @Html.ValidationMessageFor(model => model.ItemID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ItemName)
+            @Html.ValidationMessageFor(model => model.ItemName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemName_EN)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ItemName_EN)
+            @Html.ValidationMessageFor(model => model.ItemName_EN)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description_EN)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description_EN)
+            @Html.ValidationMessageFor(model => model.Description_EN)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OpenTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OpenTime)
+            @Html.ValidationMessageFor(model => model.OpenTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Phone)
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Website)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Website)
+            @Html.ValidationMessageFor(model => model.Website)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BrandID, "tbl_Brands")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("BrandID", String.Empty)
+            @Html.ValidationMessageFor(model => model.BrandID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SearchCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SearchCount)
+            @Html.ValidationMessageFor(model => model.SearchCount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ClickCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ClickCount)
+            @Html.ValidationMessageFor(model => model.ClickCount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateDate)
+            @Html.ValidationMessageFor(model => model.CreateDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateUser)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateUser)
+            @Html.ValidationMessageFor(model => model.CreateUser)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModifyDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModifyDate)
+            @Html.ValidationMessageFor(model => model.ModifyDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModifyUser)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModifyUser)
+            @Html.ValidationMessageFor(model => model.ModifyUser)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DeleteDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DeleteDate)
+            @Html.ValidationMessageFor(model => model.DeleteDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DeleteUser)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DeleteUser)
+            @Html.ValidationMessageFor(model => model.DeleteUser)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MarkerIcon)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MarkerIcon)
+            @Html.ValidationMessageFor(model => model.MarkerIcon)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

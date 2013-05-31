@@ -1,0 +1,152 @@
+﻿@model fqtd.Areas.Admin.Models.BrandItems
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>BrandItems</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.tbl_Item_Location.FullAddress)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.tbl_Item_Location.FullAddress)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ItemName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ItemName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ItemName_EN)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ItemName_EN)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description_EN)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description_EN)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OpenTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OpenTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phone)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Website)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Website)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.tbl_Brands.BrandName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.tbl_Brands.BrandName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SearchCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SearchCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClickCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClickCount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsActive)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActive)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreateDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreateDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreateUser)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreateUser)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ModifyDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifyDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ModifyUser)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ModifyUser)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeleteDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeleteDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeleteUser)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeleteUser)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MarkerIcon)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MarkerIcon)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
