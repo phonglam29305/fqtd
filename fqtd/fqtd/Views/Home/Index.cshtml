@@ -44,27 +44,27 @@
                     <input id="address" style="width: 450px" data-required="true" name="address" />
                 </div>
                 <div style="float: left">
-                    <select data-required="true">
-                        <option value>Choose</option>
-                        <option value="Fast food">Fast food</option>
+                    <select data-required="true" id="category">
+                        <option value="-1">Choose</option>
+                        @*<option value="Fast food">Fast food</option>
                         <option value="Coffee">Coffee</option>
                         <option value="Restaurant">Restaurant</option>
                         <option value="Pizza">Pizza</option>
                         <option value="Super market">Super market</option>
                         <option value="Cinema">Cinema</option>
-                        <option value="Cream">Cream</option>
+                        <option value="Cream">Cream</option>*@
                     </select>
                 </div>
                 <div>
-                    <select data-required="true">
+                    <select data-required="true" id="brand">
                         <option value>Choose</option>
-                        <option value="KFC">KFC</option>
+                       @* <option value="KFC">KFC</option>
                         <option value="Lotteria">Lotteria</option>
                         <option value="Burger King">Burger King</option>
                         <option value="Pizza hut">Pizza hut</option>
                         <option value="Sumo BBQ">Sumo BBQ</option>
                         <option value="Highland Coffee">Highland Coffee</option>
-                        <option value="Gloria Jean's">Gloria Jean's</option>
+                        <option value="Gloria Jean's">Gloria Jean's</option>*@
                     </select>
 
                 </div>
@@ -106,6 +106,40 @@
                 btnPrev: $('.pre'),
                 thumbs: $('#index'),
                 callback: function (t, f) { }
+            });
+
+            $.ajax({
+                url: '/admin/categories/Categories',
+                type: 'GET',
+                //data: { code: location, type: typeLoc },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    for (i in data) {
+                        //alert(data[i]["BrandName"]);
+                        $('#category').append('<option value="' + data[i]["CategoryID"] + '">' + data[i]["CategoryName"] + '</option>');
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong");
+                }
+            });
+           
+            $.ajax({
+                url: '/admin/brand/BrandsByCategory/' + $("category").value,
+                type: 'GET',
+                //data: { code: location, type: typeLoc },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    for (i in data) {
+                        //alert(data[i]["BrandName"]);
+                        $('#brand').append('<option value="' + data[i]["BrandID"] + '">' + data[i]["BrandName"] + '</option>');
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong");
+                }
             });
 
             //watermark and validation
