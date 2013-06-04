@@ -4,40 +4,23 @@
 
 
 <div style="width: 200px; float: left">
-    <input tabindex="1" type="checkbox" id="input-1">
-    <label for="input-1">Car parking</label>
-    <br />
-    <input tabindex="2" type="checkbox" id="input-2">
-    <label for="input-2">Free parking</label>
-    <br />
-    <input tabindex="3" type="checkbox" id="input-3">
-    <label for="input-3">No smoking place</label>
-    <br />    
-    <input tabindex="4" type="checkbox" id="input-4">
-    <label for="input-4">Red bill</label>
-    <br />
-    <input tabindex="5" type="checkbox" id="input-5">
-    <label for="input-5">Delivery</label>
-    <br />
-    <input tabindex="6" type="checkbox" id="input-6">
-    <label for="input-6">Take away</label>
-    <br />
-    <input tabindex="7" type="checkbox" id="input-7">
-    <label for="input-7">Children play ground</label>    
+    <div id="property">
+    </div>
 </div>
 <div id="googleMap" style="width: 700px; height: 500px; float: left"></div>
-<input id="address" type="text" style="width: 500px" value="@ViewBag.address" />
-<input id="range" type="text" style="width: 100px" value="@ViewBag.range" />metre(s)
+<input id="address" type="hidden" style="width: 500px" value="@ViewBag.address" />
+<input id="range" type="hidden" style="width: 100px" value="@ViewBag.range" />metre(s)
 
 
 @section scripts
 {
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
     <script>
+        var myplace;
+        var directionsDisplay;
+
         jQuery(document).ready(function ($) {
-            //bind to map
-            var myplace;
-            var directionsDisplay;
+            //bind to map           
             var locations = [
                 [10.81510, 106.58592, "<h2>You are here 1</h2><p>Nice with geolocation, ain't it?</p>"],
                 [10.79284, 106.68549, "<h2>You are here 2</h2><p>Nice with geolocation, ain't it?</p>"],
@@ -54,16 +37,19 @@
             if (geocoder) {
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
+                        //set LatLng current place
+                        myplace = results[0].geometry.location;
+
                         //set map
                         var mapProp = {
-                            center: results[0].geometry.location,
+                            center: myplace,
                             mapTypeId: google.maps.MapTypeId.ROADMAP
                         };
                         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
                         //set my city
                         var myCity = new google.maps.Circle({
-                            center: results[0].geometry.location,
+                            center: myplace,
                             radius: parseInt(range),
                             strokeWeight: 0,
                             fillColor: "#0000FF",
@@ -76,12 +62,12 @@
                         directionsDisplay.setMap(map);
 
                         map.fitBounds(myCity.getBounds());
-                        markOutLocation(results[0].geometry.location.lat(), results[0].geometry.location.lng(), map);
+                        markOutLocation(myplace.lat(), myplace.lng(), map, "You are in here", myplace);
 
                         for (i = 0; i < locations.length; i++) {
-                            var compareDistance = return_Distance(results[0].geometry.location, new google.maps.LatLng(locations[i][0], locations[i][1]));
+                            var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
                             if (range >= compareDistance) {
-                                markOutLocation(locations[i][0], locations[i][1], map, locations[i][2]);
+                                markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], myplace);
                             }
                         }
 
@@ -91,47 +77,79 @@
                 });
             }
 
-            //custom checkbox
-            $('#input-1,#input-2,#input-3,#input-4,#input-5,#input-6,#input-7').iCheck({
-                checkboxClass: 'icheckbox_square',
-                increaseArea: '20%' // optional
+            //Bind data to checkbox
+            var urlProperty = "/result/PropertyByCategoryID";
+            $.getJSON(urlProperty + "?id=-1", null, function (properties) {
+                for (i in properties) {
+                    property = properties[i];
+                    $("#property").append('<input tabindex="' + i + '" type="checkbox" id="' + property.PropertyID + '"><label for="' + property.PropertyID + '">' + property.PropertyName + '</label><br />');
+                    $('#' + property.PropertyID).iCheck({
+                        checkboxClass: 'icheckbox_square',
+                        increaseArea: '20%' // optional
+                    });
+                }
             });
+
+            function markOutLocation(lat, long, map, contentPopup) {
+                var place = new google.maps.LatLng(lat, long);
+                var marker = new google.maps.Marker({
+                    position: place,
+                    title: 'Click to zoom'
+                });
+                var infowindow;
+                if (place.lat() != myplace.lat() || place.lng() != myplace.lng()) {
+                    infowindow = new google.maps.InfoWindow({
+                        content: contentPopup + "<button onclick=\"calcRoute(" + lat + "," + long + ",\'car\')\">Car</button>"
+                        + "<button onclick=\"calcRoute(" + lat + "," + long + ",\'bike\')\">Bicycle</button>"
+                        + "<button onclick=\"calcRoute(" + lat + "," + long + ",\'walk\')\">Walk</button>"
+                        + "<button onclick=\"calcRoute(" + lat + "," + long + ",\'bus\')\">Bus</button>"
+                    });
+                }
+                else {
+                    infowindow = new google.maps.InfoWindow({
+                        content: contentPopup
+                    });
+                }
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(map, marker);
+                });
+                marker.setMap(map);
+            }
 
         });
 
-        function markOutLocation(lat, long, map, contentPopup) {
-            var place = new google.maps.LatLng(lat, long);
-            var marker = new google.maps.Marker({
-                position: place,
-                title: 'Click to zoom'
-            });
-            var infowindow = new google.maps.InfoWindow({
-                content: contentPopup + "<button onclick='calcRoute(" + lat + "," + long + ")'>Direction to here</button>"
-            });
-            google.maps.event.addListener(marker, 'click', function () {
-                infowindow.open(map, marker);
-            });
-            marker.setMap(map);
-        }
-
-        function calcRoute(latitude, longitude) {
-
+        function calcRoute(latitude, longitude, type) {
             var directionsService = new google.maps.DirectionsService();
 
             var start = myplace;
             var end = new google.maps.LatLng(latitude, longitude);
+            var travelMode;
+
+            switch (type) {
+                case 'car':
+                    travelMode = google.maps.DirectionsTravelMode.DRIVING;
+                    break;
+                case 'bike':
+                    travelMode = google.maps.DirectionsTravelMode.BICYCLING;
+                    break;
+                case 'walk':
+                    travelMode = google.maps.DirectionsTravelMode.WALKING;
+                    break;
+                case 'bus':
+                    travelMode = google.maps.DirectionsTravelMode.TRANSIT;
+                    break;
+            };
 
             var request = {
                 origin: start,
                 destination: end,
-                travelMode: google.maps.DirectionsTravelMode.DRIVING
+                travelMode: travelMode
             };
             directionsService.route(request, function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
                 }
             });
-
         }
 
         function rad(x) { return x * Math.PI / 180; }
@@ -149,5 +167,6 @@
             var d = R * c;
             return d * 1000;
         }
+
     </script>
 }
