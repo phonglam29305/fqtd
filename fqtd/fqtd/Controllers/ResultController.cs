@@ -22,6 +22,19 @@ namespace fqtd.Controllers
             return View("Index");
         }
 
+        public ActionResult PropertyByCategoryID(int id = -1, int vn0_en1 = 0)
+        {
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            if (vn0_en1 == 0)
+                jsonNetResult.Data = from a in db.SP_Category_Properties(id)
+                                     select new { a.PropertyID, a.PropertyName, a.Description };
+            if (vn0_en1 == 1)
+                jsonNetResult.Data = from a in db.SP_Category_Properties(id)
+                                     select new { a.PropertyID, PropertyName = a.PropertyName_EN, a.Description };
+
+            return jsonNetResult;
+        }
 
         public ActionResult ItemByBrandID(int id = -1, int vn0_en1 = 0)
         {

@@ -10,7 +10,6 @@
           <EntitySet Name="tbl_Brands" EntityType="fqtdModel.Store.tbl_Brands" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_BrandType" EntityType="fqtdModel.Store.tbl_BrandType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Categories" EntityType="fqtdModel.Store.tbl_Categories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbl_Category_Properties" EntityType="fqtdModel.Store.tbl_Category_Properties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Item_Location" EntityType="fqtdModel.Store.tbl_Item_Location" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Item_Properties" EntityType="fqtdModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Properties" EntityType="fqtdModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
@@ -25,14 +24,6 @@
           <AssociationSet Name="FK_tbl_Brands_tbl_Categories" Association="fqtdModel.Store.FK_tbl_Brands_tbl_Categories">
             <End Role="tbl_Categories" EntitySet="tbl_Categories" />
             <End Role="tbl_Brands" EntitySet="tbl_Brands" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Categories" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Categories">
-            <End Role="tbl_Categories" EntitySet="tbl_Categories" />
-            <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Properties">
-            <End Role="tbl_Properties" EntitySet="tbl_Properties" />
-            <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_Item_Location_tbl_Brand_Items" Association="fqtdModel.Store.FK_tbl_Item_Location_tbl_Brand_Items">
             <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
@@ -124,14 +115,6 @@
           <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
           <Property Name="DeleteDate" Type="datetime" />
           <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
-        </EntityType>
-        <EntityType Name="tbl_Category_Properties">
-          <Key>
-            <PropertyRef Name="CatetoryID" />
-            <PropertyRef Name="PropertyID" />
-          </Key>
-          <Property Name="CatetoryID" Type="int" Nullable="false" />
-          <Property Name="PropertyID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_Item_Location">
           <Key>
@@ -225,30 +208,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_Category_Properties_tbl_Categories">
-          <End Role="tbl_Categories" Type="fqtdModel.Store.tbl_Categories" Multiplicity="1" />
-          <End Role="tbl_Category_Properties" Type="fqtdModel.Store.tbl_Category_Properties" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Categories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="tbl_Category_Properties">
-              <PropertyRef Name="CatetoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbl_Category_Properties_tbl_Properties">
-          <End Role="tbl_Properties" Type="fqtdModel.Store.tbl_Properties" Multiplicity="1" />
-          <End Role="tbl_Category_Properties" Type="fqtdModel.Store.tbl_Category_Properties" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_Properties">
-              <PropertyRef Name="PropertyID" />
-            </Principal>
-            <Dependent Role="tbl_Category_Properties">
-              <PropertyRef Name="PropertyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbl_Item_Location_tbl_Brand_Items">
           <End Role="tbl_Brand_Items" Type="fqtdModel.Store.tbl_Brand_Items" Multiplicity="1" />
           <End Role="tbl_Item_Location" Type="fqtdModel.Store.tbl_Item_Location" Multiplicity="0..1" />
@@ -285,6 +244,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_Category_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
+          <Parameter Name="CategoryID" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -321,10 +283,9 @@
             <End Role="tbl_Properties" EntitySet="Properties" />
             <End Role="tbl_Item_Properties" EntitySet="ItemProperties" />
           </AssociationSet>
-          <AssociationSet Name="tbl_Category_Properties" Association="fqtdModel.tbl_Category_Properties">
-            <End Role="tbl_Categories" EntitySet="Categories" />
-            <End Role="tbl_Properties" EntitySet="Properties" />
-          </AssociationSet>
+          <FunctionImport Name="SP_Category_Properties" ReturnType="Collection(fqtdModel.SP_Category_Properties_Result)">
+          <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
           <Key>
@@ -410,7 +371,6 @@
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
-          <NavigationProperty Name="tbl_Properties" Relationship="fqtdModel.tbl_Category_Properties" FromRole="tbl_Categories" ToRole="tbl_Properties" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ItemLocation">
@@ -472,7 +432,6 @@
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Properties" FromRole="tbl_Properties" ToRole="tbl_Item_Properties" />
-          <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.tbl_Category_Properties" FromRole="tbl_Properties" ToRole="tbl_Categories" />
         </EntityType>
         <Association Name="FK_tbl_Brand_Items_tbl_Brands">
           <End Role="tbl_Brands" Type="fqtdModel.Brands" Multiplicity="1" />
@@ -546,10 +505,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="tbl_Category_Properties">
-          <End Role="tbl_Categories" Type="fqtdModel.Categories" Multiplicity="*" />
-          <End Role="tbl_Properties" Type="fqtdModel.Properties" Multiplicity="*" />
-        </Association>
+        <ComplexType Name="SP_Category_Properties_Result">
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="String" Name="PropertyName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PropertyName_EN" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Description" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -696,14 +657,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="tbl_Category_Properties" TypeName="fqtdModel.tbl_Category_Properties" StoreEntitySet="tbl_Category_Properties">
-            <EndProperty Name="tbl_Categories">
-              <ScalarProperty Name="CategoryID" ColumnName="CatetoryID" />
-            </EndProperty>
-            <EndProperty Name="tbl_Properties">
-              <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Category_Properties" FunctionName="fqtdModel.Store.SP_Category_Properties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="fqtdModel.SP_Category_Properties_Result">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyName_EN" ColumnName="PropertyName_EN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -718,8 +681,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

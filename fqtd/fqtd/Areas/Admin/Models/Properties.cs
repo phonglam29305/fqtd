@@ -17,7 +17,6 @@ namespace fqtd.Areas.Admin.Models
         public Properties()
         {
             this.tbl_Item_Properties = new HashSet<ItemProperties>();
-            this.tbl_Categories = new HashSet<Categories>();
         }
     
         public int PropertyID { get; set; }
@@ -35,6 +34,5 @@ namespace fqtd.Areas.Admin.Models
         public string DeleteUser { get; set; }
     
         public virtual ICollection<ItemProperties> tbl_Item_Properties { get; set; }
-        public virtual ICollection<Categories> tbl_Categories { get; set; }
     }
 }

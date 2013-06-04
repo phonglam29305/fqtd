@@ -17,7 +17,6 @@ namespace fqtd.Areas.Admin.Models
         public Categories()
         {
             this.tbl_Brands = new HashSet<Brands>();
-            this.tbl_Properties = new HashSet<Properties>();
         }
     
         public int CategoryID { get; set; }
@@ -35,6 +34,5 @@ namespace fqtd.Areas.Admin.Models
         public string MarkerIcon { get; set; }
     
         public virtual ICollection<Brands> tbl_Brands { get; set; }
-        public virtual ICollection<Properties> tbl_Properties { get; set; }
     }
 }

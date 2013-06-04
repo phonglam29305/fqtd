@@ -4,21 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c4d550302ac841a0a6c180e5a2cf7139" Name="Diagram1">
+      <Diagram DiagramId="c4d550302ac841a0a6c180e5a2cf7139" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="fqtdModel.BrandItems" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="fqtdModel.Brands" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="fqtdModel.BrandType" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="fqtdModel.Categories" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="fqtdModel.Categories" Width="1.5" PointX="0.5" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="fqtdModel.ItemLocation" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="fqtdModel.ItemProperties" Width="1.5" PointX="10.5" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="fqtdModel.Properties" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fqtdModel.Properties" Width="1.5" PointX="4.875" PointY="12.125" IsExpanded="true" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brand_Items_tbl_Brands" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brands_tbl_BrandType" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brands_tbl_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Item_Properties_tbl_Properties" ManuallyRouted="false" />
-        <AssociationConnector Association="fqtdModel.tbl_Category_Properties" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

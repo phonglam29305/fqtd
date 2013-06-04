@@ -12,6 +12,9 @@ namespace fqtd.Areas.Admin.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class fqtdEntities : DbContext
     {
@@ -32,5 +35,14 @@ namespace fqtd.Areas.Admin.Models
         public DbSet<ItemLocation> ItemLocations { get; set; }
         public DbSet<ItemProperties> ItemProperties { get; set; }
         public DbSet<Properties> Properties { get; set; }
+    
+        public virtual ObjectResult<SP_Category_Properties_Result> SP_Category_Properties(Nullable<int> categoryID)
+        {
+            var categoryIDParameter = categoryID.HasValue ?
+                new ObjectParameter("CategoryID", categoryID) :
+                new ObjectParameter("CategoryID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Category_Properties_Result>("SP_Category_Properties", categoryIDParameter);
+        }
     }
 }
