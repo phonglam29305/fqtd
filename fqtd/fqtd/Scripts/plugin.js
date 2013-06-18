@@ -705,6 +705,7 @@
 
 })(jQuery, window);
 
+//Validation form
 ; (function (defaults, $, window, undefined) {
 
     var
@@ -1181,7 +1182,7 @@
     filter: '*'
 }, jQuery, window);
 
-
+//auto complete GEO textbox
 ; (function ($, window, document, undefined) {
 
     // ## Options

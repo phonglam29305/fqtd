@@ -10,42 +10,27 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">@Html.ActionLink("Timdau.com", "Index", "Home")</p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    @Html.Partial("_LoginPartial")
-                </section>
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-    <div id="body">
-        @RenderSection("featured", required: false)
-        <section class="content-wrapper main-content clear-fix">
-            @RenderBody()
-        </section>
+
+    <div id="header">
+        <img src="../images/logo_big.png" />
     </div>
-    <footer>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p>&copy; Timdau.com</p>
-            </div>
+
+    <div id="wrapper">
+        @RenderSection("featured", required: false)
+        @RenderBody()
+    </div>
+
+    <div id="bottom">
+        <div id="bottom_info">
+            <div id="bottom_left">Copyright@2013 by Timdau.com</div>
+            <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
         </div>
-    </footer>
+    </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/plugin")    
+    @Scripts.Render("~/bundles/plugin")
     @RenderSection("scripts", required: false)
 </body>
 </html>
