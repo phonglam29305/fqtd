@@ -74,6 +74,7 @@
           <Property Name="BrandTypeID" Type="int" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -336,6 +337,7 @@
           <NavigationProperty Name="tbl_BrandType" Relationship="fqtdModel.FK_tbl_Brands_tbl_BrandType" FromRole="tbl_Brands" ToRole="tbl_BrandType" />
           <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Logo" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BrandType">
           <Key>
@@ -545,6 +547,7 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="fqtdModel.Brands">
               <MappingFragment StoreEntitySet="tbl_Brands">
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />

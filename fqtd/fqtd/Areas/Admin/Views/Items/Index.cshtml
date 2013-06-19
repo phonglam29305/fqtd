@@ -3,12 +3,12 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="caption">
+    <div class="title">Item list</div>
+    <div class="addAction">
+        @Html.ActionLink("   Create New   ", "Create")
+    </div>
+</div>
 <table>
     <tr>
         <th>

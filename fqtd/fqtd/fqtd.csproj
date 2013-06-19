@@ -178,6 +178,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\ItemAPIController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
