@@ -1,16 +1,143 @@
 ﻿@{
-    ViewBag.Title = "This is geolocation test page";    
+    ViewBag.Title = "This is geolocation test page";
+    Layout = "~/Views/Shared/MasterSub.cshtml";      
 }
 
 
-<div style="width: 200px; float: left">
-    <div id="property">
+<input id="address" type="hidden" style="width: 500px" value="@ViewBag.address" />
+<input id="range" type="hidden" style="width: 100px" value="@ViewBag.range" />
+
+<div id="content_sub">
+    <div id="menu">
+        <table>
+            <tr>
+                <td id="tabMap" onclick="displayMap()" class="active">
+                    <img src="../images/icon_map.jpg" />
+                    <strong>Bản đồ</strong>
+                </td>
+                <td id="tabList" onclick="displayList()">
+                    <img src="../images/icon_list.jpg" />
+                    <strong>Danh sách</strong>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="noidungchinh">
+        <div id="map">
+            <div id="googleMap"></div>
+            <div id="btn_more">
+                <input type="button" id="btn_xemthemMap" value="Xem thêm" />
+            </div>
+        </div>
+        <div id="list" class="hidden">
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="object">
+                <table style="width: 100%;">
+                    <tr>
+                        <td valign="top">
+                            <img id="photo" src="../images/photo1.jpg" /></td>
+
+                        <td valign="top">
+                            <h2>KFC Hồ Biểu Chánh</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="btn_more">
+                <input type="button" id="btn_xemthemList" value="Xem thêm" />
+            </div>
+        </div>
+        <div id="cactienich">
+            <table style="width: 240px; height: 718px;">
+                <tr>
+                    <td id="tbtable" valign="top">
+                        <p>
+                            <strong>Các tiện ích:</strong>
+                        </p>
+                        <br />
+                        <div id="property">
+                        </div>
+                    </td>
+                    <td style="width: 25px;"><a id="hrfOne" style="cursor: pointer;" onclick="hidePanel()">
+                        <img src="../images/button_close.jpg" /></a><a id="hrfTwo" style="display: none; cursor: pointer;" onclick="showPanel()">
+                            <img src="../images/button_open.jpg">
+                        </a></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
-<div id="googleMap" style="width: 700px; height: 500px; float: left"></div>
-<input id="address" type="hidden" style="width: 500px" value="@ViewBag.address" />
-<input id="range" type="hidden" style="width: 100px" value="@ViewBag.range" />metre(s)
-
 
 @section scripts
 {
@@ -43,6 +170,7 @@
                         //set map
                         var mapProp = {
                             center: myplace,
+                            disableDefaultUI: true,
                             mapTypeId: google.maps.MapTypeId.ROADMAP
                         };
                         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
@@ -168,5 +296,38 @@
             return d * 1000;
         }
 
+        function hidePanel() {
+            //document.getElementById('tbtable').style.display = "none";
+            document.getElementById('hrfOne').style.display = "none";
+            document.getElementById('hrfTwo').style.display = "";
+
+            var options = {};            
+            $("#tbtable").toggle("slide", options, 500);
+        }              
+
+        function showPanel() {
+            //document.getElementById('tbtable').style.display = "";
+            document.getElementById('hrfOne').style.display = "";
+            document.getElementById('hrfTwo').style.display = "none";
+
+            var options = {};
+            $("#tbtable").toggle("slide", options, 500);
+        }
+
+        function displayList() {
+            $("#list").removeClass("hidden");
+            $("#map").addClass("hidden");
+
+            $("#tabList").removeClass("inactive").addClass("active");
+            $("#tabMap").removeClass("active").addClass("inactive");
+        }
+
+        function displayMap() {
+            $("#map").removeClass("hidden");
+            $("#list").addClass("hidden");
+
+            $("#tabMap").removeClass("inactive").addClass("active");
+            $("#tabList").removeClass("active").addClass("inactive");
+        }        
     </script>
 }
