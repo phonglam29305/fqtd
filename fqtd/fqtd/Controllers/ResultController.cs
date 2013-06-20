@@ -45,7 +45,7 @@ namespace fqtd.Controllers
                                  select new { a.ItemID, a.ItemName, a.Description };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.ItemID, ItemName_EN = a.ItemName_EN, Description = a.Description_EN };
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN };
 
             return jsonNetResult;
         }
@@ -74,7 +74,7 @@ namespace fqtd.Controllers
                                  select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.ItemID, ItemName_EN = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude };
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude };
 
             return jsonNetResult;
         }
@@ -105,7 +105,7 @@ namespace fqtd.Controllers
                                  select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.ItemID, ItemName_EN = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude };
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude };
 
             return jsonNetResult;
         }
@@ -127,6 +127,28 @@ namespace fqtd.Controllers
                     return ItemByCategoryID(categoryid, vn0_en1);
                 }
             }
+        }
+        public ActionResult ItemDetail(int itemID, int vn0_en1=0)
+        {
+            var item = from i in db.BrandItems
+                         join br in db.Brands on i.BrandID equals br.BrandID
+                       join lo in db.ItemLocations on i.ItemID equals lo.ItemID
+                       where i.ItemID==itemID
+                       select new { 
+                       i.ItemID, i.ItemName, i.ItemName_EN, i.MarkerIcon, br.Logo, i.Phone, i.Website, i.OpenTime, i.ClickCount, i.SearchCount
+                       , Description = i.Description==""?br.Description:i.Description
+                       ,Description_EN = i.Description_EN == "" ? br.Description_EN : i.Description_EN
+                       , lo.FullAddress, lo.Longitude, lo.Latitude
+                       };
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            jsonNetResult.Data = from a in item
+                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.MarkerIcon, a.Logo, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+            if (vn0_en1 == 1)
+                jsonNetResult.Data = from a in item
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.MarkerIcon, a.Logo, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+
+            return jsonNetResult;
         }
     }
 }
