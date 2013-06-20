@@ -700,7 +700,6 @@
     <Content Include="Images\orderedList7.png" />
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Account\_RemoveExternalLoginsPartial.cshtml" />
@@ -715,7 +714,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\MasterHome.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
@@ -724,6 +723,7 @@
     <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\MasterSub.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

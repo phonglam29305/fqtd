@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - timdau.vn</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div id="header_subpage">
+		<img id="logo_small" src="../images/logo_small.png" />
+		<div id="back_home"><img src="../images/icon_home.png" /> <a href="trangchu.html">Trang chủ</a></div>
+	</div>
+
+    <div id="wrapper">
+        @RenderSection("featured", required: false)
+        @RenderBody()
+    </div>
+
+    <div id="bottom">
+        <div id="bottom_info">
+            <div id="bottom_left">Copyright@2013 by Timdau.com</div>
+            <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/plugin")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -104,10 +104,10 @@ body {
 }
 
 #content_sub {
-    width: 960px;
     margin: auto;
     padding: 0;
 }
+
 
 #home_left {
     width: 170px;
@@ -199,15 +199,15 @@ body {
     margin-top: 10px;
 }
 
-#banmuontim a {
-    color: #606060;
-    font-style:normal;
-}
+    #banmuontim a {
+        color: #606060;
+        font-style: normal;
+    }
 
-#banmuontim a:hover {
-    color: #606060;   
-    text-decoration:none;
-}
+        #banmuontim a:hover {
+            color: #606060;
+            text-decoration: none;
+        }
 
 #banmuontim2 {
     border-bottom: #e6e6e6 2px solid;
@@ -215,15 +215,15 @@ body {
     margin-top: 10px;
 }
 
-#banmuontim2 a {
-    color: #606060;
-    font-style:normal;
-}
+    #banmuontim2 a {
+        color: #606060;
+        font-style: normal;
+    }
 
-#banmuontim2 a:hover {
-    color: #606060;   
-    text-decoration:none;
-}
+        #banmuontim2 a:hover {
+            color: #606060;
+            text-decoration: none;
+        }
 
 #btn_home1 {
     width: 180px;
@@ -286,7 +286,7 @@ input {
     }
 
 #noidungchinh {
-    margin: 30px 0px;
+    margin: 19px 0px;
 }
 
     #noidungchinh h1 {
@@ -301,6 +301,14 @@ input {
         color: #606060;
         margin-top: 20px;
     }
+
+#cactienich p {
+    color: #606060;
+    width: 200px;
+    border-bottom: 1px dotted;
+    text-align: center;
+    line-height: 22px;
+}
 
 .lienket:link {
     color: #606060;
@@ -318,13 +326,11 @@ input {
 }
 
 .active {
-    color: #35a018;
-    text-decoration: none;
+    border-bottom: 1px solid #35a018;
 }
 
-.noactive {
-    color: #606060;
-    text-decoration: none;
+.inactive {
+    border-bottom: 0px;
 }
 
 #textbox {
@@ -367,10 +373,22 @@ input {
 }
 
 #menu {
-    position: absolute;
-    top: 100px;
-    left: 45%;
+    width: 200px;
+    margin: 6px auto;
 }
+
+    #menu table {
+        width: 200px;
+        border: 0;
+        text-align: center;
+        height: 30px;
+    }
+
+    #menu td {
+        width: 99px;
+        height: 30px;
+        cursor: pointer;
+    }
 
 #object {
     margin-top: 25px;
@@ -387,11 +405,11 @@ input {
     height: 20px;
 }
 
-#map {
-    width: 960px;
-    height: 610px;
+#googleMap {
+    width: 80%;
+    height: 654px;
     background-color: #dfdfdf;
-    margin-top: 60px;
+    margin: 0 auto;
 }
 
 #btn_more {
@@ -400,7 +418,20 @@ input {
     cursor: pointer;
 }
 
-#btn_xemthem {
+#btn_xemthemMap {
+    width: 180px;
+    height: 28px;
+    background-image: url(../images/bg_button.png);
+    background-repeat: repeat;
+    border: none;
+    color: #404040;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-family: Verdana;
+    cursor: pointer;
+}
+
+#btn_xemthemList {
     width: 180px;
     height: 28px;
     background-image: url(../images/bg_button.png);
@@ -416,7 +447,7 @@ input {
 #cactienich {
     position: absolute;
     left: 0px;
-    top: 142px;
+    top: 132px;
 }
 
 #tbtable {
@@ -535,6 +566,18 @@ input {
 .hidden {
     display: none;
 }
+
+#property label {
+    margin-left: 4px;
+    line-height: 22px;
+}
+
+#list {
+    width: 960px;
+    margin: auto;
+    padding: 0;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/
@@ -557,6 +600,7 @@ will be defined
     background: url(../Images/square.png) no-repeat;
     border: none;
     cursor: pointer;
+    float: left;
 }
 
 .icheckbox_square {
@@ -602,7 +646,7 @@ will be defined
     }
 
 /* Retina support */
-/*
+
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
     .icheckbox_square,
     .iradio_square {
@@ -611,4 +655,3 @@ will be defined
         background-size: 240px 24px;
     }
 }
-    */
