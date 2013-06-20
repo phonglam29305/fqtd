@@ -15,10 +15,14 @@ namespace fqtd.Controllers
 
         private fqtdEntities db = new fqtdEntities();
 
-        public ActionResult ShowResult(string address, int? range)
+        public ActionResult ShowResult(string address, int? range, int? category, int? brand, string search, int? form)
         {
             ViewBag.address = address;
             ViewBag.range = range;
+            ViewBag.category = category;
+            ViewBag.brand = brand;
+            ViewBag.search = search;
+            ViewBag.form = form;
             return View("Index");
         }
 
@@ -38,14 +42,33 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByBrandID(int id = -1, int vn0_en1 = 0)
         {
-            var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
+            //var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
+            var brands = from i in db.BrandItems
+                         join br in db.Brands on i.BrandID equals br.BrandID
+                         join lo in db.ItemLocations on i.ItemID equals lo.ItemID
+                         where i.BrandID == id
+                         select new
+                         {
+                             i.ItemID,
+                             i.ItemName,
+                             lo.FullAddress,
+                             i.Phone,
+                             i.Website,
+                             i.OpenTime,
+                             i.ItemName_EN,
+                             i.Description,
+                             i.Description_EN,
+                             lo.Longitude,
+                             lo.Latitude,
+                             br.Logo
+                         };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
-                                 select new { a.ItemID, a.ItemName, a.Description };
+                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.Phone };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN };
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.Phone };
 
             return jsonNetResult;
         }
@@ -106,7 +129,7 @@ namespace fqtd.Controllers
                              i.Description_EN,
                              lo.Longitude,
                              lo.Latitude,
-                             br.Logo                             
+                             br.Logo
                          };
             //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             JsonNetResult jsonNetResult = new JsonNetResult();
@@ -145,28 +168,44 @@ namespace fqtd.Controllers
                 }
             }
         }
-        public ActionResult ItemDetail(int itemID, int vn0_en1=0)
+
+        public ActionResult ItemDetail(int itemID, int vn0_en1 = 0)
         {
             var item = from i in db.BrandItems
-                         join br in db.Brands on i.BrandID equals br.BrandID
+                       join br in db.Brands on i.BrandID equals br.BrandID
                        join lo in db.ItemLocations on i.ItemID equals lo.ItemID
-                       where i.ItemID==itemID
-                       select new { 
-                       i.ItemID
-                       , i.ItemName
-                       , i.ItemName_EN
-                       , i.MarkerIcon
-                       , br.Logo
-                       , i.Phone
-                       , i.Website
-                       , i.OpenTime
-                       , i.ClickCount
-                       , i.SearchCount
-                       , Description = i.Description==""?br.Description:i.Description
-                       ,Description_EN = i.Description_EN == "" ? br.Description_EN : i.Description_EN
-                       , lo.FullAddress
-                       , lo.Longitude
-                       , lo.Latitude
+                       where i.ItemID == itemID
+                       select new
+                       {
+                           i.ItemID
+                           ,
+                           i.ItemName
+                           ,
+                           i.ItemName_EN
+                           ,
+                           i.MarkerIcon
+                           ,
+                           br.Logo
+                           ,
+                           i.Phone
+                           ,
+                           i.Website
+                           ,
+                           i.OpenTime
+                           ,
+                           i.ClickCount
+                           ,
+                           i.SearchCount
+                           ,
+                           Description = i.Description == "" ? br.Description : i.Description
+                           ,
+                           Description_EN = i.Description_EN == "" ? br.Description_EN : i.Description_EN
+                           ,
+                           lo.FullAddress
+                           ,
+                           lo.Longitude
+                           ,
+                           lo.Latitude
                        };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;

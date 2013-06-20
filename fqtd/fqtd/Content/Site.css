@@ -209,6 +209,10 @@ body {
             text-decoration: none;
         }
 
+    #banmuontim img {
+        border: 0;
+    }
+
 #banmuontim2 {
     border-bottom: #e6e6e6 2px solid;
     padding-bottom: 5px;
@@ -224,6 +228,10 @@ body {
             color: #606060;
             text-decoration: none;
         }
+
+    #banmuontim2 img {
+        border: 0;
+    }
 
 #btn_home1 {
     width: 180px;
@@ -577,6 +585,25 @@ input {
     margin: auto;
     padding: 0;
 }
+
+#tryit img {
+    border: 0;
+}
+
+.ui-effects-transfer {
+    border: 2px dotted gray;
+}
+
+.marker {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .marker p {
+        margin-top: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px dotted;
+    }
 
 /********************
 *   Mobile Styles   *
