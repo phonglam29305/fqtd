@@ -6,21 +6,21 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Edit", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
+    
+    @Html.HiddenFor(model => model.ItemID)
+    @Html.HiddenFor(model => model.CreateDate)
+    @Html.HiddenFor(model => model.CreateUser)
+    @Html.HiddenFor(model => model.IsActive)
+    @Html.HiddenFor(model => model.MarkerIcon)
+
     <fieldset>
-        <legend>BrandItems</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ItemID, "tbl_Item_Location")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("ItemID", String.Empty)
-            @Html.ValidationMessageFor(model => model.ItemID)
-        </div>
-
+        <legend>Item Infos</legend>
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.ItemName)
         </div>
@@ -38,20 +38,13 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
+            @Html.LabelFor(model => model.MarkerIcon)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
+            <input type="file" name="icon" />
+            @Html.ValidationMessageFor(model => model.MarkerIcon)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description_EN)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description_EN)
-            @Html.ValidationMessageFor(model => model.Description_EN)
-        </div>
+        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.OpenTime)
@@ -84,85 +77,27 @@
             @Html.DropDownList("BrandID", String.Empty)
             @Html.ValidationMessageFor(model => model.BrandID)
         </div>
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.SearchCount)
+            @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.SearchCount)
-            @Html.ValidationMessageFor(model => model.SearchCount)
+            @Html.TextAreaFor(model => model.Description, new { @id = "Description" })
+           <script type="text/javascript">
+               CKEDITOR.replace("Description");
+            </script>
+            @Html.ValidationMessageFor(model => model.Description)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ClickCount)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ClickCount)
-            @Html.ValidationMessageFor(model => model.ClickCount)
-        </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
+            @Html.LabelFor(model => model.Description_EN)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreateDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreateDate)
-            @Html.ValidationMessageFor(model => model.CreateDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreateUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreateUser)
-            @Html.ValidationMessageFor(model => model.CreateUser)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ModifyDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ModifyDate)
-            @Html.ValidationMessageFor(model => model.ModifyDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ModifyUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ModifyUser)
-            @Html.ValidationMessageFor(model => model.ModifyUser)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DeleteDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DeleteDate)
-            @Html.ValidationMessageFor(model => model.DeleteDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DeleteUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DeleteUser)
-            @Html.ValidationMessageFor(model => model.DeleteUser)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.MarkerIcon)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.MarkerIcon)
-            @Html.ValidationMessageFor(model => model.MarkerIcon)
+            @Html.TextAreaFor(model => model.Description_EN, new { @id = "Description_EN" })
+           <script type="text/javascript">
+               CKEDITOR.replace("Description_EN");
+            </script>
+            @Html.ValidationMessageFor(model => model.Description_EN)
         </div>
 
         <p>

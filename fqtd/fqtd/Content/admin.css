@@ -14,13 +14,26 @@ body {
 
 .editor-label {
     float: left;
+    text-align: right;
     min-height: 30px;
     width: 20%;
 }
-
+.display-label {
+    float: left;
+    text-align: right;
+    min-height: 30px;
+    width: 20%;
+    padding-right: 10px;
+}
+.display-field {
+    font-weight: bold;
+}
 .editor-field {
     float: left;
     min-height: 30px;
+    width: 80%;
+}
+.editor-field input {
     width: 80%;
 }
 
@@ -131,4 +144,28 @@ header ul {
     #body table td {
         border: 1px solid gray;
         padding: 2px 2px 2px 2px;
+    }
+.navigabun {
+        background: url("../images/button.gif") repeat-x scroll 0 0 transparent;
+        color: #EE287A;
+        float: left;
+        font: 14px/25px Arial,Helvetica,sans-serif;
+        height: 25px;
+        text-align: center;
+        white-space: nowrap;
+        text-decoration: none;
+        margin-left: 5px;
+        width: 110px;
+    }
+    .navigabun_dia {
+        background: url("../images/button.gif") repeat-x scroll 0 0 transparent;
+        color: #ffffff;
+        float: left;
+        font: 14px/25px Arial,Helvetica,sans-serif;
+        height: 25px;
+        text-align: center;
+        white-space: nowrap;
+        text-decoration: none;
+        margin-left: 5px;
+        width: 110px;
     }

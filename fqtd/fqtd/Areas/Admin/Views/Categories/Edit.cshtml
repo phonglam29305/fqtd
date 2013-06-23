@@ -6,7 +6,8 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Edit", "Categories", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -16,6 +17,8 @@
         @Html.HiddenFor(model => model.CreateDate)
         @Html.HiddenFor(model => model.CreateUser)
         @Html.HiddenFor(model => model.IsActive)
+        @Html.HiddenFor(model => model.MarkerIcon)
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CategoryName)
@@ -32,7 +35,13 @@
             @Html.EditorFor(model => model.CategoryName_EN)
             @Html.ValidationMessageFor(model => model.CategoryName_EN)
         </div>
-
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MarkerIcon)
+        </div>
+        <div class="editor-field">
+             <input type="file" name="icon" />
+            @Html.ValidationMessageFor(model => model.MarkerIcon)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Description)
         </div>
