@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
-using fqtd.Areas.Admin.Models;
+using System.Web.Security;
 using fqtd.Utils;
+using fqtd.Areas.Admin.Models;
 using Newtonsoft.Json;
+using PagedList;
+using System.Configuration;
+using System.Data;
+using System;
 
 namespace fqtd.Areas.Admin.Controllers
 {
@@ -18,10 +21,23 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Items/
 
-        public ActionResult Index()
+        public ActionResult Index(string keyword = "", int ?CategoryID=null, int? BrandID = null, int page = 1)
         {
-            var branditems = db.BrandItems.Include(b => b.tbl_Brands).Include(b => b.tbl_Item_Location);
-            return View(branditems.ToList());
+            var result = from a in db.BrandItems where (a.ItemName.Contains(keyword) || a.ItemName_EN.Contains(keyword)) select a;
+            if (CategoryID != null)
+                result = result.Where(a=>a.tbl_Brands.CategoryID == CategoryID);
+            if (BrandID != null)
+                result = result.Where(a => a.BrandID == BrandID);
+            result = result.OrderBy("ItemName");
+            ViewBag.CurrentKeyword = keyword;
+            int maxRecords = 20;
+            int currentPage = page;
+            ViewBag.CurrentPage = page;
+            ViewBag.CurrentCategoryID = CategoryID;
+            ViewBag.CurrentBrandID = BrandID;
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
+            return View(result.ToPagedList(currentPage, maxRecords));
         }
 
         
@@ -53,12 +69,30 @@ namespace fqtd.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BrandItems branditems)
+        public ActionResult Create(BrandItems branditems, HttpPostedFileBase icon)
         {
             if (ModelState.IsValid)
             {
+                branditems.IsActive = true;
+                branditems.CreateDate = DateTime.Now;
+                branditems.CreateUser = User.Identity.Name;
+                string filesPath = "", full_path = "";
+                if (icon != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+                    full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
+                    branditems.MarkerIcon = FileUpload.UploadFile(icon, full_path);
+                }
                 db.BrandItems.Add(branditems);
                 db.SaveChanges();
+                if (icon != null)
+                {
+                    string filename = branditems.ItemID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
+                    branditems.MarkerIcon = FileUpload.UploadFile(icon, filename, full_path);
+                    db.Entry(branditems).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 
@@ -87,12 +121,35 @@ namespace fqtd.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BrandItems branditems)
+        public ActionResult Edit(BrandItems branditems, HttpPostedFileBase icon)
         {
             if (ModelState.IsValid)
             {
+                branditems.ModifyDate = DateTime.Now;
+                branditems.ModifyUser = User.Identity.Name;
+                string filesPath = "", full_path = "";
+                string marker = branditems.MarkerIcon;
+                if (icon != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+                    full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
+                    branditems.MarkerIcon = FileUpload.UploadFile(icon, full_path);
+                }
+
                 db.Entry(branditems).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (marker + "" != "")
+                    FileUpload.DeleteFile(marker, full_path);
+
+                if (icon != null)
+                {
+                    string filename = branditems.ItemID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
+                    branditems.MarkerIcon = FileUpload.UploadFile(icon, filename, full_path);
+                    db.Entry(branditems).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", branditems.BrandID);

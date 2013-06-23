@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -11,6 +12,7 @@ using fqtd.Utils;
 using fqtd.Areas.Admin.Models;
 using Newtonsoft.Json;
 using System.Configuration;
+using PagedList;
 
 namespace fqtd.Areas.Admin.Controllers
 {
@@ -21,28 +23,34 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Brands/
 
-        public ActionResult Index()
+        public ActionResult Index(string keyword = "", int page = 1)
         {
-            var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
-            return View(brands.ToList());
+            var result = from a in db.Brands where (a.BrandName.Contains(keyword) || a.BrandName_EN.Contains(keyword)) select a;
+            result = result.OrderBy("BrandName");
+            ViewBag.CurrentKeyword = keyword;
+            int maxRecords = 20;
+            int currentPage = page;
+            ViewBag.CurrentPage = page;
+
+            return View(result.ToPagedList(currentPage, maxRecords));
         }
 
-        
-        public ActionResult BrandList(int vn0_en1=0)
+
+        public ActionResult BrandList(int vn0_en1 = 0)
         {
             var brands = db.Brands.Where(a => a.IsActive).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
-                                     select new {a.BrandID, a.BrandName, a.Description};
+                                 select new { a.BrandID, a.BrandName, a.Description };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.BrandID, BrandName=a.BrandName_EN, Description= a.Description_EN };
+                                     select new { a.BrandID, BrandName = a.BrandName_EN, Description = a.Description_EN };
             return jsonNetResult;
         }
         public ActionResult BrandsByCategory(int id = -1, int vn0_en1 = 0)
         {
-            var brands = db.Brands.Where(a => a.IsActive && (id==-1 || a.CategoryID==id)).Include(b => b.tbl_Categories);
+            var brands = db.Brands.Where(a => a.IsActive && (id == -1 || a.CategoryID == id)).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -82,28 +90,42 @@ namespace fqtd.Areas.Admin.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(Brands brands, HttpPostedFileBase file)
+        public ActionResult Create(Brands brands, HttpPostedFileBase icon, HttpPostedFileBase logo)
         {
             if (ModelState.IsValid)
             {
                 brands.IsActive = true;
                 brands.CreateDate = DateTime.Now;
                 brands.CreateUser = User.Identity.Name;
-                string filesPath="", full_path = "";
-                if (file != null)
+                string filesPath = "", full_path = "";
+                if (icon != null)
                 {
                     char DirSeparator = System.IO.Path.DirectorySeparatorChar;
                     filesPath = ConfigurationManager.AppSettings["BrandMarkerIconLocaion"];
-                    full_path = Server.MapPath(filesPath).Replace("Brands","").Replace("Admin","");
-                    brands.MarkerIcon = FileUpload.UploadFile(file, full_path);
+                    full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
+                    brands.MarkerIcon = FileUpload.UploadFile(icon, full_path);
+                }
+                if (logo != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath = ConfigurationManager.AppSettings["BrandLogoLocaion"];
+                    full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
+                    brands.Logo = FileUpload.UploadFile(logo, full_path);
                 }
 
                 db.Brands.Add(brands);
                 db.SaveChanges();
-                if (file != null)
+                if (icon != null)
                 {
-                    string filename = brands.BrandID + "_" + file.FileName.Replace(" ", "_").Replace("-", "_");
-                    brands.MarkerIcon = FileUpload.UploadFile(file, filename, full_path);
+                    string filename = brands.BrandID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
+                    brands.MarkerIcon = FileUpload.UploadFile(icon, filename, full_path);
+                    db.Entry(brands).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                if (logo != null)
+                {
+                    string filename = brands.BrandID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
+                    brands.Logo = FileUpload.UploadFile(logo, filename, full_path);
                     db.Entry(brands).State = EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -135,14 +157,51 @@ namespace fqtd.Areas.Admin.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ValidateInput(false)]
-        public ActionResult Edit(Brands brands)
+        public ActionResult Edit(Brands brands, HttpPostedFileBase icon, HttpPostedFileBase logo)
         {
             if (ModelState.IsValid)
             {
                 brands.ModifyDate = DateTime.Now;
                 brands.ModifyUser = User.Identity.Name;
+                string filesPath = "", full_path = "";
+                string filesPath_logo = "", full_path_logo = "";
+                string marker = brands.MarkerIcon; string oldlogo = brands.Logo;
+                if (icon != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath = ConfigurationManager.AppSettings["BrandMarkerIconLocaion"];
+                    full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
+                    brands.MarkerIcon = FileUpload.UploadFile(icon, full_path);
+                }
+                if (logo != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    filesPath_logo = ConfigurationManager.AppSettings["BrandLogoLocaion"];
+                    full_path_logo = Server.MapPath(filesPath_logo).Replace("Brands", "").Replace("Admin", "");
+                    brands.Logo = FileUpload.UploadFile(logo, full_path_logo);
+                }
+
                 db.Entry(brands).State = EntityState.Modified;
                 db.SaveChanges();
+                if (marker+"" != "")
+                    FileUpload.DeleteFile(marker, full_path);
+                if (oldlogo+"" != "")
+                    FileUpload.DeleteFile(oldlogo, full_path_logo);
+
+                if (icon != null)
+                {
+                    string filename = brands.BrandID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
+                    brands.MarkerIcon = FileUpload.UploadFile(icon, filename, full_path);
+                    db.Entry(brands).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                if (logo != null)
+                {
+                    string filename = brands.BrandID + "_" + logo.FileName.Replace(" ", "_").Replace("-", "_");
+                    brands.Logo = FileUpload.UploadFile(logo, filename, full_path);
+                    db.Entry(brands).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
