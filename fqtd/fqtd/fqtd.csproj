@@ -634,6 +634,8 @@
     <Content Include="Images\bullet_grey.png" />
     <Content Include="Images\button_close.jpg" />
     <Content Include="Images\button_open.jpg" />
+    <Content Include="Images\close.gif" />
+    <Content Include="Images\direction-map-sprite.png" />
     <Content Include="Images\icon1.png" />
     <Content Include="Images\icon_arrow.png" />
     <Content Include="Images\icon_arrow_over.png" />
@@ -662,11 +664,14 @@
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\logo_small1.png" />
     <Content Include="Images\map.jpg" />
+    <Content Include="Images\no-image.jpg" />
     <Content Include="Images\photo1.jpg" />
+    <Content Include="Images\tipbox.gif" />
     <Content Include="Intro.html" />
     <Content Include="Images\square%402x.png" />
     <Content Include="Images\square.png" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\infobox.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

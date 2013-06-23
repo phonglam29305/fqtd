@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/MasterSub.cshtml";      
 }
 
-
 <input id="address" type="hidden" style="width: 500px" value="@ViewBag.address" />
 <input id="range" type="hidden" style="width: 100px" value="@ViewBag.range" />
 <input id="category" type="hidden" style="width: 100px" value="@ViewBag.category" />
@@ -27,99 +26,17 @@
         </table>
     </div>
     <div id="noidungchinh">
-        <div id="map">
+        <div id="map" class="hidden">
             <div id="googleMap"></div>
             <div id="btn_more">
                 <input type="button" id="btn_xemthemMap" value="Xem thêm" />
             </div>
         </div>
         <div id="list" class="hidden">
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="object">
-                <table style="width: 100%;">
-                    <tr>
-                        <td valign="top">
-                            <img id="photo" src="../images/photo1.jpg" /></td>
-
-                        <td valign="top">
-                            <h2>KFC Hồ Biểu Chánh</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <p><a href="thongtinchitiet.html" class="lienket"><strong>Xem chi tiết</strong></a> | <a href="#" class="lienket"><strong>Đường đi</strong></a></p>
-                        </td>
-                    </tr>
-                </table>
+            <div id="subList">
             </div>
             <div id="btn_more">
-                <input type="button" id="btn_xemthemList" value="Xem thêm" />
+                <div id="pagination" class="pagination"></div>
             </div>
         </div>
         <div id="cactienich">
@@ -140,20 +57,18 @@
                 </tr>
             </table>
         </div>
+
     </div>
 </div>
 
 @section scripts
 {
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
     <script>
         var myplace;
         var directionsDisplay;
+        var locations = [];               
 
         jQuery(document).ready(function ($) {
-            //bind to map           
-
-            var locations = new Array();
             //Get data result
             var urlResult = "/Result/search?";
             urlResult += "mode=" + $("#form").val();
@@ -169,70 +84,96 @@
                     item = items[i];
                     if (item.Latitude != null && item.Longitude != null) {
                         var contentmarker = '<div class="marker"><h2>' + isEmpty(item.ItemName) + '</h2><p>' + isEmpty(item.FullAddress) + '<br/>' + isEmpty(item.Phone) + '</p></div>'
-                                     + '<button onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'car\')\">Car</button>'
-                                     + '<button onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'walk\')\">Walk</button>'
-                                     + '<button onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'bus\')\">Bus</button>';
-                        locations.push([item.Latitude, item.Longitude, contentmarker]);
+                                     + '<ul id="directionIcon">'
+                                     + '<li id="car" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'car\')\"></li>'
+                                     + '<li id="bus" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'bus\')\"></li>'
+                                     + '<li id="walk" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'walk\')\"></li></ul><div id="space"></div>';
+                        locations.push([item.Latitude, item.Longitude, contentmarker, isEmpty(item.ItemName), isEmpty(item.FullAddress), isEmpty(item.Phone), isEmpty(item.Logo), isEmpty(item.ItemID)]);
                     }
                 }
+                console.log(locations);
+                //Pagination
+                Pagination();
             });
 
             range = $("#range").val();
 
-            var address = $("#address").val();
-            var geocoder = new google.maps.Geocoder();
-            if (geocoder) {
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        //set LatLng current place
-                        myplace = results[0].geometry.location;
+            if ($("#form").val() == "1") {
+                var address = $("#address").val();
+                var geocoder = new google.maps.Geocoder();
+                if (geocoder) {
+                    geocoder.geocode({ 'address': address }, function (results, status, content) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            //set LatLng current place
+                            myplace = results[0].geometry.location;
 
-                        //set map
-                        var mapProp = {
-                            center: myplace,
-                            disableDefaultUI: true,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                            //set map
+                            var mapProp = {
+                                center: myplace,
+                                disableDefaultUI: true,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-                        //set my city
-                        var myCity = new google.maps.Circle({
-                            center: myplace,
-                            radius: parseInt(range),
-                            strokeWeight: 0,
-                            fillColor: "#0000FF",
-                            fillOpacity: 0.1
-                        });
-                        myCity.setMap(map);
+                            //set List
+                            var contentList = "";
 
-                        //set direction
-                        directionsDisplay = new google.maps.DirectionsRenderer();
-                        directionsDisplay.setMap(map);
+                            //set my city
+                            var myCity = new google.maps.Circle({
+                                center: myplace,
+                                radius: parseInt(range),
+                                strokeWeight: 0,
+                                fillColor: "#0000FF",
+                                fillOpacity: 0.1
+                            });
+                            myCity.setMap(map);
 
-                        map.fitBounds(myCity.getBounds());
-                        markOutLocation(myplace.lat(), myplace.lng(), map, "You are in here", myplace);
+                            //set direction
+                            directionsDisplay = new google.maps.DirectionsRenderer();
+                            directionsDisplay.setMap(map);
 
-                        for (i = 0; i < locations.length; i++) {
-                            var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
-                            if (range >= compareDistance) {
-                                markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], myplace);
+                            map.fitBounds(myCity.getBounds());
+                            markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", myplace);
+                            
+                            for (i = 0; i < locations.length; i++) {
+                                var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
+                                if (range >= compareDistance) {
+                                    markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], myplace);                                    
+                                }
                             }
+                            
+                        } else {
+                            alert("Geocode was not successful for the following reason: " + status);
                         }
-
-                    } else {
-                        alert("Geocode was not successful for the following reason: " + status);
-                    }
-                });
+                    });
+                }
+                $("#map").removeClass("hidden");                
             }
+            else {
+                //set List
+                var contentList = "";
+                for (i = 0; i < locations.length; i++) {
+                    markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], myplace);                    
+                }                
+                $("#list").removeClass("hidden");
+            }   
 
             //Bind data to property
-            BindPropertyData();
-
+            BindPropertyData();            
         });
 
         function isEmpty(str) {
             if ((!str || 0 === str.length) == true) {
                 return '';
+            }
+            else {
+                return str;
+            }
+        }
+
+        function checkImage(str) {
+            if ((!str || 0 === str.length) == true) {
+                return '../images/no-image.jpg';
             }
             else {
                 return str;
@@ -245,11 +186,18 @@
                 position: place,
                 title: 'Click to zoom'
             });
-            var infowindow = new google.maps.InfoWindow({
-                content: contentPopup
+            var infobox = new InfoBox({
+                content: contentPopup,
+                disableAutoPan: true,
+                maxWidth: 0,
+                pixelOffset: new google.maps.Size(-140, 0),
+                zIndex: null,
+                closeBoxMargin: "12px 4px 2px 2px",
+                closeBoxURL: "/images/close.gif",
+                infoBoxClearance: new google.maps.Size(1, 1)
             });
             google.maps.event.addListener(marker, 'click', function () {
-                infowindow.open(map, marker);
+                infobox.open(map, marker);
             });
             marker.setMap(map);
         }
@@ -356,6 +304,42 @@
 
             $("#tabMap").removeClass("inactive").addClass("active");
             $("#tabList").removeClass("active").addClass("inactive");
+        }
+
+        function pageselectCallback(page_index, jq) {
+            var local = locations;            
+
+            // Get number of elements per pagionation page from form
+            var items_per_page = 5
+            var max_elem = Math.min((page_index + 1) * items_per_page, local.length);
+            var newcontent = '';
+
+            // Iterate through a selection of the content and build an HTML string
+            for (var i = page_index * items_per_page; i < max_elem; i++) {
+                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><img id="photo" src="' + isEmpty(checkImage(local[i][6])) + '" /></td><td valign="top"><h2>' + isEmpty(local[i][3]) + '</h2>'
+                    + '<p>' + isEmpty(local[i][4]) + '<br/>' + isEmpty(local[i][5]) + '</p><p><a href="#" class="lienket"><strong>Xem chi tiết</strong></a>'
+                    + '| <a href="#" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
+            }
+
+            // Replace old content with new content
+            $('#subList').html(newcontent);
+
+            // Prevent click eventpropagation
+            return false;
+        }
+
+        function Pagination(stores) {
+            // Create pagination element with options from form
+            var opt = {
+                callback: pageselectCallback,
+                items_per_page: 5,
+                num_display_entries: 5,
+                num_edge_entries: 2,
+                prev_text: "Trước",
+                next_text: "Sau"
+            };
+            console.log(locations.length);
+            $("#pagination").pagination(locations.length, opt);
         }
     </script>
 }
