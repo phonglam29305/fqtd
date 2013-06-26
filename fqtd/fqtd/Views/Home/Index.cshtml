@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "This is step 1";
+    ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/MasterHome.cshtml";    
 }
 <div id="content_home">
@@ -10,19 +10,19 @@
                 <div id="home_left">
                 </div>
                 <div id="home_center">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <table style="width:100%; border:0px; border-collapse:separate; border-spacing: 13px;">
                         <tr>
-                            <td colspan="3" height="50">
+                            <td colspan="3" style="width:50px">
                                 <div>
                                     <input id="address" data-required="true" name="address" />
                                 </div>
                             </td>
-                            <td width="34">
+                            <td style="width:34px">
                                 <a id="tryit" href="JavaScript:void(0);" title="Geolocation chỉ hoạt động chính xác với các thiết bị di động như Điện thoại, Laptop, Máy tính bảng.">
                                     <img src="../images/icon1.png" /></a></td>
                         </tr>
                         <tr>
-                            <td height="50">
+                            <td>
                                 <div>
                                     <select data-required="true" id="category" name="category">
                                         <option>Loại</option>
@@ -44,11 +44,14 @@
                             <td>mét</td>
                         </tr>
                         <tr>
-                            <td height="50">&nbsp;</td>
-                            <td>
-                                <input type="submit" value="TÌM" id="btn_home1" /></td>
-                            <td>&nbsp;</td>
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>                            
+                            <td colspan="4" style="text-align:center">
+                                <input type="submit" value="TÌM" id="btn_home1" /></td>                           
                         </tr>
                     </table>
                 </div>
@@ -72,9 +75,9 @@
                     </div>
                 </div>
                 <div id="home_center2">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <table style="width:100%; border:0px; border-collapse:separate; border-spacing: 13px;">
                         <tr>
-                            <td colspan="4" height="50">
+                            <td colspan="4">
                                 <div>
                                     <input id="search" data-required="true" name="search" />
                                 </div>
@@ -86,12 +89,9 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td height="50" width="200">&nbsp;</td>
-                            <td>
-                                <input type="submit" value="TÌM" id="btn_home2" /></td>
-                            <td>&nbsp;</td>
-                            <td></td>
+                        <tr>                            
+                            <td colspan="4" style="text-align:center">
+                                <input type="submit" value="TÌM" id="btn_home2" /></td>                            
                         </tr>
                     </table>
 
@@ -112,121 +112,7 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false&libraries=places"></script>
     <script>
         jQuery(document).ready(function ($) {
-            ///event slide
-            var chartsBlock = $('#content');
-            chartsBlock.smSlideChart({
-                btnNext: $('.next'),
-                btnPrev: $('.pre'),
-                thumbs: $('#index'),
-                callback: function (t, f) { }
-            });
-
-            //Bind data to select box Category
-            var urlCategory = "/admin/categories/Categories";
-            $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
-                for (i in categories) {
-                    category = categories[i];
-                    $("#category").append('<option value="' + category.CategoryID + '">' + category.CategoryName + '</option>');;
-                }
-            });
-
-            //Bind data to select box Brand
-            var urlBrand = "/admin/brand/BrandsByCategory";
-            $.getJSON(urlBrand + "?id=-1", null, function (brands) {
-                for (i in brands) {
-                    brand = brands[i];
-                    $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
-                }
-            });
-
-            //Cascade select box Category
-            $('#category').change(getBrand);
-
-            function getBrand() {
-                var siteurl = "/admin/brand/BrandsByCategory";
-                var categoryVal = $('#category').val();
-                var data = '?id=' + categoryVal;
-                $("#brand").empty();
-                //alert(siteurl+' '+data);               
-                $.getJSON(siteurl + data, null, function (brands) {
-                    for (i in brands) {
-                        brand = brands[i];
-                        $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
-                    }
-                });
-            }
-
-            //watermark and validation
-            $("#address").watermark("Nhập địa chỉ hiện tại của bạn");
-            $("#search").watermark("Nhập tên hoặc địa chỉ quán bạn muốn tìm");
-            $("#range").watermark("Bán kính");
-            $("#form1").validate({
-                onChange: true,
-                eachValidField: function () {
-
-                    $(this).closest('div').removeClass('error').addClass('success');
-                },
-                eachInvalidField: function () {
-
-                    $(this).closest('div').removeClass('success').addClass('error');
-                }
-            });
-            $("#form2").validate({
-                onChange: true,
-                eachValidField: function () {
-
-                    $(this).closest('div').removeClass('error').addClass('success');
-                },
-                eachInvalidField: function () {
-
-                    $(this).closest('div').removeClass('success').addClass('error');
-                }
-            });
-
-
-            ///Bind tooltip
-            $("#tryit").tooltip({
-                show: null,
-                position: {
-                    my: "left top",
-                    at: "left bottom"
-                },
-                open: function (event, ui) {
-                    ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast");
-                }
-            });
-
-            ///bind event to get current position
-            $("#tryit").click(function () {
-                if (navigator.geolocation) {
-                    // Get current position
-                    navigator.geolocation.getCurrentPosition(function (position, status) {
-                        var geocoder = new google.maps.Geocoder();
-                        myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-                        if (geocoder) {
-                            geocoder.geocode({ 'latLng': myplace }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    $("#address").val(results[0].formatted_address);
-                                }
-                                else {
-                                    console.log("Geocoding failed: " + status);
-                                }
-                            });
-                        }
-                    });
-                }
-                else {
-                    // No geolocation fallback: Defaults to Eeaster Island, Chile
-                    alert("Please turn on your location service so we can locate where you are.");
-                };
-            });
-
-            //bind places autocomplete
-            $("#address").geocomplete();
-
+            FQTD.initHomepage();
         });
-
-
     </script>
 }

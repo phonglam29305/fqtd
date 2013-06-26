@@ -126,14 +126,14 @@ body {
 }
 
 #home_right {
-    width: 170px;
+    width: 110px;
     display: block;
-    float: left;
+    float: right;
     margin-top: 80px;
 }
 
 #home_left2 {
-    width: 170px;
+    width: 152px;
     display: block;
     float: left;
     margin-right: 20px;
@@ -144,7 +144,7 @@ body {
     width: 580px;
     display: block;
     float: left;
-    margin-right: 20px;
+    margin-left: 64px;
     margin-top: 80px;
 }
 

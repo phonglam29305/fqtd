@@ -1,9 +1,9 @@
 ﻿/*Global variables and functions*/
 
-var FQTD = (function() {
-    var myplace, directionsDisplay;    
-    var locations = [];
-    
+var FQTD = (function () {
+    var myplace, directionsDisplay;
+    var locations = new Array();
+
     function isEmpty(str) {
         if ((!str || 0 === str.length) == true) {
             return '';
@@ -21,7 +21,7 @@ var FQTD = (function() {
             return str;
         }
     }
-    
+
     function rad(x) { return x * Math.PI / 180; }
 
     function return_Distance(latLng1, latLng2) {
@@ -37,8 +37,8 @@ var FQTD = (function() {
         var d = R * c;
         return d * 1000;
     }
-   
-    return {       
+
+    return {
         BindPropertyData: function () {
             //Bind data to checkbox
             var urlProperty = "/result/PropertyByCategoryID";
@@ -53,11 +53,12 @@ var FQTD = (function() {
                 }
             });
         },
-        markOutLocation: function (lat, long, map, contentPopup) {
+        markOutLocation: function (lat, long, map, contentPopup, isHome) {
             var place = new google.maps.LatLng(lat, long);
             var marker = new google.maps.Marker({
                 position: place,
-                title: 'Click to zoom'
+                title: 'Click to zoom',
+                icon: (isHome === true ? '/images/home.png' : '/images/MarkerIcon/Brand/schools_maps.png')
             });
             var infobox = new InfoBox({
                 content: contentPopup,
@@ -108,7 +109,7 @@ var FQTD = (function() {
             });
         },
         hidePanel: function () {
-            $("#hrfClose").bind('click', function(){
+            $("#hrfClose").bind('click', function () {
                 var options = {};
                 $("#hrfClose").hide("fade", options, 500);
                 $("#tbtable").toggle("slide", options, 500, function () {
@@ -117,9 +118,9 @@ var FQTD = (function() {
                     $("#hrfOpen").show("fade", options, 500);
                 });
             })
-        },        
+        },
         showPanel: function () {
-            $("#hrfOpen").bind('click', function(){
+            $("#hrfOpen").bind('click', function () {
                 var options = {};
                 $("#hrfOpen").addClass("hidden");
                 $("#tbtable").toggle("slide", options, 500, function () {
@@ -127,7 +128,7 @@ var FQTD = (function() {
                     $("#hrfClose").show("fade", options, 500);
                 });
             })
-        },        
+        },
         displayList: function () {
             $("#tabList").bind('click', (function () {
                 $("#list").removeClass("hidden");
@@ -138,7 +139,7 @@ var FQTD = (function() {
             }));
         },
         displayMap: function () {
-            $("#tabMap").bind('click', function(){
+            $("#tabMap").bind('click', function () {
                 $("#map").removeClass("hidden");
                 $("#list").addClass("hidden");
 
@@ -174,10 +175,10 @@ var FQTD = (function() {
                 prev_text: "Trước",
                 next_text: "Sau"
             };
-            console.log(FQTD.aaa);
             $("#pagination").pagination(locations.length, opt);
         },
-        GetJSON: function () { //Get data result
+        GetJSON: function () {
+            //Get data result
             var urlResult = "/Result/search?";
             urlResult += "mode=" + $("#form").val();
             urlResult += "&keyword=" + $("#search").val();
@@ -187,19 +188,21 @@ var FQTD = (function() {
             urlResult += "&radious=" + $("#range").val();
             urlResult += "&vn0_en1=0";
 
-            $.getJSON(urlResult, null, function (items) {
+            var result = $.getJSON(urlResult, null, function (items) {
                 for (i in items) {
                     item = items[i];
                     if (item.Latitude != null && item.Longitude != null) {
                         var contentmarker = '<div class="marker"><h2>' + isEmpty(item.ItemName) + '</h2><p>' + isEmpty(item.FullAddress) + '<br/>' + isEmpty(item.Phone) + '</p></div>'
                                      + '<ul id="directionIcon">'
-                                     + '<li id="car" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'car\')\"></li>'
-                                     + '<li id="bus" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'bus\')\"></li>'
-                                     + '<li id="walk" onclick=\"calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'walk\')\"></li></ul><div id="space"></div>';
+                                     + '<li id="car" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'car\')\"></li>'
+                                     + '<li id="bus" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'bus\')\"></li>'
+                                     + '<li id="walk" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'walk\')\"></li></ul><div id="space"></div>';
                         locations.push([item.Latitude, item.Longitude, contentmarker, isEmpty(item.ItemName), isEmpty(item.FullAddress), isEmpty(item.Phone), isEmpty(item.Logo), isEmpty(item.ItemID)]);
                     }
-                }
+                }                
             });
+
+            result.complete(function () { FQTD.BindData() });
         },
         BindData: function () {
             var range = $("#range").val();
@@ -221,9 +224,6 @@ var FQTD = (function() {
                             };
                             var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-                            //set List
-                            var contentList = "";
-
                             //set my city
                             var myCity = new google.maps.Circle({
                                 center: myplace,
@@ -239,12 +239,12 @@ var FQTD = (function() {
                             directionsDisplay.setMap(map);
 
                             map.fitBounds(myCity.getBounds());
-                            FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", myplace);
+                            FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
 
                             for (i = 0; i < locations.length; i++) {
                                 var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
                                 if (range >= compareDistance) {
-                                    FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], myplace);
+                                    FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
                                 }
                             }
 
@@ -253,22 +253,170 @@ var FQTD = (function() {
                         }
                     });
                 }
+                //set map display first
                 $("#map").removeClass("hidden");
             }
-            else {                
+            else {
+                if (locations.length > 0) {
+                    //set 1st place as center
+                    myplace = new google.maps.LatLng(locations[0][0], locations[0][1]);
+
+                    //set map
+                    var mapProp = {
+                        center: myplace,
+                        zoom: 4,
+                        disableDefaultUI: true,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+                    //set direction
+                    directionsDisplay = new google.maps.DirectionsRenderer();
+                    directionsDisplay.setMap(map);
+
+                    for (i = 0; i < locations.length; i++) {
+                        FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
+                    }
+                }
+                //set list display first
                 $("#list").removeClass("hidden");
-            }            
+            }
+            FQTD.Pagination();
         },
-        initResult: function () {            
+        BindSelectCategory: function () {
+            //Bind data to select box Category
+            var urlCategory = "/admin/categories/Categories";
+            $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
+                for (i in categories) {
+                    category = categories[i];
+                    $("#category").append('<option value="' + category.CategoryID + '">' + category.CategoryName + '</option>');;
+                }
+            });
+        },
+        BindSelectBrand: function () {
+            //Bind data to select box Brand
+            var urlBrand = "/admin/brand/BrandsByCategory";
+            $.getJSON(urlBrand + "?id=-1", null, function (brands) {
+                for (i in brands) {
+                    brand = brands[i];
+                    $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
+                }
+            });
+        },
+        SetupWatermarkValidation: function () {
+            //watermark and validation
+            $("#address").watermark("Nhập địa chỉ hiện tại của bạn");
+            $("#search").watermark("Nhập tên hoặc địa chỉ quán bạn muốn tìm");
+            $("#range").watermark("Bán kính");
+            $("#form1").validate({
+                onChange: true,
+                eachValidField: function () {
+
+                    $(this).closest('div').removeClass('error').addClass('success');
+                },
+                eachInvalidField: function () {
+
+                    $(this).closest('div').removeClass('success').addClass('error');
+                }
+            });
+            $("#form2").validate({
+                onChange: true,
+                eachValidField: function () {
+
+                    $(this).closest('div').removeClass('error').addClass('success');
+                },
+                eachInvalidField: function () {
+
+                    $(this).closest('div').removeClass('success').addClass('error');
+                }
+            });
+        },
+        BindTooltip: function () {
+            ///Bind tooltip
+            $("#tryit").tooltip({
+                show: null,
+                position: {
+                    my: "left top",
+                    at: "left bottom"
+                },
+                open: function (event, ui) {
+                    ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast");
+                }
+            });
+        },
+        GetCurrentPosition: function () {
+            ///bind event to get current position
+            $("#tryit").click(function () {
+                if (navigator.geolocation) {
+                    // Get current position
+                    navigator.geolocation.getCurrentPosition(function (position, status) {
+                        var geocoder = new google.maps.Geocoder();
+                        myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                        if (geocoder) {
+                            geocoder.geocode({ 'latLng': myplace }, function (results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    $("#address").val(results[0].formatted_address);
+                                }
+                                else {
+                                    console.log("Geocoding failed: " + status);
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    // No geolocation fallback: Defaults to Eeaster Island, Chile
+                    alert("Please turn on your location service so we can locate where you are.");
+                };
+            });
+        },
+        initResult: function () {
             FQTD.displayList();
             FQTD.displayMap();
             FQTD.showPanel();
             FQTD.hidePanel();
             FQTD.BindPropertyData();
             FQTD.GetJSON();
-            FQTD.Pagination();
-            FQTD.BindData();            
-        },        
+        },
+        initHomepage: function () {
+            ///event slide
+            var chartsBlock = $('#content');
+            chartsBlock.smSlideChart({
+                btnNext: $('.next'),
+                btnPrev: $('.pre'),
+                thumbs: $('#index'),
+                callback: function (t, f) { }
+            });
+
+            FQTD.BindSelectCategory()
+            FQTD.BindSelectBrand()
+
+            function GetBrandByCategory() {
+                var siteurl = "/admin/brand/BrandsByCategory";
+                var categoryVal = $('#category').val();
+                var data = '?id=' + categoryVal;
+                $("#brand").empty();
+                //alert(siteurl+' '+data);               
+                $.getJSON(siteurl + data, null, function (brands) {
+                    for (i in brands) {
+                        brand = brands[i];
+                        $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
+                    }
+                });
+            }
+
+            //Cascade select box Category
+            $('#category').change(GetBrandByCategory);
+
+            FQTD.SetupWatermarkValidation()
+            FQTD.BindTooltip()
+            FQTD.GetCurrentPosition()
+            FQTD.GetCurrentPosition()
+
+            //bind places autocomplete
+            $("#address").geocomplete();
+        }
     };
 })();
 
