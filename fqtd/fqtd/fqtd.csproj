@@ -646,6 +646,7 @@
     <Content Include="Images\button_open.jpg" />
     <Content Include="Images\close.gif" />
     <Content Include="Images\direction-map-sprite.png" />
+    <Content Include="Images\home.png" />
     <Content Include="Images\icon1.png" />
     <Content Include="Images\icon_arrow.png" />
     <Content Include="Images\icon_arrow_over.png" />
@@ -674,6 +675,7 @@
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\logo_small1.png" />
     <Content Include="Images\map.jpg" />
+    <Content Include="Images\MarkerIcon\Brand\schools_maps.png" />
     <Content Include="Images\no-image.jpg" />
     <Content Include="Images\photo1.jpg" />
     <Content Include="Images\tipbox.gif" />
@@ -747,7 +749,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\MarkerIcon\Brand\" />
     <Folder Include="Images\MarkerIcon\Category\" />
     <Folder Include="Images\MarkerIcon\Item\" />
     <Folder Include="Models\" />
