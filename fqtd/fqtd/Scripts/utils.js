@@ -44,9 +44,8 @@ var FQTD = (function () {
             var urlProperty = "/result/PropertyByCategoryID";
             $.getJSON(urlProperty + "?id=-1", null, function (properties) {
                 for (i in properties) {
-                    property = properties[i];
-                    $("#property").append('<input tabindex="' + i + '" type="checkbox" id="' + property.PropertyID + '"><label for="' + property.PropertyID + '">' + property.PropertyName + '</label><br />');
-                    $('#' + property.PropertyID).iCheck({
+                    $("#property").append('<input tabindex="' + i + '" type="checkbox" id="' + properties[i].PropertyID + '"><label for="' + properties[i].PropertyID + '">' + properties[i].PropertyName + '</label><br />');
+                    $('#' + properties[i].PropertyID).iCheck({
                         checkboxClass: 'icheckbox_square',
                         increaseArea: '20%' // optional
                     });
@@ -75,10 +74,36 @@ var FQTD = (function () {
             });
             marker.setMap(map);
         },
-        calcRoute: function (latitude, longitude, type) {
+        calcRoute: function (latitude, longitude, type, form) {
             var directionsService = new google.maps.DirectionsService();
+            var start;
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
 
-            var start = myplace;
+            if (form == "1") {
+                start = myplace;
+                FQTD.directionWay(start, latitude, longitude, type, directionsService);
+            }
+            else {
+                if (navigator.geolocation) {
+                    // Get current position
+                    navigator.geolocation.getCurrentPosition(function (position, status) {
+                        start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+                        FQTD.directionWay(start, latitude, longitude, type, directionsService);
+                    }, function (err) {
+                        console.warn('ERROR(' + err.code + '): ' + err.message);
+                    }, options);
+                }
+                else {
+                    // No geolocation fallback: Defaults to Eeaster Island, Chile
+                    alert("Please turn on your location service so we can locate where you are.");
+                }
+            }                       
+        },
+        directionWay: function (start, latitude, longitude, type, directionsService) {
             var end = new google.maps.LatLng(latitude, longitude);
             var travelMode;
 
@@ -96,17 +121,18 @@ var FQTD = (function () {
                     travelMode = google.maps.DirectionsTravelMode.TRANSIT;
                     break;
             };
-
-            var request = {
-                origin: start,
-                destination: end,
-                travelMode: travelMode
-            };
-            directionsService.route(request, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                }
-            });
+            if (start != null && end != null) {
+                var request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: travelMode
+                };
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                    }
+                });
+            }
         },
         hidePanel: function () {
             $("#hrfClose").bind('click', function () {
@@ -130,22 +156,22 @@ var FQTD = (function () {
             })
         },
         displayList: function () {
-            $("#tabList").bind('click', (function () {
-                $("#list").removeClass("hidden");
-                $("#map").addClass("hidden");
 
-                $("#tabList").removeClass("inactive").addClass("active");
-                $("#tabMap").removeClass("active").addClass("inactive");
-            }));
+            $("#list").removeClass("hidden");
+            $("#map").addClass("hidden");
+
+            $("#tabList").removeClass("inactive").addClass("active");
+            $("#tabMap").removeClass("active").addClass("inactive");
+
         },
         displayMap: function () {
-            $("#tabMap").bind('click', function () {
-                $("#map").removeClass("hidden");
-                $("#list").addClass("hidden");
 
-                $("#tabMap").removeClass("inactive").addClass("active");
-                $("#tabList").removeClass("active").addClass("inactive");
-            })
+            $("#map").removeClass("hidden");
+            $("#list").addClass("hidden");
+
+            $("#tabMap").removeClass("inactive").addClass("active");
+            $("#tabList").removeClass("active").addClass("inactive");
+
         },
         pageselectCallback: function (page_index, jq) {
             // Get number of elements per pagionation page from form
@@ -189,17 +215,16 @@ var FQTD = (function () {
             urlResult += "&vn0_en1=0";
 
             var result = $.getJSON(urlResult, null, function (items) {
-                for (i in items) {
-                    item = items[i];
-                    if (item.Latitude != null && item.Longitude != null) {
-                        var contentmarker = '<div class="marker"><h2>' + isEmpty(item.ItemName) + '</h2><p>' + isEmpty(item.FullAddress) + '<br/>' + isEmpty(item.Phone) + '</p></div>'
+                for (var i = 0; i < items.length; i++) {                    
+                    if (items[i].Latitude != null && items[i].Longitude != null) {
+                        var contentmarker = '<div class="marker"><h2>' + isEmpty(items[i].ItemName) + '</h2><p>' + isEmpty(items[i].FullAddress) + '<br/>' + isEmpty(items[i].Phone) + '</p></div>'
                                      + '<ul id="directionIcon">'
-                                     + '<li id="car" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'car\')\"></li>'
-                                     + '<li id="bus" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'bus\')\"></li>'
-                                     + '<li id="walk" onclick=\"FQTD.calcRoute(' + item.Latitude + ',' + item.Longitude + ',\'walk\')\"></li></ul><div id="space"></div>';
-                        locations.push([item.Latitude, item.Longitude, contentmarker, isEmpty(item.ItemName), isEmpty(item.FullAddress), isEmpty(item.Phone), isEmpty(item.Logo), isEmpty(item.ItemID)]);
+                                     + '<li id="car" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'car\',' + $("#form").val() + ')\"></li>'
+                                     + '<li id="bus" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'bus\',' + $("#form").val() + ')\"></li>'
+                                     + '<li id="walk" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'walk\',' + $("#form").val() + ')\"></li></ul><div id="space"></div>';
+                        locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID)]);
                     }
-                }                
+                }
             });
 
             result.complete(function () { FQTD.BindData() });
@@ -215,7 +240,7 @@ var FQTD = (function () {
                         if (status == google.maps.GeocoderStatus.OK) {
                             //set LatLng current place
                             myplace = results[0].geometry.location;
-
+                            
                             //set map
                             var mapProp = {
                                 center: myplace,
@@ -254,17 +279,17 @@ var FQTD = (function () {
                     });
                 }
                 //set map display first
-                $("#map").removeClass("hidden");
+                FQTD.displayMap()
             }
             else {
                 if (locations.length > 0) {
-                    //set 1st place as center
-                    myplace = new google.maps.LatLng(locations[0][0], locations[0][1]);
-
+                    //set 1st place as middle of Viet Nam (Hue)                    
+                    myplace = new google.maps.LatLng(16.44980, 107.56235);
+                   
                     //set map
                     var mapProp = {
                         center: myplace,
-                        zoom: 4,
+                        zoom: 6,
                         disableDefaultUI: true,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
@@ -279,7 +304,7 @@ var FQTD = (function () {
                     }
                 }
                 //set list display first
-                $("#list").removeClass("hidden");
+                FQTD.displayMap()
             }
             FQTD.Pagination();
         },
@@ -288,8 +313,7 @@ var FQTD = (function () {
             var urlCategory = "/admin/categories/Categories";
             $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
                 for (i in categories) {
-                    category = categories[i];
-                    $("#category").append('<option value="' + category.CategoryID + '">' + category.CategoryName + '</option>');;
+                    $("#category").append('<option value="' + categories[i].CategoryID + '">' + categories[i].CategoryName + '</option>');;
                 }
             });
         },
@@ -298,8 +322,7 @@ var FQTD = (function () {
             var urlBrand = "/admin/brand/BrandsByCategory";
             $.getJSON(urlBrand + "?id=-1", null, function (brands) {
                 for (i in brands) {
-                    brand = brands[i];
-                    $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
+                    $("#brand").append('<option value="' + brands[i].BrandID + '">' + brands[i].BrandName + '</option>');;
                 }
             });
         },
@@ -372,8 +395,20 @@ var FQTD = (function () {
             });
         },
         initResult: function () {
-            FQTD.displayList();
-            FQTD.displayMap();
+            $("#tabList").bind('click', function () {
+                $("#list").removeClass("hidden");
+                $("#map").addClass("hidden");
+
+                $("#tabList").removeClass("inactive").addClass("active");
+                $("#tabMap").removeClass("active").addClass("inactive");
+            });
+            $("#tabMap").bind('click', function () {
+                $("#map").removeClass("hidden");
+                $("#list").addClass("hidden");
+
+                $("#tabMap").removeClass("inactive").addClass("active");
+                $("#tabList").removeClass("active").addClass("inactive");
+            });
             FQTD.showPanel();
             FQTD.hidePanel();
             FQTD.BindPropertyData();

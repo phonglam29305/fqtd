@@ -23,6 +23,7 @@ var locations = [
 	[10.35545,107.09198,"<h2>You are here 6</h2><p>Nice with geolocation, ain't it?</p>"]
 ];
 
+
 function getLocation()
 {	
 	if (navigator.geolocation) 
@@ -38,14 +39,17 @@ function getLocation()
 }
 
 function showPosition(position, status)
-{	
+{		
 	
 		myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		// myplace = new google.maps.LatLng(10.8243154, 106.62840310000001);
 		distance = $("#distance").val();
 		
 		//set map
 		var mapProp = {
-		  center:myplace,    
+		  center:myplace,   
+		  //zoom: 6,
+		  disableDefaultUI: true,		  
 		  mapTypeId:google.maps.MapTypeId.ROADMAP
 		  };	  
 		var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
