@@ -1,8 +1,9 @@
 ﻿/*Global variables and functions*/
 
 var FQTD = (function () {
-    var myplace, directionsDisplay;
+    var myplace, directionsDisplay, map;
     var locations = new Array();
+    var limit = 0;
 
     function isEmpty(str) {
         if ((!str || 0 === str.length) == true) {
@@ -91,17 +92,16 @@ var FQTD = (function () {
                 if (navigator.geolocation) {
                     // Get current position
                     navigator.geolocation.getCurrentPosition(function (position, status) {
-                        start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+                        start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         FQTD.directionWay(start, latitude, longitude, type, directionsService);
                     }, function (err) {
                         console.warn('ERROR(' + err.code + '): ' + err.message);
                     }, options);
                 }
                 else {
-                    // No geolocation fallback: Defaults to Eeaster Island, Chile
-                    alert("Please turn on your location service so we can locate where you are.");
+                    alert("Xin vui lòng bật chức năng định vị, như vậy chúng tôi có thể tìm những địa điểm gần bạn nhất.");
                 }
-            }                       
+            }
         },
         directionWay: function (start, latitude, longitude, type, directionsService) {
             var end = new google.maps.LatLng(latitude, longitude);
@@ -173,6 +173,11 @@ var FQTD = (function () {
             $("#tabList").removeClass("active").addClass("inactive");
 
         },
+        noRecord: function () {
+            $("#list").html("<p style='text-align:center'>No record found.</p>");
+            $("#map").html("<p style='text-align:center'>No record found.</p>");
+            FQTD.displayMap();
+        },
         pageselectCallback: function (page_index, jq) {
             // Get number of elements per pagionation page from form
             var items_per_page = 5
@@ -215,7 +220,7 @@ var FQTD = (function () {
             urlResult += "&vn0_en1=0";
 
             var result = $.getJSON(urlResult, null, function (items) {
-                for (var i = 0; i < items.length; i++) {                    
+                for (var i = 0; i < items.length; i++) {
                     if (items[i].Latitude != null && items[i].Longitude != null) {
                         var contentmarker = '<div class="marker"><h2>' + isEmpty(items[i].ItemName) + '</h2><p>' + isEmpty(items[i].FullAddress) + '<br/>' + isEmpty(items[i].Phone) + '</p></div>'
                                      + '<ul id="directionIcon">'
@@ -231,82 +236,98 @@ var FQTD = (function () {
         },
         BindData: function () {
             var range = $("#range").val();
+            if (locations.length > 0) {
+                if ($("#form").val() == "1") {
+                    var address = $("#address").val();
+                    var geocoder = new google.maps.Geocoder();
+                    if (geocoder) {
+                        geocoder.geocode({ 'address': address }, function (results, status, content) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                //set LatLng current place
+                                myplace = results[0].geometry.location;
 
-            if ($("#form").val() == "1") {
-                var address = $("#address").val();
-                var geocoder = new google.maps.Geocoder();
-                if (geocoder) {
-                    geocoder.geocode({ 'address': address }, function (results, status, content) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            //set LatLng current place
-                            myplace = results[0].geometry.location;
-                            
-                            //set map
-                            var mapProp = {
-                                center: myplace,
-                                disableDefaultUI: true,
-                                mapTypeId: google.maps.MapTypeId.ROADMAP
-                            };
-                            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                                //set map
+                                var mapProp = {
+                                    center: myplace,
+                                    disableDefaultUI: true,
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+                                map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-                            //set my city
-                            var myCity = new google.maps.Circle({
-                                center: myplace,
-                                radius: parseInt(range),
-                                strokeWeight: 0,
-                                fillColor: "#0000FF",
-                                fillOpacity: 0.1
-                            });
-                            myCity.setMap(map);
+                                //set my city
+                                var myCity = new google.maps.Circle({
+                                    center: myplace,
+                                    radius: parseInt(range),
+                                    strokeWeight: 0,
+                                    fillColor: "#0000FF",
+                                    fillOpacity: 0.1
+                                });
+                                myCity.setMap(map);
 
-                            //set direction
-                            directionsDisplay = new google.maps.DirectionsRenderer();
-                            directionsDisplay.setMap(map);
+                                //set direction
+                                directionsDisplay = new google.maps.DirectionsRenderer();
+                                directionsDisplay.setMap(map);
 
-                            map.fitBounds(myCity.getBounds());
-                            FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
+                                map.fitBounds(myCity.getBounds());
+                                FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
 
-                            for (i = 0; i < locations.length; i++) {
-                                var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
-                                if (range >= compareDistance) {
-                                    FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
+                                for (i = 0; i < locations.length; i++) {
+                                    var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
+                                    if (range >= compareDistance) {
+                                        FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
+                                    }
                                 }
-                            }
 
-                        } else {
-                            alert("Geocode was not successful for the following reason: " + status);
-                        }
-                    });
+                            } else {
+                                alert("Geocode không hoạt động vì lí do sau : " + status);
+                            }
+                        });
+                    }
+                    //set map display first
+                    FQTD.displayMap()
                 }
-                //set map display first
-                FQTD.displayMap()
+                else {
+                    if (navigator.geolocation) {
+                        // Get current position
+                        navigator.geolocation.getCurrentPosition(function (position, status) {
+                            var geocoder = new google.maps.Geocoder();
+                            myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                            FQTD.SetupMap(myplace, locations, 12);
+                        });
+                    }
+                    else {
+                        alert("Xin vui lòng bật chức năng định vị, như vậy chúng tôi có thể tìm những địa điểm gần bạn nhất.");
+                        //set default location is Hue (middle of Vietnam)
+                        myplace = new google.maps.LatLng(16.46346, 107.58470);
+                        FQTD.SetupMap(myplace, locations, 6);
+                    };
+                    //set list display first
+                    FQTD.displayMap()
+                }
+                FQTD.Pagination();
             }
             else {
-                if (locations.length > 0) {
-                    //set 1st place as middle of Viet Nam (Hue)                    
-                    myplace = new google.maps.LatLng(16.44980, 107.56235);
-                   
-                    //set map
-                    var mapProp = {
-                        center: myplace,
-                        zoom: 6,
-                        disableDefaultUI: true,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-                    //set direction
-                    directionsDisplay = new google.maps.DirectionsRenderer();
-                    directionsDisplay.setMap(map);
-
-                    for (i = 0; i < locations.length; i++) {
-                        FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
-                    }
-                }
-                //set list display first
-                FQTD.displayMap()
+                FQTD.noRecord()
             }
-            FQTD.Pagination();
+        },
+        SetupMap: function (myplace, listMarker, zoom) {
+            //set map
+            var mapProp = {
+                center: myplace,
+                zoom: zoom,
+                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+            //set direction
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+
+            for (i = 0; i <= 4; i++) {
+                FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
+                limit++;
+            }
         },
         BindSelectCategory: function () {
             //Bind data to select box Category
@@ -367,17 +388,17 @@ var FQTD = (function () {
                 }
             });
         },
-        GetCurrentPosition: function () {
+        GetCurrentPositionAddress: function () {
             ///bind event to get current position
-            $("#tryit").click(function () {
+            $("#getCurrentPosition").click(function () {
                 if (navigator.geolocation) {
                     // Get current position
                     navigator.geolocation.getCurrentPosition(function (position, status) {
                         var geocoder = new google.maps.Geocoder();
-                        myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        //myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                         if (geocoder) {
-                            geocoder.geocode({ 'latLng': myplace }, function (results, status) {
+                            geocoder.geocode({ 'latLng': new google.maps.LatLng(position.coords.latitude, position.coords.longitude) }, function (results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) {
                                     $("#address").val(results[0].formatted_address);
                                 }
@@ -389,10 +410,18 @@ var FQTD = (function () {
                     });
                 }
                 else {
-                    // No geolocation fallback: Defaults to Eeaster Island, Chile
-                    alert("Please turn on your location service so we can locate where you are.");
+                    alert("Xin vui lòng bật chức năng định vị, như vậy chúng tôi có thể định vị bạn đang ở đâu.");
                 };
             });
+        },
+        DisplayMore: function (localLimit, listMarker) {
+            var bound = (listMarker.length - localLimit) >= 5 ? 5 : (listMarker.length - localLimit);
+            bound = (parseInt(localLimit) + parseInt(bound));
+            for (i = localLimit; i <= (bound - 1) ; i++) {
+                FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
+                localLimit++;
+            }
+            limit = localLimit;
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -413,6 +442,11 @@ var FQTD = (function () {
             FQTD.hidePanel();
             FQTD.BindPropertyData();
             FQTD.GetJSON();
+            $("#btn_xemthemMap").bind("click", function () {
+                if (limit < locations.length) {
+                    FQTD.DisplayMore(limit, locations);
+                }
+            });
         },
         initHomepage: function () {
             ///event slide
@@ -446,8 +480,7 @@ var FQTD = (function () {
 
             FQTD.SetupWatermarkValidation()
             FQTD.BindTooltip()
-            FQTD.GetCurrentPosition()
-            FQTD.GetCurrentPosition()
+            FQTD.GetCurrentPositionAddress()
 
             //bind places autocomplete
             $("#address").geocomplete();
