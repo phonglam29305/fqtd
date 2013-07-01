@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using fqtd.Areas.Admin.Models;
 using fqtd.Utils;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace fqtd.Controllers
 {
@@ -173,6 +174,7 @@ namespace fqtd.Controllers
         {
             var item = from i in db.BrandItems
                        join br in db.Brands on i.BrandID equals br.BrandID
+                       join ca in db.Categories on br.CategoryID equals ca.CategoryID
                        join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                        where i.ItemID == itemID
                        select new
@@ -182,11 +184,7 @@ namespace fqtd.Controllers
                            i.ItemName
                            ,
                            i.ItemName_EN
-                           ,
-                           i.MarkerIcon
-                           ,
-                           br.Logo
-                           ,
+                          ,
                            i.Phone
                            ,
                            i.Website
@@ -205,16 +203,26 @@ namespace fqtd.Controllers
                            ,
                            lo.Longitude
                            ,
-                           lo.Latitude
+                           lo.Latitude,
+                           ca.MarkerIcon, B_MarkerIcon=br.MarkerIcon, I_MarkerIcon=i.MarkerIcon, br.Logo
                        };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
-            jsonNetResult.Data = from a in item
-                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.MarkerIcon, a.Logo, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+            
+            var result= from a in item
+                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
             if (vn0_en1 == 1)
-                jsonNetResult.Data = from a in item
-                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.MarkerIcon, a.Logo, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
-
+                result = from a in item
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+            Dictionary<string, object> list = new Dictionary<string, object>();
+            list.Add("ItemDetail", result);
+            string markerIcon = item.FirstOrDefault().I_MarkerIcon + "" == "" ? item.FirstOrDefault().B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"] + "/" + item.FirstOrDefault().MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + item.FirstOrDefault().B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocaion"] + "/" + item.FirstOrDefault().I_MarkerIcon;
+            list.Add("MakerIcon", markerIcon);
+            list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"] + item.FirstOrDefault().Logo);
+            list.Add("ItemImages", null);
+            list.Add("RelateList", null);
+            list.Add("SameBrandList", null);
+            jsonNetResult.Data = list;
             return jsonNetResult;
         }
     }

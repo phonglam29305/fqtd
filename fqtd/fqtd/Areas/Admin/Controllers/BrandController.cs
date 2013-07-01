@@ -176,7 +176,7 @@ namespace fqtd.Areas.Admin.Controllers
                 if (logo != null)
                 {
                     char DirSeparator = System.IO.Path.DirectorySeparatorChar;
-                    filesPath_logo = ConfigurationManager.AppSettings["BrandLogoLocaion"];
+                    filesPath_logo = ConfigurationManager.AppSettings["BrandLogoLocation"];
                     full_path_logo = Server.MapPath(filesPath_logo).Replace("Brands", "").Replace("Admin", "");
                     brands.Logo = FileUpload.UploadFile(logo, full_path_logo);
                 }
@@ -198,7 +198,7 @@ namespace fqtd.Areas.Admin.Controllers
                 if (logo != null)
                 {
                     string filename = brands.BrandID + "_" + logo.FileName.Replace(" ", "_").Replace("-", "_");
-                    brands.Logo = FileUpload.UploadFile(logo, filename, full_path);
+                    brands.Logo = FileUpload.UploadFile(logo, filename, full_path_logo);
                     db.Entry(brands).State = EntityState.Modified;
                     db.SaveChanges();
                 }
