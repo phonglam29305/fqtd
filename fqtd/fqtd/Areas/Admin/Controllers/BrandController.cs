@@ -183,9 +183,9 @@ namespace fqtd.Areas.Admin.Controllers
 
                 db.Entry(brands).State = EntityState.Modified;
                 db.SaveChanges();
-                if (marker+"" != "")
+                if (marker + "" != "")
                     FileUpload.DeleteFile(marker, full_path);
-                if (oldlogo+"" != "")
+                if (oldlogo + "" != "")
                     FileUpload.DeleteFile(oldlogo, full_path_logo);
 
                 if (icon != null)

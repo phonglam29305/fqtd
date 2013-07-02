@@ -186,7 +186,7 @@ var FQTD = (function () {
 
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
-                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><img id="photo" src="' + isEmpty(checkImage(locations[i][6])) + '" /></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
+                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><img id="photo" width=150 height-150 src="' + isEmpty(checkImage(locations[i][6])) + '" /></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
                     + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="#" class="lienket"><strong>Xem chi tiết</strong></a>'
                     + '| <a href="#" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }
