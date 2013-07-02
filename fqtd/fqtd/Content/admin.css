@@ -84,7 +84,7 @@ header {
 header ul {
     width: 100%;
     text-align: right;
-    margin-top: 45px;
+    padding-top: 30px;
 }
 
     header ul li {

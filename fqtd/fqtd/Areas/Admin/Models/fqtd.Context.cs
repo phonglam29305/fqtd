@@ -44,5 +44,14 @@ namespace fqtd.Areas.Admin.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Category_Properties_Result>("SP_Category_Properties", categoryIDParameter);
         }
+    
+        public virtual ObjectResult<SP_Item_Properties_Result> SP_Item_Properties(Nullable<int> itemID)
+        {
+            var itemIDParameter = itemID.HasValue ?
+                new ObjectParameter("ItemID", itemID) :
+                new ObjectParameter("ItemID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Item_Properties_Result>("SP_Item_Properties", itemIDParameter);
+        }
     }
 }

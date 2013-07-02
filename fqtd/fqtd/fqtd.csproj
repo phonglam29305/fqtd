@@ -188,6 +188,9 @@
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\SP_Item_Properties_Result.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
@@ -632,6 +635,7 @@
     <Content Include="Areas\Admin\Views\Categories\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Items\_Paging.cshtml" />
+    <Content Include="Areas\Admin\Views\Items\ImageList.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />

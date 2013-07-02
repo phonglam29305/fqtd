@@ -9,6 +9,7 @@ using fqtd.Utils;
 using Newtonsoft.Json;
 using System.Configuration;
 using System.Web.WebPages;
+using System.IO;
 
 namespace fqtd.Controllers
 {
@@ -246,7 +247,7 @@ namespace fqtd.Controllers
             string markerIcon = temp.I_MarkerIcon + "" == "" ? temp.B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocaion"] + "/" + temp.I_MarkerIcon;
             list.Add("MakerIcon", markerIcon);
             list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"] + temp.Logo);
-            list.Add("ItemImages", null);
+            list.Add("ItemImages", GetImageList(temp.ItemID));
             string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "../..");
             var relateList = from a in db.BrandItems
                              join br in db.Brands on a.BrandID equals br.BrandID
@@ -287,8 +288,32 @@ namespace fqtd.Controllers
                             Logo = path + "/" + br.Logo
                         };
             list.Add("SameCategoryList", items);
+            var properties = from a in db.SP_Item_Properties(temp.ItemID)
+                             select new { a.PropertyID, a.PropertyValue, PropertyName = vn0_en1==0? a.PropertyName :a.PropertyName_EN};
+            list.Add("PropertyList", properties);
             jsonNetResult.Data = list;
             return jsonNetResult;
+        }
+
+        private object GetImageList(int ItemID)
+        {
+            List<string> images = new List<string>();
+            string path = ConfigurationManager.AppSettings["ItemImageLocaion"] + "\\" + ItemID;
+            path = Server.MapPath(path);
+            if (Directory.Exists(path))
+            {
+                string[] files = Directory.GetFiles(path);
+
+                foreach (string s in files)
+                {
+                    string filename = Path.GetFileName(s);
+                    System.IO.File.Move(s, s.Replace(" ", "_").Replace("-", "_"));
+                    if (filename.ToLower().IndexOf(".jpg") >= 0 || filename.ToLower().IndexOf(".png") >= 0 || filename.ToLower().IndexOf(".gif") >= 0)
+                        images.Add(ConfigurationManager.AppSettings["ItemImageLocaion"].Replace("~", "../../../..") + "/" + ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
+
+                }
+            }
+            return images;
         }
     }
 }

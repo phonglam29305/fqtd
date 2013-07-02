@@ -1,0 +1,36 @@
+﻿@model fqtd.Areas.Admin.Models.BrandItems
+@{
+    ViewBag.Title = "Items list";
+    List<string> List = ViewBag.ImageList;
+}
+<div class="main-container col2-right-layout">
+    <h2>AddImages</h2>
+    <div id="AddImages">
+    </div>
+    <fieldset>
+        <legend>Them hinh</legend>
+        @using (Html.BeginForm("AddImages", "Items", new { id = Model.ItemID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {    
+            <input type="file" name="file" />
+            <input type="submit" value="Upload Image" />
+        }
+    </fieldset>
+    <div>
+        @Html.ActionLink("Trở về danh sách", "Index")
+    </div>
+
+    <table width="100%" style="">
+        @foreach (var item in from i in List.Select((value, index) => new { value, index }) group i.value by i.index / 3 into g select g)
+        {
+            <tr>
+                @foreach (var x in item)
+                {
+                    <td style="width: 33.333%; text-align: center">
+                        <img style="width: 100%;max-width: 300px" src="@x" />
+                        @Html.ActionLink("Xoa", "DeleteImage", new { id = Model.ItemID, image = x })
+                    </td> 
+                }
+            </tr>
+        }
+    </table>
+</div>

@@ -11,6 +11,8 @@ using PagedList;
 using System.Configuration;
 using System.Data;
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 namespace fqtd.Areas.Admin.Controllers
 {
@@ -21,11 +23,11 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Items/
 
-        public ActionResult Index(string keyword = "", int ?CategoryID=null, int? BrandID = null, int page = 1)
+        public ActionResult Index(string keyword = "", int? CategoryID = null, int? BrandID = null, int page = 1)
         {
             var result = from a in db.BrandItems where (a.ItemName.Contains(keyword) || a.ItemName_EN.Contains(keyword)) select a;
             if (CategoryID != null)
-                result = result.Where(a=>a.tbl_Brands.CategoryID == CategoryID);
+                result = result.Where(a => a.tbl_Brands.CategoryID == CategoryID);
             if (BrandID != null)
                 result = result.Where(a => a.BrandID == BrandID);
             result = result.OrderBy("ItemName");
@@ -40,7 +42,7 @@ namespace fqtd.Areas.Admin.Controllers
             return View(result.ToPagedList(currentPage, maxRecords));
         }
 
-        
+
         //
         // GET: /Admin/Items/Details/5
 
@@ -169,6 +171,51 @@ namespace fqtd.Areas.Admin.Controllers
             }
             return View(branditems);
         }
+
+
+        public ViewResult ImageList(int id)
+        {
+            BrandItems item = db.BrandItems.Find(id);
+            string path = ConfigurationManager.AppSettings["ItemImageLocaion"] + "\\" + item.ItemID;
+            path = Server.MapPath(path);
+            List<string> list = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] files = Directory.GetFiles(path);
+
+                foreach (string s in files)
+                {
+                    string filename = Path.GetFileName(s);
+                    System.IO.File.Move(s, s.Replace(" ", "_").Replace("-", "_"));
+                    if (filename.ToLower().IndexOf(".jpg") >= 0 || filename.ToLower().IndexOf(".png") >= 0 || filename.ToLower().IndexOf(".gif") >= 0)
+                        list.Add(ConfigurationManager.AppSettings["ItemImageLocaion"].Replace("~", "../../../..") + "/" + item.ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
+
+                }
+            }
+            ViewBag.ImageList = list;
+            return View(item);
+        }
+        [HttpPost]
+        //[Authorize]
+        public ActionResult AddImages(int id, HttpPostedFileBase file)
+        {
+            var item = db.BrandItems.Find(id);
+            if (ModelState.IsValid)
+            {
+                //HttpPostedFileBase hpf = Request.Files[0] as HttpPostedFileBase;
+
+                if (file != null)
+                {
+                    char DirSeparator = System.IO.Path.DirectorySeparatorChar;
+                    string FilesPath = ConfigurationManager.AppSettings["ItemImageLocaion"];
+                    string full_path = Server.MapPath(FilesPath).Replace("Items", "").Replace("AddImages", "").Replace(" ", "_").Replace("-", "_") + "\\" + item.ItemID;
+                    FileUpload.UploadFile(file, full_path);
+                }
+                return RedirectToAction("ImageList", new { id = item.ItemID });
+            }
+            return View(item);
+        }
+
 
         //
         // POST: /Admin/Items/Delete/5

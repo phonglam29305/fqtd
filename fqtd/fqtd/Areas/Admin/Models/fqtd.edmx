@@ -248,6 +248,9 @@
         <Function Name="SP_Category_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_Item_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
+          <Parameter Name="ItemID" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -286,6 +289,9 @@
           </AssociationSet>
           <FunctionImport Name="SP_Category_Properties" ReturnType="Collection(fqtdModel.SP_Category_Properties_Result)">
           <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Item_Properties" ReturnType="Collection(fqtdModel.SP_Item_Properties_Result)">
+            <Parameter Name="ItemID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
@@ -513,6 +519,13 @@
           <Property Type="String" Name="PropertyName_EN" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="Description" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_Item_Properties_Result">
+          <Property Type="Int32" Name="ItemID" Nullable="true" />
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="String" Name="PropertyName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="PropertyName_EN" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="PropertyValue" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -667,6 +680,17 @@
                 <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
                 <ScalarProperty Name="PropertyName_EN" ColumnName="PropertyName_EN" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Item_Properties" FunctionName="fqtdModel.Store.SP_Item_Properties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="fqtdModel.SP_Item_Properties_Result">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyName_EN" ColumnName="PropertyName_EN" />
+                <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
