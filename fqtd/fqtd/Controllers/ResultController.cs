@@ -8,6 +8,7 @@ using fqtd.Areas.Admin.Models;
 using fqtd.Utils;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Web.WebPages;
 
 namespace fqtd.Controllers
 {
@@ -43,9 +44,15 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByBrandID(int id = -1, int vn0_en1 = 0)
         {
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"];
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"];
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"];
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+
             //var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
+                         join c in db.Categories on br.CategoryID equals c.CategoryID
                          join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                          where i.BrandID == id
                          select new
@@ -61,7 +68,8 @@ namespace fqtd.Controllers
                              i.Description_EN,
                              lo.Longitude,
                              lo.Latitude,
-                             br.Logo
+                             Logo = path + "/" + br.Logo,
+                             MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
@@ -76,6 +84,12 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByCategoryID(int id = -1, int vn0_en1 = 0)
         {
+
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
+
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -94,22 +108,28 @@ namespace fqtd.Controllers
                              i.Description_EN,
                              lo.Longitude,
                              lo.Latitude,
-                             br.Logo
+                             Logo = path + "/" + br.Logo,
+                             MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
             //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
-                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.Phone };
+                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.MarkerIcon, a.Phone };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in brands
-                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.Phone };
+                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Website, a.Logo, a.MarkerIcon, a.Phone };
 
             return jsonNetResult;
         }
 
         public ActionResult ItemByKeyword(string keyword, int vn0_en1 = 0)
         {
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
+
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -130,7 +150,8 @@ namespace fqtd.Controllers
                              i.Description_EN,
                              lo.Longitude,
                              lo.Latitude,
-                             br.Logo
+                             Logo = path + "/" + br.Logo,
+                             MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
             //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             JsonNetResult jsonNetResult = new JsonNetResult();
@@ -204,24 +225,68 @@ namespace fqtd.Controllers
                            lo.Longitude
                            ,
                            lo.Latitude,
-                           ca.MarkerIcon, B_MarkerIcon=br.MarkerIcon, I_MarkerIcon=i.MarkerIcon, br.Logo
+                           ca.MarkerIcon,
+                           B_MarkerIcon = br.MarkerIcon,
+                           I_MarkerIcon = i.MarkerIcon,
+                           br.Logo,
+                           br.BrandID,
+                           br.CategoryID
                        };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
-            
-            var result= from a in item
-                                 select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+
+            var result = from a in item
+                         select new { a.ItemID, a.ItemName, a.Description, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
             if (vn0_en1 == 1)
                 result = from a in item
-                                     select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
+                         select new { a.ItemID, ItemName = a.ItemName_EN, Description = a.Description_EN, a.Longitude, a.Latitude, a.FullAddress, a.Phone, a.Website, a.OpenTime, a.ClickCount, a.SearchCount };
             Dictionary<string, object> list = new Dictionary<string, object>();
             list.Add("ItemDetail", result);
-            string markerIcon = item.FirstOrDefault().I_MarkerIcon + "" == "" ? item.FirstOrDefault().B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"] + "/" + item.FirstOrDefault().MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + item.FirstOrDefault().B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocaion"] + "/" + item.FirstOrDefault().I_MarkerIcon;
+            var temp = item.FirstOrDefault();
+            string markerIcon = temp.I_MarkerIcon + "" == "" ? temp.B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocaion"] + "/" + temp.I_MarkerIcon;
             list.Add("MakerIcon", markerIcon);
-            list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"] + item.FirstOrDefault().Logo);
+            list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"] + temp.Logo);
             list.Add("ItemImages", null);
-            list.Add("RelateList", null);
-            list.Add("SameBrandList", null);
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "../..");
+            var relateList = from a in db.BrandItems
+                             join br in db.Brands on a.BrandID equals br.BrandID
+                             join ca in db.Categories on br.CategoryID equals ca.CategoryID
+                             join lo in db.ItemLocations on a.ItemID equals lo.ItemID
+                             where a.ItemID != temp.ItemID && a.BrandID == temp.BrandID
+                             select new
+                             {
+                                 a.ItemID,
+                                 ItemName = vn0_en1 == 0 ? a.ItemName : a.ItemName_EN
+                                 ,
+                                 a.Phone
+                                 ,
+                                 a.Website
+                                 ,
+                                 lo.FullAddress
+                                 ,
+                                 Logo = path + "/" + br.Logo
+                             };
+            list.Add("RelateList", relateList);
+            var items = from i in db.BrandItems
+                        join br in db.Brands on i.BrandID equals br.BrandID
+                        join ca in db.Categories on br.CategoryID equals ca.CategoryID
+                        join lo in db.ItemLocations on i.ItemID equals lo.ItemID
+                        where i.ItemID != itemID && br.CategoryID == temp.CategoryID
+                        select new
+                        {
+                            i.ItemID
+                            ,
+                            ItemName = vn0_en1 == 0 ? i.ItemName : i.ItemName_EN
+                             ,
+                            i.Phone
+                            ,
+                            i.Website
+                            ,
+                            lo.FullAddress
+                            ,
+                            Logo = path + "/" + br.Logo
+                        };
+            list.Add("SameCategoryList", items);
             jsonNetResult.Data = list;
             return jsonNetResult;
         }
