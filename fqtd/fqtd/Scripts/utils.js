@@ -218,7 +218,7 @@ var FQTD = (function () {
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
             urlResult += "&vn0_en1=0";
-            console.log(urlResult);
+            
             var result = $.getJSON(urlResult, null, function (items) {
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].Latitude != null && items[i].Longitude != null) {
@@ -484,6 +484,22 @@ var FQTD = (function () {
 
             //bind places autocomplete
             $("#address").geocomplete();
+        },
+        initDetail: function () {
+            var urlResult = "/result/itemdetail?";
+            urlResult += "itemid=6270";
+           
+            
+            var result = $.getJSON(urlResult, null, function (object) {
+                console.log(object.ItemDetail[0])
+                if (object != null) {
+                    if (object.ItemDetail[0] != null) {
+                        $("#brandname").html(object.ItemDetail[0].BrandName)
+                        $("#branddescription").html(object.ItemDetail[0].Description)
+                        $("#tendiadiem").html("<h2>" + object.ItemDetail[0].ItemName + "</h2>")
+                    }
+                }
+            });
         }
     };
 })();

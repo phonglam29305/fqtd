@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Utils\Dynamic.cs" />
     <Compile Include="Utils\FileUpload.cs" />
@@ -651,6 +652,7 @@
     <Content Include="Images\close.gif" />
     <Content Include="Images\direction-map-sprite.png" />
     <Content Include="Images\home.png" />
+    <Content Include="Images\icon+.png" />
     <Content Include="Images\icon1.png" />
     <Content Include="Images\icon_arrow.png" />
     <Content Include="Images\icon_arrow_over.png" />
@@ -671,6 +673,7 @@
     <Content Include="Images\icon_left_over.png" />
     <Content Include="Images\icon_list.jpg" />
     <Content Include="Images\icon_map.jpg" />
+    <Content Include="Images\icon_p.png" />
     <Content Include="Images\icon_right.png" />
     <Content Include="Images\icon_right_over.png" />
     <Content Include="Images\icon_tw.png" />
@@ -749,6 +752,7 @@
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\MasterSub.cshtml" />
+    <Content Include="Views\Detail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

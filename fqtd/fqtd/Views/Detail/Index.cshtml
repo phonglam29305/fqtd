@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/MasterSub.cshtml";      
+}
+
+<div id="content_subdetail">
+    <div id="gioithieuchung">
+        <h1 id="brandname"></h1>
+        <p id="branddescription"></p>
+    </div>
+    <div id="tendiadiem">        
+    </div>
+    <div id="thongtinchitiet">
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td class="group">
+                                <div class="title_box">
+                                    <table>
+                                        <tr>
+                                            <td class="row1">THÔNG TIN ĐỊA ĐIỂM</td>
+                                            <td class="row2">
+                                                <img src="../images/icon_down.png" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div>
+                                    <table id="detailinfo">
+                                        <tr>
+                                            <td>Vị trí khu vực</td>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ở gần</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Chỉ đường</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thể loại</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sức chứa</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thời gian hoạt động</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="whiteline">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="group">
+                                <div class="title_box">
+                                    <table>
+                                        <tr>
+                                            <td class="row1">CÙNG THƯƠNG HIỆU</td>
+                                            <td class="row2">
+                                                <img src="../images/icon_down.png" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="content_box">
+                                    <table id="samebrand">
+                                        <tr>
+                                            <td>
+                                                <img src="../images/photo3.jpg" id="photo3" /><br />
+                                                <strong>KFC Cộng Hòa</strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width:20px"></td>
+                <td style="width:240px">
+                    <table>
+                        <tr>
+                            <td class="group">
+                                <div class="title_box">CÁC TIỆN ÍCH</div>
+                                <div class="content_box">
+                                    <table id="tblproperty">
+                                        <tr>
+                                            <td class="row1">
+                                                <img src="../images/bullet_green.png" /></td>
+                                            <td>text text text text </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20px">&nbsp;</td>
+                        </tr>
+                        @*<tr>
+                            <td id="group">
+                                <div id="title_box">HÌNH ẢNH</div>
+                                <div id="content_box">
+                                    <table width="100%" border="0" cellspacing="10" cellpadding="10">
+                                        <tr>
+                                            <td width="50%" align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                            <td width="50%" align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                            <td align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                            <td align="center" valign="top">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="20">&nbsp;</td>
+                        </tr>*@
+                        <tr>
+                            <td class="group">
+                                <div class="title_box">CÙNG THỂ LOẠI</div>
+                                <div class="content_box">
+                                    <table id="tblSameCategory">
+                                        <tr>
+                                            <td class="row1">
+                                                <img src="../images/photo2.jpg" id="photo2"></td>
+                                            <td class="row2">Lotterica Trần Quốc Thảo<br />
+                                                <a href="#" class="chitiet">Chi tiết</a>
+                                                <img src="../images/bullet_grey.png" />
+                                            </td>
+                                        </tr>                                       
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="whiteline">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td id="sociallink">
+                                <a href="#">
+                                    <img src="../images/icon_fb.png" border="0" /></a><a href="#"><img src="../images/icon_tw.png" border="0" /></a><a href="#"><img src="../images/icon_email.png" border="0" /></a><a href="#"><img src="../images/icon_p.png" border="0" /></a><a href="#"><img src="../images/icon+.png" border="0" /></a>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        jQuery(document).ready(function ($) {
+            FQTD.initDetail();
+        });
+    </script>
+}

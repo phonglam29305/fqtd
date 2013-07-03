@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace fqtd.Controllers
 {
-    public class HomeController : Controller
+    public class DetailController : Controller
     {
         public ActionResult Index()
-        {         
+        {            
 
             return View("Index");
         }      
