@@ -45,10 +45,10 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByBrandID(int id = -1, int vn0_en1 = 0)
         {
-            string path = ConfigurationManager.AppSettings["BrandLogoLocation"];
-            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"];
-            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"];
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
 
             //var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             var brands = from i in db.BrandItems
