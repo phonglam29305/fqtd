@@ -290,7 +290,7 @@ namespace fqtd.Controllers
                         };
             list.Add("SameCategoryList", items.OrderBy(t => Guid.NewGuid()).Take(5));
             var properties = from a in db.SP_Item_Properties(temp.ItemID)
-                             select new { a.PropertyID, a.PropertyValue, PropertyName = vn0_en1==0? a.PropertyName :a.PropertyName_EN};
+                             select new { a.PropertyID , a.PropertyValue, PropertyName = vn0_en1==0? a.PropertyName :a.PropertyName_EN};
             list.Add("PropertyList", properties);
             jsonNetResult.Data = list;
             return jsonNetResult;

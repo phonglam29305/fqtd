@@ -548,11 +548,13 @@ input {
 .chitiet:link {
     color: #35a018;
     text-decoration: none;
+    padding-right: 5px;
 }
 
 .chitiet:hover {
     color: #35a018;
     text-decoration: underline;
+    padding-right: 5px;
 }
 
 .chitiet:visited {
@@ -712,19 +714,44 @@ input {
     width: 25%;
 }
 
-#tblproperty .row1  {
-    width:10px;
-    float:right;    
+#samebrand img {
+    width: 150px;
+    border: 0px none;
+}
+
+#samebrand a {
+    border: 0px none;
+}
+
+#tblproperty .row1 {
+    width: 10px;
+    float: right;
 }
 
 #tblSameCategory .row1 {
-     text-align:center;
-     width:50%;     
+    text-align: center;
+    width: 50%;
 }
 
+    #tblSameCategory .row1 img {
+        border:0px none;
+    }
+
+    #tblSameCategory .row1 a {
+        border:0px none;
+    }
+
 #tblSameCategory .row2 {
-      width:50%;
-      text-align:left;      
+    width: 50%;
+    text-align: left;
+}
+
+.silverrow {
+    background-color: #eaeaea;
+}
+
+.samecategorylogo {
+    width: 98px;
 }
 /********************
 *   Mobile Styles   *

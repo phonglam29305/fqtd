@@ -491,13 +491,42 @@ var FQTD = (function () {
            
             
             var result = $.getJSON(urlResult, null, function (object) {
-                console.log(object.ItemDetail[0])
+                console.log(object.PropertyList[0].PropertyName)
                 if (object != null) {
+                    //bind data to item detail
                     if (object.ItemDetail[0] != null) {
                         $("#brandname").html(object.ItemDetail[0].BrandName)
                         $("#branddescription").html(object.ItemDetail[0].Description)
                         $("#tendiadiem").html("<h2>" + object.ItemDetail[0].ItemName + "</h2>")
+                        $("#txtaddress").html(object.ItemDetail[0].FullAddress)
+                        $("#txtphone").html(object.ItemDetail[0].Phone)
+                        $("#txtwebsite").html(object.ItemDetail[0].Website)
+                        $("#txtopentime").html(object.ItemDetail[0].OpenTime)                        
                     }
+                    //bind data to same brand list
+                    var relatelist = "";
+                    if (object.RelateList.length > 0) {
+                        for (var i = 0; i < 4; i++) {
+                            relatelist += "<td><a href='/detail/" + object.RelateList[i].ItemID + "'><img src='" + object.RelateList[i].Logo + "'/></a><br /><strong>" + object.RelateList[i].ItemName + "</strong></td>"
+                        }
+                    }
+                    $("#samebrand").html(relatelist)
+                    //bind data to property list
+                    var propertylist = "";
+                    if (object.PropertyList.length > 0) {
+                        for (var i = 0; i < object.PropertyList.length; i++) {
+                            propertylist += "<tr><td class='row1'><img src='../images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
+                        }
+                    }                    
+                    $("#tblproperty").html(propertylist)
+                    //bind data to same category list
+                    var samecategoryList = "";
+                    if (object.SameCategoryList.length > 0) {
+                        for (var i = 0; i < object.SameCategoryList.length; i++) {
+                            samecategoryList += "<tr><td class='row1'><a href='/detail/" + object.SameCategoryList[i].ItemID + "'><img class='samecategorylogo' src='" + object.SameCategoryList[i].Logo + "'></a></td><td class='row2'>" + object.SameCategoryList[i].ItemName + "<br /><a href='/detail/" + object.SameCategoryList[i].ItemID + "' class='chitiet'>Chi tiết</a><img src='../images/bullet_grey.png' /></td></tr>"
+                        }
+                    }
+                    $("#tblSameCategory").html(samecategoryList)
                 }
             });
         }

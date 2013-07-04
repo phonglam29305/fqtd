@@ -8,7 +8,7 @@
         <h1 id="brandname"></h1>
         <p id="branddescription"></p>
     </div>
-    <div id="tendiadiem">        
+    <div id="tendiadiem">
     </div>
     <div id="thongtinchitiet">
         <table>
@@ -29,28 +29,20 @@
                                 <div>
                                     <table id="detailinfo">
                                         <tr>
-                                            <td>Vị trí khu vực</td>
-                                            <td>...</td>
+                                            <td>Địa chỉ</td>
+                                            <td id="txtaddress"></td>
+                                        </tr>
+                                        <tr class="silverrow">
+                                            <td>Điện thoại</td>
+                                            <td id="txtphone"></td>
                                         </tr>
                                         <tr>
-                                            <td>Ở gần</td>
-                                            <td></td>
+                                            <td>Website</td>
+                                            <td id="txtwebsite"></td>
                                         </tr>
-                                        <tr>
-                                            <td>Chỉ đường</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Thể loại</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sức chứa</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Thời gian hoạt động</td>
-                                            <td></td>
+                                        <tr class="silverrow">
+                                            <td>Giờ mở cửa</td>
+                                            <td id="txtopentime"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -71,38 +63,28 @@
                                     </table>
                                 </div>
                                 <div class="content_box">
-                                    <table id="samebrand">
-                                        <tr>
-                                            <td>
-                                                <img src="../images/photo3.jpg" id="photo3" /><br />
-                                                <strong>KFC Cộng Hòa</strong>
-                                            </td>
-                                        </tr>
+                                    <table>
+                                        <tr id="samebrand"></tr>
                                     </table>
                                 </div>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td style="width:20px"></td>
-                <td style="width:240px">
+                <td style="width: 20px"></td>
+                <td style="width: 240px">
                     <table>
                         <tr>
                             <td class="group">
                                 <div class="title_box">CÁC TIỆN ÍCH</div>
                                 <div class="content_box">
                                     <table id="tblproperty">
-                                        <tr>
-                                            <td class="row1">
-                                                <img src="../images/bullet_green.png" /></td>
-                                            <td>text text text text </td>
-                                        </tr>
                                     </table>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:20px">&nbsp;</td>
+                            <td style="width: 20px">&nbsp;</td>
                         </tr>
                         @*<tr>
                             <td id="group">
@@ -138,15 +120,7 @@
                             <td class="group">
                                 <div class="title_box">CÙNG THỂ LOẠI</div>
                                 <div class="content_box">
-                                    <table id="tblSameCategory">
-                                        <tr>
-                                            <td class="row1">
-                                                <img src="../images/photo2.jpg" id="photo2"></td>
-                                            <td class="row2">Lotterica Trần Quốc Thảo<br />
-                                                <a href="#" class="chitiet">Chi tiết</a>
-                                                <img src="../images/bullet_grey.png" />
-                                            </td>
-                                        </tr>                                       
+                                    <table id="tblSameCategory">                                        
                                     </table>
                                 </div>
                             </td>
@@ -156,10 +130,18 @@
                         </tr>
                         <tr>
                             <td id="sociallink">
-                                <a href="#">
-                                    <img src="../images/icon_fb.png" border="0" /></a><a href="#"><img src="../images/icon_tw.png" border="0" /></a><a href="#"><img src="../images/icon_email.png" border="0" /></a><a href="#"><img src="../images/icon_p.png" border="0" /></a><a href="#"><img src="../images/icon+.png" border="0" /></a>
+                                <!-- AddThis Button BEGIN -->
+                               @* <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                                    <a class="addthis_button_preferred_1"></a>
+                                    <a class="addthis_button_preferred_2"></a>
+                                    <a class="addthis_button_preferred_3"></a>
+                                    <a class="addthis_button_compact"></a>
+                                    <a class="addthis_counter addthis_bubble_style"></a>
+                                </div>
+                                <script type="text/javascript">var addthis_config = { "data_track_addressbar": true };</script>
+                                <script type="text/javascript" src="//s7.addthis.*@com/js/300/addthis_widget.js#pubid=anhvuphamx"></script>
+                                <!-- AddThis Button END -->
                             </td>
-
                         </tr>
                     </table>
 
