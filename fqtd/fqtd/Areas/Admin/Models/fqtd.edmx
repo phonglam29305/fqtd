@@ -167,7 +167,7 @@
           <Property Name="OrderNumber" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
-          <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="256" />
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ModifyUser" Type="nvarchar" MaxLength="256" />
           <Property Name="DeleteDate" Type="datetime" />
@@ -291,7 +291,7 @@
           <Parameter Name="CategoryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_Item_Properties" ReturnType="Collection(fqtdModel.SP_Item_Properties_Result)">
-            <Parameter Name="ItemID" Mode="In" Type="Int32" />
+          <Parameter Name="ItemID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
@@ -434,7 +434,7 @@
           <Property Name="OrderNumber" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />

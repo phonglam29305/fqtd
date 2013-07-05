@@ -185,6 +185,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
@@ -637,6 +638,11 @@
     <Content Include="Areas\Admin\Views\Brand\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Items\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Items\ImageList.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />
