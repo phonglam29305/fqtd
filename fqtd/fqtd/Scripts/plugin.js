@@ -122,7 +122,7 @@
     };
 }(jQuery, window));
 
-;(function ($, window, undefined) {
+; (function ($, window, undefined) {
 
     var
         // String constants for data names
@@ -930,7 +930,7 @@
 		            log = fieldDescription.conditional;
 		        }
 
-		        describedby.html(log || '');		       
+		        describedby.html(log || '');
 		    }
 
 		    // Check if display message in the textbox
@@ -939,7 +939,7 @@
 		            field.val(fieldDescription.required);
 		        }
 		    }
-		    
+
 
 		    if (typeof (validation.each) == 'function') {
 
@@ -1079,10 +1079,19 @@
                             // If form is valid
                             if (formValid) {
 
-                                // Send form?
-                                if (!options.sendForm) {
+                                // Send form post?
+                                if (!options.sendFormPost) {
 
                                     event.preventDefault();
+
+                                    var address = form[0]["address"] != null ? form[0]["address"].value : "0"
+                                    var type = form[0]["form"] != null ? form[0]["form"].value : "0"
+                                    var range = form[0]["range"] != null ? form[0]["range"].value : "0"
+                                    var category = form[0]["category"] != null ? form[0]["category"].value : "0"
+                                    var brand = form[0]["brand"] != null ? form[0]["brand"].value : "0"
+                                    var search = form[0]["search"] != null ? form[0]["search"].value : "0"
+                                    
+                                    window.location.href = "result/index/" + type + "/" + category + "/" + brand + "/" + range + "/" + address + "/" + search
                                 }
 
                                 // Is a function?
@@ -1090,6 +1099,7 @@
 
                                     options.valid.call(form, event, options);
                                 }
+
                             } else {
 
                                 event.preventDefault();
@@ -1134,7 +1144,7 @@
 })({
 
     // Send form if is valid?
-    sendForm: true,
+    sendFormPost: true,
 
     // Use WAI-ARIA properties
     waiAria: true,

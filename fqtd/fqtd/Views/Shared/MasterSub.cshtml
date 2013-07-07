@@ -4,37 +4,39 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - timdau.vn</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=1040" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/modernizr")
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false"></script>
 </head>
 <body>
-
-    <div id="header_subpage">
-		<img id="logo_small" src="../images/logo_small1.png" />
-		<div id="back_home"><img src="../images/icon_home.png" /> <a href="/">Trang chủ</a></div>
-	</div>
-
+    <header>
+        <div id="header_subpage">
+            <img id="logo_small" src="/images/logo_small1.png" />
+            <div id="back_home">
+                <img src="/images/icon_home.png" />
+                <a href="/">Trang chủ</a></div>
+        </div>
+    </header>
     <div id="wrapper">
         @RenderSection("featured", required: false)
         @RenderBody()
     </div>
-
-    <div id="bottom">
-        <div id="bottom_info">
-            <div id="bottom_left">Copyright@2013 by Timdau.com</div>
-            <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
+    <footer>
+        <div id="bottom">
+            <div id="bottom_info">
+                <div id="bottom_left">Copyright@2013 by Timdau.com</div>
+                <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
+            </div>
         </div>
-    </div>
-    
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/plugin")  
-    @Scripts.Render("~/bundles/infobox") 
-    @Scripts.Render("~/bundles/utils") 
+    @Scripts.Render("~/bundles/plugin")
+    @Scripts.Render("~/bundles/infobox")
+    @Scripts.Render("~/bundles/utils")
     @RenderSection("scripts", required: false)
-    
+
 </body>
 </html>

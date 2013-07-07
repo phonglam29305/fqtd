@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Configuration;
 using System.Web.WebPages;
 using System.IO;
+using System.Web.UI;
 
 namespace fqtd.Controllers
 {
@@ -45,10 +46,10 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByBrandID(int id = -1, int vn0_en1 = 0)
         {
-            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
-            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
-            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
 
             //var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             var brands = from i in db.BrandItems
@@ -86,10 +87,10 @@ namespace fqtd.Controllers
         public ActionResult ItemByCategoryID(int id = -1, int vn0_en1 = 0)
         {
 
-            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
-            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
-            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
 
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
@@ -126,10 +127,10 @@ namespace fqtd.Controllers
 
         public ActionResult ItemByKeyword(string keyword, int vn0_en1 = 0)
         {
-            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "..");
-            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "..");
-            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "..");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "..");
+            string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
+            string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
+            string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
 
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
@@ -232,7 +233,9 @@ namespace fqtd.Controllers
                            br.Logo,
                            br.BrandID,
                            br.CategoryID
-                           , br.BrandName, br.BrandName_EN
+                           ,
+                           br.BrandName,
+                           br.BrandName_EN
                        };
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
@@ -290,7 +293,7 @@ namespace fqtd.Controllers
                         };
             list.Add("SameCategoryList", items.OrderBy(t => Guid.NewGuid()).Take(5));
             var properties = from a in db.SP_Item_Properties(temp.ItemID)
-                             select new { a.PropertyID , a.PropertyValue, PropertyName = vn0_en1==0? a.PropertyName :a.PropertyName_EN};
+                             select new { a.PropertyID, a.PropertyValue, PropertyName = vn0_en1 == 0 ? a.PropertyName : a.PropertyName_EN };
             list.Add("PropertyList", properties);
             jsonNetResult.Data = list;
             return jsonNetResult;

@@ -42,6 +42,17 @@ body {
     background-image: url(../images/bg_bottom.jpg);
     background-repeat: repeat-x;
     text-align: center;
+    position: absolute;
+}
+
+#bottomHome {
+    height: 40px;
+    width: 100%;
+    background-image: url(../images/bg_bottom.jpg);
+    background-repeat: repeat-x;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
 }
 
 #bottom_info {
@@ -101,6 +112,7 @@ body {
     position: relative;
     overflow: hidden;
     margin: 0 auto;
+    height: 100%;
 }
 
 #content_sub {
@@ -660,20 +672,26 @@ input {
         cursor: pointer;
     }
 
-#car {
+#moto {
     left: 0px;
     width: 18px;
+    background: url('../images/direction-map-sprite.png') -70px 0;
+}
+
+#car {
+    left: 25px;
+    width: 19px;
     background: url('../images/direction-map-sprite.png') -46px 0;
 }
 
 #bus {
-    left: 27px;
+    left: 50px;
     width: 15px;
     background: url('../images/direction-map-sprite.png') -95px 0;
 }
 
 #walk {
-    left: 49px;
+    left: 71px;
     width: 15px;
     background: url('../images/direction-map-sprite.png') -23px 0;
 }
@@ -684,6 +702,22 @@ input {
     padding: 0 14px;
     background: url('../images/tipbox.gif') no-repeat #fff;
 }
+
+    .infoBox #linkview {
+        float: right;
+    }
+
+        .infoBox #linkview a {
+            color: #35a018;
+            text-decoration: none;
+            padding-right: 5px;
+        }
+
+            .infoBox #linkview a:hover {
+                color: #35a018;
+                text-decoration: underline;
+                padding-right: 5px;
+            }
 
 .currentplace {
     font-size: 20px;
@@ -734,11 +768,11 @@ input {
 }
 
     #tblSameCategory .row1 img {
-        border:0px none;
+        border: 0px none;
     }
 
     #tblSameCategory .row1 a {
-        border:0px none;
+        border: 0px none;
     }
 
 #tblSameCategory .row2 {
@@ -752,6 +786,10 @@ input {
 
 .samecategorylogo {
     width: 98px;
+}
+
+#staticmap {
+    width: 682px;
 }
 /********************
 *   Mobile Styles   *

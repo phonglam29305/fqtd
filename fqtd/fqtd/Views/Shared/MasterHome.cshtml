@@ -4,34 +4,34 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - timdau.vn</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=1040" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-    <div id="header">
-        <img src="../images/logo_big1.png" />
-    </div>
-
+    <header>
+        <div id="header">
+            <img src="/images/logo_big1.png" />
+        </div>
+    </header>
     <div id="wrapper">
         @RenderSection("featured", required: false)
         @RenderBody()
     </div>
-
-    <div id="bottom">
-        <div id="bottom_info">
-            <div id="bottom_left">Copyright@2013 by Timdau.com</div>
-            <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
+    <footer>
+        <div id="bottomHome">
+            <div id="bottom_info">
+                <div id="bottom_left">Copyright@2013 by Timdau.com</div>
+                <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
+            </div>
         </div>
-    </div>
-
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/plugin")
-    @Scripts.Render("~/bundles/utils") 
+    @Scripts.Render("~/bundles/utils")
     @RenderSection("scripts", required: false)
 </body>
 </html>

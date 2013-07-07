@@ -16,7 +16,7 @@ var FQTD = (function () {
 
     function checkImage(str) {
         if ((!str || 0 === str.length) == true) {
-            return '../images/no-image.jpg';
+            return '/images/no-image.jpg';
         }
         else {
             return str;
@@ -187,10 +187,10 @@ var FQTD = (function () {
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
                 newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><img id="photo" width="150" height="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
-                    + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="#" class="lienket"><strong>Xem chi tiết</strong></a>'
-                    + '| <a href="#" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
+                    + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" class="lienket"  target="_blank"><strong>Xem chi tiết</strong></a>'
+                    + '| <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }
-            
+
             // Replace old content with new content
             $('#subList').html(newcontent);
 
@@ -210,7 +210,7 @@ var FQTD = (function () {
         },
         GetJSON: function () {
             //Get data result
-            var urlResult = "/Result/search?";
+            var urlResult = "/result/search?";
             urlResult += "mode=" + $("#form").val();
             urlResult += "&keyword=" + $("#search").val();
             urlResult += "&currentLocation=" + $("#address").val();
@@ -218,15 +218,17 @@ var FQTD = (function () {
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
             urlResult += "&vn0_en1=0";
-            
+
             var result = $.getJSON(urlResult, null, function (items) {
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].Latitude != null && items[i].Longitude != null) {
                         var contentmarker = '<div class="marker"><h2>' + isEmpty(items[i].ItemName) + '</h2><p>' + isEmpty(items[i].FullAddress) + '<br/>' + isEmpty(items[i].Phone) + '</p></div>'
                                      + '<ul id="directionIcon">'
+                                     + '<li id="moto" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'car\',' + $("#form").val() + ')\"></li>'
                                      + '<li id="car" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'car\',' + $("#form").val() + ')\"></li>'
                                      + '<li id="bus" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'bus\',' + $("#form").val() + ')\"></li>'
-                                     + '<li id="walk" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'walk\',' + $("#form").val() + ')\"></li></ul><div id="space"></div>';
+                                     + '<li id="walk" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'walk\',' + $("#form").val() + ')\"></li></ul>'
+                                     + '<div id="linkview"><a href="/detail/' + isEmpty(items[i].ItemID) + '" target="_blank">Xem chi tiết</a></div><div id="space"></div>';
                         locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID)]);
                     }
                 }
@@ -354,6 +356,7 @@ var FQTD = (function () {
             $("#range").watermark("Bán kính");
             $("#form1").validate({
                 onChange: true,
+                sendFormPost: false,
                 eachValidField: function () {
 
                     $(this).closest('div').removeClass('error').addClass('success');
@@ -365,6 +368,7 @@ var FQTD = (function () {
             });
             $("#form2").validate({
                 onChange: true,
+                sendFormPost: false,
                 eachValidField: function () {
 
                     $(this).closest('div').removeClass('error').addClass('success');
@@ -422,6 +426,10 @@ var FQTD = (function () {
                 localLimit++;
             }
             limit = localLimit;
+        },
+        DisplayDirection: function (lat, long) {
+            FQTD.displayMap()
+            FQTD.calcRoute(lat, long, 'car', $("#form").val())
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -484,14 +492,14 @@ var FQTD = (function () {
 
             //bind places autocomplete
             $("#address").geocomplete();
+
         },
         initDetail: function () {
+            var id = $(location).attr('pathname').split('/')[2]
             var urlResult = "/result/itemdetail?";
-            urlResult += "itemid=6270";
-           
-            
+            urlResult += "itemid=" + id;
+
             var result = $.getJSON(urlResult, null, function (object) {
-                console.log(object.PropertyList[0].PropertyName)
                 if (object != null) {
                     //bind data to item detail
                     if (object.ItemDetail[0] != null) {
@@ -501,7 +509,10 @@ var FQTD = (function () {
                         $("#txtaddress").html(object.ItemDetail[0].FullAddress)
                         $("#txtphone").html(object.ItemDetail[0].Phone)
                         $("#txtwebsite").html(object.ItemDetail[0].Website)
-                        $("#txtopentime").html(object.ItemDetail[0].OpenTime)                        
+                        $("#txtopentime").html(object.ItemDetail[0].OpenTime)
+                        if (isEmpty(object.ItemDetail[0].Latitude) != "" && isEmpty(object.ItemDetail[0].Longitude) != "") {
+                            $("#staticmap").attr('src', 'http://maps.googleapis.com/maps/api/staticmap?center=' + isEmpty(object.ItemDetail[0].Latitude) + ',' + isEmpty(object.ItemDetail[0].Longitude) + '&zoom=15&size=682x300&maptype=roadmap&markers=color:blue%7Clabel:A%7C' + isEmpty(object.ItemDetail[0].Latitude) + ',' + isEmpty(object.ItemDetail[0].Longitude) + '&sensor=false')
+                        }
                     }
                     //bind data to same brand list
                     var relatelist = "";
@@ -515,15 +526,15 @@ var FQTD = (function () {
                     var propertylist = "";
                     if (object.PropertyList.length > 0) {
                         for (var i = 0; i < object.PropertyList.length; i++) {
-                            propertylist += "<tr><td class='row1'><img src='../images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
+                            propertylist += "<tr><td class='row1'><img src='/images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
                         }
-                    }                    
+                    }
                     $("#tblproperty").html(propertylist)
                     //bind data to same category list
                     var samecategoryList = "";
                     if (object.SameCategoryList.length > 0) {
                         for (var i = 0; i < object.SameCategoryList.length; i++) {
-                            samecategoryList += "<tr><td class='row1'><a href='/detail/" + object.SameCategoryList[i].ItemID + "'><img class='samecategorylogo' src='" + object.SameCategoryList[i].Logo + "'></a></td><td class='row2'>" + object.SameCategoryList[i].ItemName + "<br /><a href='/detail/" + object.SameCategoryList[i].ItemID + "' class='chitiet'>Chi tiết</a><img src='../images/bullet_grey.png' /></td></tr>"
+                            samecategoryList += "<tr><td class='row1'><a href='/detail/" + object.SameCategoryList[i].ItemID + "'><img class='samecategorylogo' src='" + object.SameCategoryList[i].Logo + "'></a></td><td class='row2'>" + object.SameCategoryList[i].ItemName + "<br /><a href='/detail/" + object.SameCategoryList[i].ItemID + "' class='chitiet'>Chi tiết</a><img src='/images/bullet_grey.png' /></td></tr>"
                         }
                     }
                     $("#tblSameCategory").html(samecategoryList)
