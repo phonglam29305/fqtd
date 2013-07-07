@@ -189,6 +189,9 @@
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\SP_GetKeyword_Result.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\SP_Item_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>

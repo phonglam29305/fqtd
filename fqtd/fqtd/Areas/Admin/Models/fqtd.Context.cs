@@ -53,5 +53,22 @@ namespace fqtd.Areas.Admin.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Item_Properties_Result>("SP_Item_Properties", itemIDParameter);
         }
+    
+        public virtual ObjectResult<SP_GetKeyword_Result> SP_GetKeyword(string street, string district, string city)
+        {
+            var streetParameter = street != null ?
+                new ObjectParameter("street", street) :
+                new ObjectParameter("street", typeof(string));
+    
+            var districtParameter = district != null ?
+                new ObjectParameter("district", district) :
+                new ObjectParameter("district", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("city", city) :
+                new ObjectParameter("city", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetKeyword_Result>("SP_GetKeyword", streetParameter, districtParameter, cityParameter);
+        }
     }
 }

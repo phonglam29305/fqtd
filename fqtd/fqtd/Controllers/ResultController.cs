@@ -30,6 +30,7 @@ namespace fqtd.Controllers
             return View("Index");
         }
 
+
         public ActionResult PropertyByCategoryID(int id = -1, int vn0_en1 = 0)
         {
             JsonNetResult jsonNetResult = new JsonNetResult();
