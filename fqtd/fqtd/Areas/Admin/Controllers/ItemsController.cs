@@ -230,6 +230,53 @@ namespace fqtd.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult KeywordBuilder()
+        {
+            var items = from i in db.BrandItems
+                        join l in db.ItemLocations on i.ItemID equals l.ItemID
+                        select new { 
+                        i.ItemID, i.ItemName, i.ItemName_EN,
+                        i.tbl_Brands.BrandName, i.tbl_Brands.BrandName_EN,
+                        i.tbl_Brands.tbl_Categories.CategoryName, i.tbl_Brands.tbl_Categories.CategoryName_EN,
+                        l.FullAddress, l.Street, l.Distrist, l.City
+                        };
+            string keyword = "";
+            foreach (var item in items)
+            {
+                keyword = "";
+                var list = db.SP_GetKeyword(item.Street, item.Distrist, item.City);
+                foreach (var key in list)
+                {
+                    if (key.type == 1)//street
+                    {
+                        string[] words = key.street.Split(';');
+                        foreach (var word in words)
+                            keyword = keyword + ";" + word;
+                    }
+                    else if (key.type == 2)//district
+                    {
+                        string[] words = key.district.Split(';');
+                        foreach (var word in words)
+                            keyword = keyword + ";" + word;
+                    }
+                    if (key.type == 3)//city
+                    {
+                        string[] words = key.city.Split(';');
+                        foreach (var word in words)
+                            keyword = keyword + ";" + word;
+                    }
+                }
+                var branditem = db.BrandItems.Find(item.ItemID);
+                if (branditem != null)
+                {
+                    branditem.Keyword = keyword;
+                    db.Entry(branditem).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

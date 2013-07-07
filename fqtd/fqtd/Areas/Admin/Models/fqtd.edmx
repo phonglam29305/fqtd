@@ -248,6 +248,11 @@
         <Function Name="SP_Category_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_GetKeyword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
+          <Parameter Name="street" Type="nvarchar" Mode="In" />
+          <Parameter Name="district" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_Item_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
           <Parameter Name="ItemID" Type="int" Mode="In" />
         </Function>
@@ -292,6 +297,11 @@
           </FunctionImport>
           <FunctionImport Name="SP_Item_Properties" ReturnType="Collection(fqtdModel.SP_Item_Properties_Result)">
           <Parameter Name="ItemID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetKeyword" ReturnType="Collection(fqtdModel.SP_GetKeyword_Result)">
+            <Parameter Name="street" Mode="In" Type="String" />
+            <Parameter Name="district" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
@@ -526,6 +536,12 @@
           <Property Type="String" Name="PropertyName_EN" Nullable="true" MaxLength="250" />
           <Property Type="Boolean" Name="PropertyValue" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="SP_GetKeyword_Result">
+          <Property Type="Int32" Name="type" Nullable="true" />
+          <Property Type="String" Name="street" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="district" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="150" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -691,6 +707,16 @@
                 <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
                 <ScalarProperty Name="PropertyName_EN" ColumnName="PropertyName_EN" />
                 <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetKeyword" FunctionName="fqtdModel.Store.SP_GetKeyword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="fqtdModel.SP_GetKeyword_Result">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="city" ColumnName="city" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
