@@ -472,13 +472,27 @@ input {
         color: #d01b12;
     }
 
+    #gioithieuchung p {
+        color: #606060;
+        margin-top: 20px;
+    }
+
 #tendiadiem {
     margin-top: 25px;
 }
 
 #thongtinchitiet {
-    margin-top: 25px;
+    margin: 25px 0;
 }
+
+    #thongtinchitiet table {
+        width: 100%;
+        border: 0;
+    }
+
+        #thongtinchitiet table td {
+            vertical-align: top;
+        }
 
 #kq_left {
     width: 685px;
@@ -495,12 +509,12 @@ input {
     background-color: #FFCCCC;
 }
 
-#group {
+.group {
     border: #b4b4b4 1px solid;
     padding: 2px;
 }
 
-#title_box {
+.title_box {
     background-image: url(../images/bg_title_box.jpg);
     background-repeat: repeat-x;
     height: 16px;
@@ -508,6 +522,19 @@ input {
     color: #ffffff;
     font-weight: bold;
 }
+
+    .title_box .row1 {
+        text-align: left;
+    }
+
+    .title_box .row2 {
+        width: 12px;
+        text-align: right;
+    }
+
+        .title_box .row2 img {
+            float: right;
+        }
 
 #photo2 {
     border: #dbdbdb 2px solid;
@@ -521,11 +548,13 @@ input {
 .chitiet:link {
     color: #35a018;
     text-decoration: none;
+    padding-right: 5px;
 }
 
 .chitiet:hover {
     color: #35a018;
     text-decoration: underline;
+    padding-right: 5px;
 }
 
 .chitiet:visited {
@@ -533,7 +562,7 @@ input {
     text-decoration: none;
 }
 
-#content_box {
+.content_box {
     margin: 10px 0px;
 }
 
@@ -666,6 +695,64 @@ input {
     padding-top: 3px;
 }
 
+#content_subdetail {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.whiteline {
+    height: 20px;
+}
+
+#detailinfo td {
+    line-height: 26px;
+    padding-left: 5px;
+}
+
+#samebrand td {
+    text-align: center;
+    width: 25%;
+}
+
+#samebrand img {
+    width: 150px;
+    border: 0px none;
+}
+
+#samebrand a {
+    border: 0px none;
+}
+
+#tblproperty .row1 {
+    width: 10px;
+    float: right;
+}
+
+#tblSameCategory .row1 {
+    text-align: center;
+    width: 50%;
+}
+
+    #tblSameCategory .row1 img {
+        border:0px none;
+    }
+
+    #tblSameCategory .row1 a {
+        border:0px none;
+    }
+
+#tblSameCategory .row2 {
+    width: 50%;
+    text-align: left;
+}
+
+.silverrow {
+    background-color: #eaeaea;
+}
+
+.samecategorylogo {
+    width: 98px;
+}
 /********************
 *   Mobile Styles   *
 ********************/

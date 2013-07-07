@@ -185,6 +185,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
@@ -193,6 +194,7 @@
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Utils\Dynamic.cs" />
     <Compile Include="Utils\FileUpload.cs" />
@@ -636,6 +638,11 @@
     <Content Include="Areas\Admin\Views\Brand\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Items\_Paging.cshtml" />
     <Content Include="Areas\Admin\Views\Items\ImageList.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Properties\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />
@@ -651,6 +658,7 @@
     <Content Include="Images\close.gif" />
     <Content Include="Images\direction-map-sprite.png" />
     <Content Include="Images\home.png" />
+    <Content Include="Images\icon+.png" />
     <Content Include="Images\icon1.png" />
     <Content Include="Images\icon_arrow.png" />
     <Content Include="Images\icon_arrow_over.png" />
@@ -671,6 +679,7 @@
     <Content Include="Images\icon_left_over.png" />
     <Content Include="Images\icon_list.jpg" />
     <Content Include="Images\icon_map.jpg" />
+    <Content Include="Images\icon_p.png" />
     <Content Include="Images\icon_right.png" />
     <Content Include="Images\icon_right_over.png" />
     <Content Include="Images\icon_tw.png" />
@@ -749,6 +758,7 @@
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\MasterSub.cshtml" />
+    <Content Include="Views\Detail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
