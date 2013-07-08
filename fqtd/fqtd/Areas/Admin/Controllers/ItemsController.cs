@@ -13,6 +13,8 @@ using System.Data;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace fqtd.Areas.Admin.Controllers
 {
@@ -232,38 +234,72 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult KeywordBuilder()
         {
-            var items = from i in db.BrandItems
-                        join l in db.ItemLocations on i.ItemID equals l.ItemID
-                        select new { 
-                        i.ItemID, i.ItemName, i.ItemName_EN,
-                        i.tbl_Brands.BrandName, i.tbl_Brands.BrandName_EN,
-                        i.tbl_Brands.tbl_Categories.CategoryName, i.tbl_Brands.tbl_Categories.CategoryName_EN,
-                        l.FullAddress, l.Street, l.Distrist, l.City
-                        };
+            var xxx = from i in db.BrandItems
+                      join l in db.ItemLocations on i.ItemID equals l.ItemID
+                      where l.Street != null && l.Distrist != null && l.City != null
+                      select new
+                      {
+                          i.ItemID,
+                          i.ItemName,
+                          i.ItemName_EN,
+                          i.tbl_Brands.BrandName,
+                          i.tbl_Brands.BrandName_EN,
+                          i.tbl_Brands.tbl_Categories.CategoryName,
+                          i.tbl_Brands.tbl_Categories.CategoryName_EN,
+                          l.FullAddress,
+                          l.Street,
+                          l.Distrist,
+                          l.City
+                      };
+            var items = xxx.ToList();
             string keyword = "";
             foreach (var item in items)
             {
                 keyword = "";
                 var list = db.SP_GetKeyword(item.Street, item.Distrist, item.City);
+                var temp = list.ToList();
+                if (temp.Where(a => a.type == 1).ToList().Count == 0)
+                {
+                    keyword = keyword + ";" + item.BrandName + " " + item.Street;
+                    keyword = keyword + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.Street);
+                }
+                if (temp.Where(a => a.type == 2).ToList().Count == 0)
+                {
+                    keyword = keyword + ";" + item.BrandName + " " + item.Distrist;
+                    keyword = keyword + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.Distrist);
+                }
+                if (temp.Where(a => a.type == 3).ToList().Count == 0)
+                {
+                    keyword = keyword + ";" + item.BrandName + " " + item.City;
+                    keyword = keyword + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.City);
+                }
+                list = db.SP_GetKeyword(item.Street, item.Distrist, item.City);
                 foreach (var key in list)
                 {
+                    
                     if (key.type == 1)//street
                     {
                         string[] words = key.street.Split(';');
+                        
                         foreach (var word in words)
-                            keyword = keyword + ";" + word;
+                            if (words.Length > 0)
+                                keyword = keyword + ";" + item.BrandName + " " + word;
                     }
                     else if (key.type == 2)//district
                     {
                         string[] words = key.district.Split(';');
+                        
                         foreach (var word in words)
-                            keyword = keyword + ";" + word;
+                            if (words.Length > 0)
+                            keyword = keyword + ";" + item.BrandName + " " + word;
                     }
                     if (key.type == 3)//city
                     {
                         string[] words = key.city.Split(';');
+                       
                         foreach (var word in words)
-                            keyword = keyword + ";" + word;
+                            if (words.Length > 0)
+                            keyword = keyword + ";" + item.BrandName + " " + word;
                     }
                 }
                 var branditem = db.BrandItems.Find(item.ItemID);
@@ -274,7 +310,20 @@ namespace fqtd.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
             }
-            return View();
+
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
+            return RedirectToAction("index","items");
+        }
+
+        
+
+        public static string StripDiacritics(string accented)
+        {
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+
+            string strFormD = accented.Normalize(NormalizationForm.FormD);
+            return regex.Replace(strFormD, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
         }
 
         protected override void Dispose(bool disposing)

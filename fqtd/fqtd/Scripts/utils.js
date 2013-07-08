@@ -220,6 +220,7 @@ var FQTD = (function () {
             urlResult += "&vn0_en1=0";
 
             var result = $.getJSON(urlResult, null, function (items) {
+                //alert(items);
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].Latitude != null && items[i].Longitude != null) {
                         var contentmarker = '<div class="marker"><h2>' + isEmpty(items[i].ItemName) + '</h2><p>' + isEmpty(items[i].FullAddress) + '<br/>' + isEmpty(items[i].Phone) + '</p></div>'

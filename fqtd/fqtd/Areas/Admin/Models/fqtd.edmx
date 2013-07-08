@@ -54,6 +54,7 @@
           <Property Name="SearchCount" Type="decimal" />
           <Property Name="ClickCount" Type="decimal" />
           <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
+          <Property Name="Keyword" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -330,6 +331,7 @@
           <NavigationProperty Name="tbl_Item_Location" Relationship="fqtdModel.FK_tbl_Item_Location_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Location" />
           <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keyword" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -551,6 +553,7 @@
           <EntitySetMapping Name="BrandItems">
             <EntityTypeMapping TypeName="fqtdModel.BrandItems">
               <MappingFragment StoreEntitySet="tbl_Brand_Items">
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
                 <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />

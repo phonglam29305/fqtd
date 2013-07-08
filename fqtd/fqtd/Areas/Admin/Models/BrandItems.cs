@@ -38,6 +38,7 @@ namespace fqtd.Areas.Admin.Models
         public Nullable<System.DateTime> DeleteDate { get; set; }
         public string DeleteUser { get; set; }
         public string MarkerIcon { get; set; }
+        public string Keyword { get; set; }
     
         public virtual Brands tbl_Brands { get; set; }
         public virtual ItemLocation tbl_Item_Location { get; set; }

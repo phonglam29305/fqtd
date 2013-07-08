@@ -137,9 +137,10 @@ namespace fqtd.Controllers
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
                          join lo in db.ItemLocations on i.ItemID equals lo.ItemID
-                         where i.ItemName.Contains(keyword) || i.ItemName_EN.Contains(keyword) || i.Description.Contains(keyword) || i.Description_EN.Contains(keyword)
-                         || br.BrandName.Contains(keyword) || br.BrandName_EN.Contains(keyword) || br.Description.Contains(keyword) || br.Description_EN.Contains(keyword)
-                         || c.CategoryName.Contains(keyword) || c.CategoryName_EN.Contains(keyword) || c.Description.Contains(keyword) || c.Description_EN.Contains(keyword)
+                         //where i.ItemName.Contains(keyword) || i.ItemName_EN.Contains(keyword) || i.Description.Contains(keyword) || i.Description_EN.Contains(keyword)
+                         //|| br.BrandName.Contains(keyword) || br.BrandName_EN.Contains(keyword) || br.Description.Contains(keyword) || br.Description_EN.Contains(keyword)
+                         //|| c.CategoryName.Contains(keyword) || c.CategoryName_EN.Contains(keyword) || c.Description.Contains(keyword) || c.Description_EN.Contains(keyword)
+                         where i.Keyword.ToLower().Contains(keyword.ToLower())
                          select new
                          {
                              i.ItemID,
@@ -156,6 +157,7 @@ namespace fqtd.Controllers
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
+            string count = "count: " + brands.Count();
             //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
@@ -319,6 +321,25 @@ namespace fqtd.Controllers
                 }
             }
             return images;
+        }
+
+        public ActionResult GetKeyword4Autocomplete(string StringInput)
+        {
+            var items = db.BrandItems.Where(a=>a.Keyword.Length>0);
+            List<string> list = new List<string>();
+            foreach (var item in items)
+            {
+                foreach (var key in item.Keyword.Split(';'))
+                {
+                    if (key !=null && key.ToLower().StartsWith(StringInput.ToLower()))
+                        if (!list.Contains(key.ToLower().Trim()))
+                            list.Add(key.ToLower().Trim());
+                }
+            }
+            JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.Formatting = Formatting.Indented;
+            jsonNetResult.Data = from a in list select a;
+            return jsonNetResult;
         }
     }
 }
