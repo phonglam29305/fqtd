@@ -18,6 +18,7 @@
         <AssociationConnector Association="fqtdModel.FK_tbl_Brands_tbl_BrandType" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brands_tbl_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Item_Properties_tbl_Properties" ManuallyRouted="false" />
+        <AssociationConnector Association="fqtdModel.tbl_Category_Properties" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

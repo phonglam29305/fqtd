@@ -23,7 +23,9 @@ var FQTD = (function () {
         }
     }
 
-    function rad(x) { return x * Math.PI / 180; }
+    function rad(x) {
+        return x * Math.PI / 180;
+    }
 
     function return_Distance(latLng1, latLng2) {
         var R = 6371; // km
@@ -37,6 +39,10 @@ var FQTD = (function () {
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c;
         return d * 1000;
+    }
+
+    function sortbyDistance(a, b) {
+        return a[8] - b[8];
     }
 
     return {
@@ -230,7 +236,7 @@ var FQTD = (function () {
                                      + '<li id="bus" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'bus\',' + $("#form").val() + ')\"></li>'
                                      + '<li id="walk" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'walk\',' + $("#form").val() + ')\"></li></ul>'
                                      + '<div id="linkview"><a href="/detail/' + isEmpty(items[i].ItemID) + '" target="_blank">Xem chi tiết</a></div><div id="space"></div>';
-                        locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID)]);
+                        locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID), 0]);
                     }
                 }
             });
@@ -274,11 +280,13 @@ var FQTD = (function () {
                                 map.fitBounds(myCity.getBounds());
                                 FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
 
-                                for (i = 0; i < locations.length; i++) {
-                                    var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
-                                    if (range >= compareDistance) {
-                                        FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
-                                    }
+                                //add distance to array and sort array by distance
+                                FQTD.SortArray()
+
+                                //add marker to map
+                                for (i = 0; i <= 4; i++) {
+                                    FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
+                                    limit++;
                                 }
 
                             } else {
@@ -295,6 +303,11 @@ var FQTD = (function () {
                         navigator.geolocation.getCurrentPosition(function (position, status) {
                             var geocoder = new google.maps.Geocoder();
                             myplace = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                            //add distance to array and sort array by distance
+                            FQTD.SortArray()
+
+                            //bind marker to map
                             FQTD.SetupMap(myplace, locations, 12);
                         });
                     }
@@ -302,6 +315,11 @@ var FQTD = (function () {
                         alert("Xin vui lòng bật chức năng định vị, như vậy chúng tôi có thể tìm những địa điểm gần bạn nhất.");
                         //set default location is Hue (middle of Vietnam)
                         myplace = new google.maps.LatLng(16.46346, 107.58470);
+
+                        //add distance to array and sort array by distance
+                        FQTD.SortArray()
+
+                        //bind marker to map
                         FQTD.SetupMap(myplace, locations, 6);
                     };
                     //set list display first
@@ -431,6 +449,14 @@ var FQTD = (function () {
         DisplayDirection: function (lat, long) {
             FQTD.displayMap()
             FQTD.calcRoute(lat, long, 'car', $("#form").val())
+        },
+        SortArray: function () {
+            for (i = 0; i < locations.length; i++) {
+                var compareDistance = return_Distance(myplace, new google.maps.LatLng(locations[i][0], locations[i][1]));
+                //add distance to array
+                locations[i][8] = compareDistance;
+            }
+            locations.sort(sortbyDistance)            
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
