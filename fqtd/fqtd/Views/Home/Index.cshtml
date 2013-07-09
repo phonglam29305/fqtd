@@ -80,6 +80,21 @@
                             <td colspan="4">
                                 <div>
                                     <input id="search" data-required="true" name="search" />
+                                    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+                                    <script src="~/Scripts/jquery-1.9.1.js"></script>
+                                    <script src="~/Scripts/jquery-ui-1.10.3.js"></script>
+                                    <script>
+
+                                        $(function() {
+                                            var urlResult = "result/getkeyword4autocomplete?stringinput=";
+                                            var availableTags = $.getJSON(urlResult, null, function (items){
+                                               // alert(items);
+      $( "#search" ).autocomplete({
+          source: items
+      });
+      });
+  });
+                                    </script>
                                 </div>
                             </td>
                         </tr>
