@@ -54,7 +54,7 @@ namespace fqtd.Areas.Admin.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Item_Properties_Result>("SP_Item_Properties", itemIDParameter);
         }
     
-        public virtual ObjectResult<SP_GetKeyword_Result> SP_GetKeyword(string street, string district, string city)
+        public virtual ObjectResult<SP_GetKeyword1_Result> SP_GetKeyword1(string street, string district, string city)
         {
             var streetParameter = street != null ?
                 new ObjectParameter("street", street) :
@@ -68,7 +68,7 @@ namespace fqtd.Areas.Admin.Models
                 new ObjectParameter("city", city) :
                 new ObjectParameter("city", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetKeyword_Result>("SP_GetKeyword", streetParameter, districtParameter, cityParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetKeyword1_Result>("SP_GetKeyword1", streetParameter, districtParameter, cityParameter);
         }
     }
 }

@@ -11,11 +11,14 @@ namespace fqtd.Areas.Admin.Models
 {
     using System;
     
-    public partial class SP_GetKeyword_Result
+    public partial class SP_GetKeyword1_Result
     {
         public Nullable<int> type { get; set; }
         public string street { get; set; }
         public string district { get; set; }
         public string city { get; set; }
+        public string street_us { get; set; }
+        public string district_us { get; set; }
+        public string city_us { get; set; }
     }
 }

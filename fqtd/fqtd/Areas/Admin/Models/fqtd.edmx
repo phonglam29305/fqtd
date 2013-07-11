@@ -35,7 +35,7 @@
             <End Role="tbl_Categories" EntitySet="tbl_Categories" />
             <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties1" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Properties1">
+          <AssociationSet Name="FK_tbl_Category_Properties_tbl_Properties" Association="fqtdModel.Store.FK_tbl_Category_Properties_tbl_Properties">
             <End Role="tbl_Properties" EntitySet="tbl_Properties" />
             <End Role="tbl_Category_Properties" EntitySet="tbl_Category_Properties" />
           </AssociationSet>
@@ -68,6 +68,7 @@
           <Property Name="SearchCount" Type="decimal" />
           <Property Name="ClickCount" Type="decimal" />
           <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
+          <Property Name="Keyword_unsign" Type="nvarchar(max)" />
           <Property Name="Keyword" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
@@ -247,7 +248,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_Category_Properties_tbl_Properties1">
+        <Association Name="FK_tbl_Category_Properties_tbl_Properties">
           <End Role="tbl_Properties" Type="fqtdModel.Store.tbl_Properties" Multiplicity="1" />
           <End Role="tbl_Category_Properties" Type="fqtdModel.Store.tbl_Category_Properties" Multiplicity="*" />
           <ReferentialConstraint>
@@ -295,10 +296,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_GetKeyword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="street" Type="nvarchar" Mode="In" />
+          <Parameter Name="district" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_Category_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_GetKeyword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
+        <Function Name="SP_GetKeyword1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" StoreFunctionName="SP_GetKeyword" Schema="timdau_fqtd">
           <Parameter Name="street" Type="nvarchar" Mode="In" />
           <Parameter Name="district" Type="nvarchar" Mode="In" />
           <Parameter Name="city" Type="nvarchar" Mode="In" />
@@ -348,15 +354,15 @@
           <FunctionImport Name="SP_Item_Properties" ReturnType="Collection(fqtdModel.SP_Item_Properties_Result)">
           <Parameter Name="ItemID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_GetKeyword" ReturnType="Collection(fqtdModel.SP_GetKeyword_Result)">
-            <Parameter Name="street" Mode="In" Type="String" />
-            <Parameter Name="district" Mode="In" Type="String" />
-            <Parameter Name="city" Mode="In" Type="String" />
-          </FunctionImport>
           <AssociationSet Name="tbl_Category_Properties" Association="fqtdModel.tbl_Category_Properties">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Properties" EntitySet="Properties" />
           </AssociationSet>
+          <FunctionImport Name="SP_GetKeyword1" ReturnType="Collection(fqtdModel.SP_GetKeyword1_Result)">
+            <Parameter Name="street" Mode="In" Type="String" />
+            <Parameter Name="district" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
           <Key>
@@ -385,6 +391,7 @@
           <NavigationProperty Name="tbl_Item_Properties" Relationship="fqtdModel.FK_tbl_Item_Properties_tbl_Brand_Items" FromRole="tbl_Brand_Items" ToRole="tbl_Item_Properties" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Keyword" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keyword_unsign" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -593,16 +600,19 @@
           <Property Type="String" Name="PropertyName_EN" Nullable="true" MaxLength="250" />
           <Property Type="Boolean" Name="PropertyValue" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="SP_GetKeyword_Result">
-          <Property Type="Int32" Name="type" Nullable="true" />
-          <Property Type="String" Name="street" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="district" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="city" Nullable="true" MaxLength="150" />
-        </ComplexType>
         <Association Name="tbl_Category_Properties">
           <End Type="fqtdModel.Categories" Role="Categories" Multiplicity="*" />
           <End Type="fqtdModel.Properties" Role="Properties" Multiplicity="*" />
         </Association>
+        <ComplexType Name="SP_GetKeyword1_Result">
+          <Property Type="Int32" Name="type" Nullable="true" />
+          <Property Type="String" Name="street" Nullable="true" />
+          <Property Type="String" Name="district" Nullable="true" />
+          <Property Type="String" Name="city" Nullable="true" />
+          <Property Type="String" Name="street_us" Nullable="true" />
+          <Property Type="String" Name="district_us" Nullable="true" />
+          <Property Type="String" Name="city_us" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -612,6 +622,7 @@
           <EntitySetMapping Name="BrandItems">
             <EntityTypeMapping TypeName="fqtdModel.BrandItems">
               <MappingFragment StoreEntitySet="tbl_Brand_Items">
+                <ScalarProperty Name="Keyword_unsign" ColumnName="Keyword_unsign" />
                 <ScalarProperty Name="Keyword" ColumnName="Keyword" />
                 <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
@@ -772,16 +783,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetKeyword" FunctionName="fqtdModel.Store.SP_GetKeyword">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="fqtdModel.SP_GetKeyword_Result">
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="street" ColumnName="street" />
-                <ScalarProperty Name="district" ColumnName="district" />
-                <ScalarProperty Name="city" ColumnName="city" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <AssociationSetMapping Name="tbl_Category_Properties" TypeName="fqtdModel.tbl_Category_Properties" StoreEntitySet="tbl_Category_Properties">
             <EndProperty Name="Properties">
               <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
@@ -790,6 +791,19 @@
               <ScalarProperty Name="CategoryID" ColumnName="CatetoryID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetKeyword1" FunctionName="fqtdModel.Store.SP_GetKeyword1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="fqtdModel.SP_GetKeyword1_Result">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="street_us" ColumnName="street_us" />
+                <ScalarProperty Name="district_us" ColumnName="district_us" />
+                <ScalarProperty Name="city_us" ColumnName="city_us" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

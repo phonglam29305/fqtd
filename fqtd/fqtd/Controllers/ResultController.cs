@@ -11,6 +11,8 @@ using System.Configuration;
 using System.Web.WebPages;
 using System.IO;
 using System.Web.UI;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace fqtd.Controllers
 {
@@ -125,6 +127,13 @@ namespace fqtd.Controllers
 
             return jsonNetResult;
         }
+        public static string StripDiacritics(string accented)
+        {
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+
+            string strFormD = accented.Normalize(NormalizationForm.FormD);
+            return regex.Replace(strFormD, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
+        }
 
         public ActionResult ItemByKeyword(string keyword, int vn0_en1 = 0)
         {
@@ -140,7 +149,7 @@ namespace fqtd.Controllers
                          //where i.ItemName.Contains(keyword) || i.ItemName_EN.Contains(keyword) || i.Description.Contains(keyword) || i.Description_EN.Contains(keyword)
                          //|| br.BrandName.Contains(keyword) || br.BrandName_EN.Contains(keyword) || br.Description.Contains(keyword) || br.Description_EN.Contains(keyword)
                          //|| c.CategoryName.Contains(keyword) || c.CategoryName_EN.Contains(keyword) || c.Description.Contains(keyword) || c.Description_EN.Contains(keyword)
-                         where i.Keyword.ToLower().Contains(keyword.ToLower())
+                         where i.Keyword_unsign.ToLower().Contains(StripDiacritics(keyword).ToLower())
                          select new
                          {
                              i.ItemID,
