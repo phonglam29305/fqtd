@@ -186,6 +186,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SystemContentController.cs" />
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
@@ -193,6 +194,12 @@
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\SP_Item_Properties_Result.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\SystemContent.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\tbl_SystemContent.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
@@ -646,6 +653,8 @@
     <Content Include="Areas\Admin\Views\Properties\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Properties\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Properties\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SystemContent\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SystemContent\Index.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />
@@ -762,6 +771,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\MasterSub.cshtml" />
     <Content Include="Views\Detail\Index.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Introduction.cshtml" />
+    <Content Include="Views\Home\TermAndConditionOfUse.cshtml" />
+    <Content Include="Views\Home\Policy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

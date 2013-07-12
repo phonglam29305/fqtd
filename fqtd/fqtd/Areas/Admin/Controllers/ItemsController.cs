@@ -232,11 +232,11 @@ namespace fqtd.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult KeywordBuilder()
+        public ActionResult KeywordBuilder(int itemid = 0)
         {
             var xxx = from i in db.BrandItems
                       join l in db.ItemLocations on i.ItemID equals l.ItemID
-                      where l.Street != null && l.Distrist != null && l.City != null
+                      where l.Street != null && l.Distrist != null && l.City != null && (i.ItemID==itemid || itemid==0)
                       select new
                       {
                           i.ItemID,

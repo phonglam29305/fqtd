@@ -19,6 +19,7 @@
           <EntitySet Name="tbl_Item_Location" EntityType="fqtdModel.Store.tbl_Item_Location" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Item_Properties" EntityType="fqtdModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Properties" EntityType="fqtdModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_SystemContent" EntityType="fqtdModel.Store.tbl_SystemContent" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_tbl_Brand_Items_tbl_Brands" Association="fqtdModel.Store.FK_tbl_Brand_Items_tbl_Brands">
             <End Role="tbl_Brands" EntitySet="tbl_Brands" />
             <End Role="tbl_Brand_Items" EntitySet="tbl_Brand_Items" />
@@ -200,6 +201,13 @@
           <Property Name="DeleteDate" Type="datetime" />
           <Property Name="DeleteUser" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="tbl_SystemContent">
+          <Key>
+            <PropertyRef Name="SystemID" />
+          </Key>
+          <Property Name="SystemID" Type="int" Nullable="false" />
+          <Property Name="SystemContent" Type="nvarchar(max)" />
+        </EntityType>
         <Association Name="FK_tbl_Brand_Items_tbl_Brands">
           <End Role="tbl_Brands" Type="fqtdModel.Store.tbl_Brands" Multiplicity="1" />
           <End Role="tbl_Brand_Items" Type="fqtdModel.Store.tbl_Brand_Items" Multiplicity="*" />
@@ -363,6 +371,7 @@
             <Parameter Name="district" Mode="In" Type="String" />
             <Parameter Name="city" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tbl_SystemContent" EntityType="fqtdModel.tbl_SystemContent" />
         </EntityContainer>
         <EntityType Name="BrandItems">
           <Key>
@@ -613,6 +622,19 @@
           <Property Type="String" Name="district_us" Nullable="true" />
           <Property Type="String" Name="city_us" Nullable="true" />
         </ComplexType>
+        <EnumType Name="SystemContent">
+          <Member Name="Contact" Value="1" />
+          <Member Name="Introduction" Value="2" />
+          <Member Name="Tern4Use" Value="3" />
+          <Member Name="Policy" Value="4" />
+        </EnumType>
+        <EntityType Name="tbl_SystemContent">
+          <Key>
+            <PropertyRef Name="SystemID" />
+          </Key>
+          <Property Type="fqtdModel.SystemContent" Name="SystemID" Nullable="false" />
+          <Property Type="String" Name="SystemContent" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -804,6 +826,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_SystemContent">
+            <EntityTypeMapping TypeName="fqtdModel.tbl_SystemContent">
+              <MappingFragment StoreEntitySet="tbl_SystemContent">
+                <ScalarProperty Name="SystemContent" ColumnName="SystemContent" />
+                <ScalarProperty Name="SystemID" ColumnName="SystemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -141,7 +141,7 @@ namespace fqtd.Controllers
             string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
             string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
-
+            keyword = StripDiacritics(keyword).ToLower();
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -149,7 +149,7 @@ namespace fqtd.Controllers
                          //where i.ItemName.Contains(keyword) || i.ItemName_EN.Contains(keyword) || i.Description.Contains(keyword) || i.Description_EN.Contains(keyword)
                          //|| br.BrandName.Contains(keyword) || br.BrandName_EN.Contains(keyword) || br.Description.Contains(keyword) || br.Description_EN.Contains(keyword)
                          //|| c.CategoryName.Contains(keyword) || c.CategoryName_EN.Contains(keyword) || c.Description.Contains(keyword) || c.Description_EN.Contains(keyword)
-                         where i.Keyword_unsign.ToLower().Contains(StripDiacritics(keyword).ToLower())
+                         where i.Keyword_unsign.ToLower().Contains(keyword)
                          select new
                          {
                              i.ItemID,

@@ -35,6 +35,7 @@ namespace fqtd.Areas.Admin.Models
         public DbSet<ItemLocation> ItemLocations { get; set; }
         public DbSet<ItemProperties> ItemProperties { get; set; }
         public DbSet<Properties> Properties { get; set; }
+        public DbSet<tbl_SystemContent> tbl_SystemContent { get; set; }
     
         public virtual ObjectResult<SP_Category_Properties_Result> SP_Category_Properties(Nullable<int> categoryID)
         {
