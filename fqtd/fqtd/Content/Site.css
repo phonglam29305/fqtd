@@ -79,25 +79,25 @@ body {
     color: #e8e8e8;
 }
 
-    #bottom_right a:link {
+    #bottom_right a {
         color: #e0e0e0;
         text-decoration: none;
     }
 
-    #bottom_right a:hover {
-        color: #ffffff;
-        text-decoration: underline;
-    }
+        #bottom_right a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
 
-    #bottom_right a:active {
-        color: #ffffff;
-        text-decoration: none;
-    }
+        #bottom_right a:active {
+            color: #ffffff;
+            text-decoration: none;
+        }
 
-    #bottom_right a:visited {
-        color: #e0e0e0;
-        text-decoration: none;
-    }
+        #bottom_right a:visited {
+            color: #e0e0e0;
+            text-decoration: none;
+        }
 
 #content {
     width: 50000px;
@@ -330,21 +330,6 @@ input {
     line-height: 22px;
 }
 
-.lienket:link {
-    color: #606060;
-    text-decoration: none;
-}
-
-.lienket:hover {
-    color: #35a018;
-    text-decoration: none;
-}
-
-.lienket:visited {
-    color: #606060;
-    text-decoration: none;
-}
-
 .active {
     border-bottom: 1px solid #35a018;
 }
@@ -412,6 +397,16 @@ input {
 
 #object {
     margin-top: 25px;
+}
+
+#object a {
+    color: #606060;
+    text-decoration: none;
+}
+
+#object a:hover {
+    color: #35a018;
+    text-decoration: none;
 }
 
 #photo {
@@ -790,6 +785,29 @@ input {
 
 #staticmap {
     width: 682px;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+    max-height: 150px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    list-style: none;
+    background-color: #606060;
+    color: white;
+    padding: 5px;
+}
+
+.ui-menu-item .ui-state-focus {
+    color: #35a018;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
 }
 /********************
 *   Mobile Styles   *

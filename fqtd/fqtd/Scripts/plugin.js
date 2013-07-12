@@ -82,7 +82,7 @@
             options.callback(index, last);
             that.element.animate({
                 'margin-left': -that.containerWidth * index
-            }, options.duration, 'easeInOutBack', function () {
+            }, options.duration, 'easeOutQuint', function () {
                 $.isFunction(callback) && callback();
                 //options.callback(index, last);
             });
@@ -1084,6 +1084,7 @@
 
                                     event.preventDefault();
 
+                                    //direct to result page
                                     var address = form[0]["address"] != null ? form[0]["address"].value : "0"
                                     var type = form[0]["form"] != null ? form[0]["form"].value : "0"
                                     var range = form[0]["range"] != null ? form[0]["range"].value : "0"
@@ -1091,7 +1092,7 @@
                                     var brand = form[0]["brand"] != null ? form[0]["brand"].value : "0"
                                     var search = form[0]["search"] != null ? form[0]["search"].value : "0"
                                     
-                                    window.location.href = "result/index/" + type + "/" + category + "/" + brand + "/" + range + "/" + address + "/" + search
+                                    window.location.href = "result/index/" + type + "/" + category + "/" + brand + "/" + range + "/" + address + "/" + encodeURIComponent(search)
                                 }
 
                                 // Is a function?

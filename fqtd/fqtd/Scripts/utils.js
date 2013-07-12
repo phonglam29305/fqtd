@@ -192,9 +192,9 @@ var FQTD = (function () {
 
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
-                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><img id="photo" width="150" height="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
-                    + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" class="lienket"  target="_blank"><strong>Xem chi tiết</strong></a>'
-                    + '| <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
+                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" height="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
+                    + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
+                    + ' | <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }
 
             // Replace old content with new content
@@ -332,6 +332,12 @@ var FQTD = (function () {
             }
         },
         SetupMap: function (myplace, listMarker, zoom) {
+            //set if 1st place will not display in map view
+            var compareDistance = return_Distance(myplace, new google.maps.LatLng(listMarker[0][0], listMarker[0][1]));
+            if (compareDistance > 17639) {
+                myplace = new google.maps.LatLng(listMarker[0][0], listMarker[0][1]);
+            }
+
             //set map
             var mapProp = {
                 center: myplace,
@@ -456,7 +462,18 @@ var FQTD = (function () {
                 //add distance to array
                 locations[i][8] = compareDistance;
             }
+            //sort by distance ascending
             locations.sort(sortbyDistance)            
+        },
+        BindKeywordAutocomplete: function () {
+            //get all keyword
+            var urlResult = "result/GetKeyword4Autocomplete?stringinput=";
+
+            var result = $.getJSON(urlResult, null, function (items) {
+                $("#search").autocomplete({
+                    source: items
+                })
+            });
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -519,6 +536,9 @@ var FQTD = (function () {
 
             //bind places autocomplete
             $("#address").geocomplete();
+
+            //bind auto complete to keyword
+            FQTD.BindKeywordAutocomplete()
 
         },
         initDetail: function () {
