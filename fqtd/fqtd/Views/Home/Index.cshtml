@@ -2,7 +2,14 @@
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/MasterHome.cshtml";    
 }
-
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <div id="content_home">
     <div id="content">
         <div id="step1" class="inner">
@@ -108,7 +115,11 @@
     <li class="active"><a href="JavaScript:void(0);">&nbsp;</a></li>
     <li><a href="JavaScript:void(0);">&nbsp;</a></li>
 </ul>
-
+<div id="facebook">
+    <div class="fb-like" data-href="@ViewBag.URL"
+            data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="tahoma">
+    </div>
+</div>
 @section scripts
  {
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTNlc8mcX8hdGZpkkPK1NXVq1PJY1zYs0&sensor=false&libraries=places"></script>

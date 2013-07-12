@@ -10,14 +10,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="fb-root"></div>
-    <script>(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    
     <header>
         <div id="header">
             <a href="~/"><img src="/images/logo_big1.png" /></a>
@@ -27,21 +20,12 @@
         @RenderSection("featured", required: false)
         @RenderBody()
     </div>
-    <div id="facebook">
-        <div class="fb-like" data-href="@ViewBag.URL"
-            data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="tahoma">
-        </div>
-    </div>
+   
     <footer>
         <div id="bottomHome">
             <div id="bottom_info">
-<<<<<<< HEAD
-                <div id="bottom_left">Copyright@2013 by Timdau.com</div>
-                <div id="bottom_right"><a href="~/home/contact"><strong>Liên hệ</strong></a>  |  <a href="~/home/introduction"><strong>Giới thiệu<strong></a>  |  <a href="~/home/termandconditionofuse"><strong>Điều khoản sử dụng<strong></a>  |  <a href="~/home/policy"><strong>Chính sách bảo mật<strong></a> </div>
-=======
                 <div id="bottom_left">Copyright@2013 by Timdau.vn</div>
-                <div id="bottom_right"><a href="lienhe.html"><strong>Liên hệ</strong></a>  |  <a href="gioithieu.html"><strong>Giới thiệu<strong></a>  |  <a href="dieukhoan.html"><strong>Điều khoản sử dụng<strong></a>  |  <a href="chinhsach.html"><strong>Chính sách bảo mật<strong></a> </div>
->>>>>>> 1c1b2aed9e3ac6191611721aa263d00c525e2717
+                <div id="bottom_right"><a href="~/home/contact"><strong>Liên hệ</strong></a>  |  <a href="~/home/introduction"><strong>Giới thiệu<strong></a>  |  <a href="~/home/termandconditionofuse"><strong>Điều khoản sử dụng<strong></a>  |  <a href="~/home/policy"><strong>Chính sách bảo mật<strong></a> </div>
             </div>
         </div>
     </footer>
