@@ -55,6 +55,14 @@ body {
     bottom: 0;
 }
 
+#facebook {
+    height: 20px;
+    width: 100%;    
+    text-align: right;
+    position: absolute;
+    bottom: 42px;
+}
+
 #bottom_info {
     width: 960px;
     margin: auto;
@@ -808,6 +816,10 @@ input {
 
 .ui-helper-hidden-accessible {
     display: none;
+}
+#loading {
+     width: 30px; 
+     margin: 0 auto;
 }
 /********************
 *   Mobile Styles   *

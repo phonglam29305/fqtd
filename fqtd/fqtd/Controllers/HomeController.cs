@@ -11,8 +11,8 @@ namespace fqtd.Controllers
     {
         private fqtdEntities db = new fqtdEntities();
         public ActionResult Index()
-        {         
-
+        {
+            ViewBag.URL = Request.Url.OriginalString;
             return View("Index");
         }
         public ActionResult Contact()

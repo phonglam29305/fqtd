@@ -695,6 +695,7 @@
     <Content Include="Images\icon_right.png" />
     <Content Include="Images\icon_right_over.png" />
     <Content Include="Images\icon_tw.png" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Images\logo_big.png" />
     <Content Include="Images\logo_big1.png" />
     <Content Include="Images\logo_small.png" />
