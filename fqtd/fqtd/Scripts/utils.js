@@ -180,8 +180,8 @@ var FQTD = (function () {
 
         },
         noRecord: function () {
-            $("#list").html("<p style='text-align:center'>No record found.</p>");
-            $("#map").html("<p style='text-align:center'>No record found.</p>");
+            $("#list").html("<p style='text-align:center'>Thông tin tìm kiếm hiện chưa cập nhật. Vui lòng tìm lại sau.</p>");
+            $("#map").html("<p style='text-align:center'>Thông tin tìm kiếm hiện chưa cập nhật. Vui lòng tìm lại sau.</p>");
             FQTD.displayMap();
         },
         pageselectCallback: function (page_index, jq) {
@@ -193,7 +193,7 @@ var FQTD = (function () {
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
                 newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" height="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
-                    + '<p>' + isEmpty(locations[i][4]) + '<br/>' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
+                    + '<p>Địa chỉ : ' + isEmpty(locations[i][4]) + '<br/>Điện thoại : ' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
                     + ' | <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }
 
@@ -224,7 +224,7 @@ var FQTD = (function () {
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
             urlResult += "&vn0_en1=0";
-
+            console.log(urlResult);
             var result = $.getJSON(urlResult, null, function (items) {
                 //alert(items);
                 for (var i = 0; i < items.length; i++) {
@@ -241,7 +241,10 @@ var FQTD = (function () {
                 }
             });
 
-            result.complete(function () { FQTD.BindData() });
+            result.complete(function () {
+                FQTD.BindData()
+                FQTD.HideLoading()
+            });
         },
         BindData: function () {
             var range = $("#range").val();
@@ -474,6 +477,9 @@ var FQTD = (function () {
                     source: items
                 })
             });
+        },
+        HideLoading: function () {
+            $("#loading").addClass("hidden");
         },
         initResult: function () {
             $("#tabList").bind('click', function () {

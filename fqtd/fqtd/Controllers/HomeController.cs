@@ -9,8 +9,8 @@ namespace fqtd.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {         
-
+        {
+            ViewBag.URL = Request.Url.OriginalString;
             return View("Index");
         }      
        
