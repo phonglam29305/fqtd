@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using fqtd.Areas.Admin.Models;
+using System.Configuration;
 
 namespace fqtd.Controllers
 {
@@ -13,6 +14,8 @@ namespace fqtd.Controllers
         public ActionResult Index()
         {
             ViewBag.URL = Request.Url.OriginalString;
+            ViewBag.keywords = ConfigurationManager.AppSettings["metakeywords"];
+            ViewBag.description = ConfigurationManager.AppSettings["metakeydescription"];
             return View("Index");
         }
         public ActionResult Contact()

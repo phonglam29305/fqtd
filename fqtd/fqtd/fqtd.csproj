@@ -670,7 +670,6 @@
     <Content Include="Images\close.gif" />
     <Content Include="Images\direction-map-sprite.png" />
     <Content Include="Images\home.png" />
-    <Content Include="Images\icon+.png" />
     <Content Include="Images\icon1.png" />
     <Content Include="Images\icon_arrow.png" />
     <Content Include="Images\icon_arrow_over.png" />
@@ -682,8 +681,6 @@
     <Content Include="Images\icon_car_over.png" />
     <Content Include="Images\icon_check2.png" />
     <Content Include="Images\icon_down.png" />
-    <Content Include="Images\icon_email.png" />
-    <Content Include="Images\icon_fb.png" />
     <Content Include="Images\icon_home.png" />
     <Content Include="Images\icon_human.png" />
     <Content Include="Images\icon_human_over.png" />
@@ -691,19 +688,15 @@
     <Content Include="Images\icon_left_over.png" />
     <Content Include="Images\icon_list.jpg" />
     <Content Include="Images\icon_map.jpg" />
-    <Content Include="Images\icon_p.png" />
     <Content Include="Images\icon_right.png" />
     <Content Include="Images\icon_right_over.png" />
-    <Content Include="Images\icon_tw.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\logo_big.png" />
     <Content Include="Images\logo_big1.png" />
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\logo_small1.png" />
-    <Content Include="Images\map.jpg" />
     <Content Include="Images\MarkerIcon\Brand\schools_maps.png" />
     <Content Include="Images\no-image.jpg" />
-    <Content Include="Images\photo1.jpg" />
     <Content Include="Images\tipbox.gif" />
     <Content Include="Intro.html" />
     <Content Include="Images\square%402x.png" />

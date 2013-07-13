@@ -23,6 +23,8 @@ namespace fqtd.Controllers
 
         public ActionResult ShowResult(string address, int? range, int? category, int? brand, string search, int? form)
         {
+            ViewBag.keywords = ConfigurationManager.AppSettings["metakeywords"];
+            ViewBag.description = ConfigurationManager.AppSettings["metakeydescription"];            
             ViewBag.address = address;
             ViewBag.range = range;
             ViewBag.category = category;
