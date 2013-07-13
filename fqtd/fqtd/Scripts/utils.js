@@ -4,6 +4,7 @@ var FQTD = (function () {
     var myplace, directionsDisplay, map;
     var locations = new Array();
     var limit = 0;
+    var infobox;
 
     function isEmpty(str) {
         if ((!str || 0 === str.length) == true) {
@@ -66,17 +67,19 @@ var FQTD = (function () {
                 title: 'Click to zoom',
                 icon: (isHome === true ? '/images/home.png' : '/images/MarkerIcon/Brand/schools_maps.png')
             });
-            var infobox = new InfoBox({
-                content: contentPopup,
-                disableAutoPan: true,
-                maxWidth: 0,
-                pixelOffset: new google.maps.Size(-140, 0),
-                zIndex: null,
-                closeBoxMargin: "12px 4px 2px 2px",
-                closeBoxURL: "/images/close.gif",
-                infoBoxClearance: new google.maps.Size(1, 1)
-            });
+            
             google.maps.event.addListener(marker, 'click', function () {
+                if (infobox) infobox.close();
+                infobox = new InfoBox({
+                    content: contentPopup,
+                    disableAutoPan: true,
+                    maxWidth: 0,
+                    pixelOffset: new google.maps.Size(-140, 0),
+                    zIndex: null,
+                    closeBoxMargin: "12px 4px 2px 2px",
+                    closeBoxURL: "/images/close.gif",
+                    infoBoxClearance: new google.maps.Size(1, 1)
+                });
                 infobox.open(map, marker);
             });
             marker.setMap(map);
@@ -355,8 +358,10 @@ var FQTD = (function () {
             directionsDisplay.setMap(map);
 
             for (i = 0; i <= 4; i++) {
-                FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
-                limit++;
+                if (listMarker[i]) {
+                    FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
+                    limit++;
+                }
             }
         },
         BindSelectCategory: function () {
@@ -480,6 +485,7 @@ var FQTD = (function () {
         },
         HideLoading: function () {
             $("#loading").addClass("hidden");
+            $("#bottom").attr("class","bottom")
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -591,6 +597,9 @@ var FQTD = (function () {
                         }
                     }
                     $("#tblSameCategory").html(samecategoryList)
+
+                    //footer
+                    FQTD.HideLoading()
                 }
             });
         }

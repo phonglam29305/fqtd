@@ -36,7 +36,7 @@ body {
     height: 100%;
 }
 
-#bottom {
+.bottom {
     height: 40px;
     width: 100%;
     background-image: url(../images/bg_bottom.jpg);
@@ -45,7 +45,7 @@ body {
     position: absolute;
 }
 
-#bottomHome {
+.bottomHome {
     height: 40px;
     width: 100%;
     background-image: url(../images/bg_bottom.jpg);
@@ -57,10 +57,12 @@ body {
 
 #facebook {
     height: 20px;
-    width: 100%;    
-    text-align: right;
+    width: 99%;    
+    text-align: left;
     position: absolute;
     bottom: 42px;
+    padding-left:5px;
+    padding-bottom:5px;
 }
 
 #bottom_info {
@@ -430,8 +432,7 @@ input {
 
 #googleMap {
     width: 80%;
-    height: 654px;
-    background-color: #dfdfdf;
+    height: 654px;    
     margin: 0 auto;
 }
 
@@ -818,8 +819,10 @@ input {
     display: none;
 }
 #loading {
-     width: 30px; 
-     margin: 0 auto;
+    position:absolute;
+    width: 30px; 
+    top:50%;
+    left:50%;
 }
 /********************
 *   Mobile Styles   *
