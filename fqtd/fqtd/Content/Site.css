@@ -57,12 +57,12 @@ body {
 
 #facebook {
     height: 20px;
-    width: 99%;    
+    width: 99%;
     text-align: left;
     position: absolute;
     bottom: 42px;
-    padding-left:5px;
-    padding-bottom:5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
 }
 
 #bottom_info {
@@ -409,15 +409,15 @@ input {
     margin-top: 25px;
 }
 
-#object a {
-    color: #606060;
-    text-decoration: none;
-}
+    #object a {
+        color: #606060;
+        text-decoration: none;
+    }
 
-#object a:hover {
-    color: #35a018;
-    text-decoration: none;
-}
+        #object a:hover {
+            color: #35a018;
+            text-decoration: none;
+        }
 
 #photo {
     border: #dadada 1px solid;
@@ -432,7 +432,7 @@ input {
 
 #googleMap {
     width: 80%;
-    height: 654px;    
+    height: 654px;
     margin: 0 auto;
 }
 
@@ -468,11 +468,6 @@ input {
     cursor: pointer;
 }
 
-#cactienich {
-    position: absolute;
-    left: 0px;
-    top: 132px;
-}
 
 #tbtable {
     background: #FFFFFF;
@@ -818,11 +813,22 @@ input {
 .ui-helper-hidden-accessible {
     display: none;
 }
+
 #loading {
-    position:absolute;
-    width: 30px; 
-    top:50%;
-    left:50%;
+    position: absolute;
+    width: 30px;
+    top: 50%;
+    left: 50%;
+}
+.stick {
+    position:fixed;
+    top:0px;
+    left: 0px;
+}
+.nostick {
+    position: absolute;
+    left: 0px;
+    top: 132px;
 }
 /********************
 *   Mobile Styles   *

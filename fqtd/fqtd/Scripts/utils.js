@@ -228,7 +228,7 @@ var FQTD = (function () {
             urlResult += "&radious=" + $("#range").val();
             urlResult += "&properties=0,2,3,4,5,6";
             urlResult += "&vn0_en1=0";
-            console.log(urlResult);
+            
             var result = $.getJSON(urlResult, null, function (items) {
                 //alert(items);
                 for (var i = 0; i < items.length; i++) {
@@ -251,7 +251,7 @@ var FQTD = (function () {
             });
         },
         BindData: function () {
-            var range = $("#range").val();
+            
             if (locations.length > 0) {
                 if ($("#form").val() == "1") {
                     var address = $("#address").val();
@@ -262,39 +262,11 @@ var FQTD = (function () {
                                 //set LatLng current place
                                 myplace = results[0].geometry.location;
 
-                                //set map
-                                var mapProp = {
-                                    center: myplace,
-                                    disableDefaultUI: true,
-                                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                                };
-                                map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-                                //set my city
-                                var myCity = new google.maps.Circle({
-                                    center: myplace,
-                                    radius: parseInt(range),
-                                    strokeWeight: 0,
-                                    fillColor: "#0000FF",
-                                    fillOpacity: 0.1
-                                });
-                                myCity.setMap(map);
-
-                                //set direction
-                                directionsDisplay = new google.maps.DirectionsRenderer();
-                                directionsDisplay.setMap(map);
-
-                                map.fitBounds(myCity.getBounds());
-                                FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
-
                                 //add distance to array and sort array by distance
                                 FQTD.SortArray()
 
-                                //add marker to map
-                                for (i = 0; i <= 4; i++) {
-                                    FQTD.markOutLocation(locations[i][0], locations[i][1], map, locations[i][2], false);
-                                    limit++;
-                                }
+                                //bind marker to map
+                                FQTD.SetupMap(myplace, locations, 12, 0);
 
                             } else {
                                 alert("Geocode không hoạt động vì lí do sau : " + status);
@@ -315,7 +287,7 @@ var FQTD = (function () {
                             FQTD.SortArray()
 
                             //bind marker to map
-                            FQTD.SetupMap(myplace, locations, 12);
+                            FQTD.SetupMap(myplace, locations, 12, 1);
                         });
                     }
                     else {
@@ -327,7 +299,7 @@ var FQTD = (function () {
                         FQTD.SortArray()
 
                         //bind marker to map
-                        FQTD.SetupMap(myplace, locations, 6);
+                        FQTD.SetupMap(myplace, locations, 6 , 1);
                     };
                     //set list display first
                     FQTD.displayMap()
@@ -338,32 +310,63 @@ var FQTD = (function () {
                 FQTD.noRecord()
             }
         },
-        SetupMap: function (myplace, listMarker, zoom) {
-            //set if 1st place will not display in map view
-            var compareDistance = return_Distance(myplace, new google.maps.LatLng(listMarker[0][0], listMarker[0][1]));
-            if (compareDistance > 17639) {
-                myplace = new google.maps.LatLng(listMarker[0][0], listMarker[0][1]);
-            }
+        SetupMap: function (myplace, listMarker, zoom, type) {
+            if (type == 1) {
+                //set if 1st place will not display in map view
+                var compareDistance = return_Distance(myplace, new google.maps.LatLng(listMarker[0][0], listMarker[0][1]));
+                if (compareDistance > 17639) {
+                    myplace = new google.maps.LatLng(listMarker[0][0], listMarker[0][1]);
+                }
 
-            //set map
-            var mapProp = {
-                center: myplace,
-                zoom: zoom,
-                disableDefaultUI: true,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                //set map
+                var mapProp = {
+                    center: myplace,
+                    zoom: zoom,
+                    disableDefaultUI: true,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            }
+            else {
+                //get range value
+                var range = $("#range").val();
+
+                //set map
+                var mapProp = {
+                    center: myplace,
+                    disableDefaultUI: true,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                
+                //set my city
+                var myCity = new google.maps.Circle({
+                    center: myplace,
+                    radius: parseInt(range),
+                    strokeWeight: 0,
+                    fillColor: "#0000FF",
+                    fillOpacity: 0.1
+                });
+                myCity.setMap(map);
+                
+                map.fitBounds(myCity.getBounds());
+                FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
+            }
 
             //set direction
             directionsDisplay = new google.maps.DirectionsRenderer();
             directionsDisplay.setMap(map);
 
+            //add marker to map
             for (i = 0; i <= 4; i++) {
                 if (listMarker[i]) {
                     FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
                     limit++;
                 }
             }
+
+            //check to display button more
+            if (listMarker.length <= 4) $("#btn_xemthemMap").addClass("hidden")
         },
         BindSelectCategory: function () {
             //Bind data to select box Category
@@ -488,6 +491,20 @@ var FQTD = (function () {
             $("#loading").addClass("hidden");
             $("#bottom").attr("class","bottom")
         },
+        Sticker: function () {
+            var s = $("#cactienich");
+            var pos = s.position();
+            $(window).scroll(function () {
+                var windowpos = $(window).scrollTop();                
+                if (windowpos >= pos.top) {
+                    s.removeClass("nostick");
+                    s.addClass("stick");
+                } else {
+                    s.removeClass("stick");
+                    s.addClass("nostick");
+                }
+            });
+        },
         initResult: function () {
             $("#tabList").bind('click', function () {
                 $("#list").removeClass("hidden");
@@ -512,6 +529,7 @@ var FQTD = (function () {
                     FQTD.DisplayMore(limit, locations);
                 }
             });
+            FQTD.Sticker();
         },
         initHomepage: function () {
             ///event slide
