@@ -236,7 +236,7 @@ namespace fqtd.Areas.Admin.Controllers
         {
             var xxx = from i in db.BrandItems
                       join l in db.ItemLocations on i.ItemID equals l.ItemID
-                      where l.Street != null && l.Distrist != null && l.City != null && (i.ItemID==itemid || itemid==0)
+                      where l.Street != null && l.Distrist != null && l.City != null && (i.ItemID == itemid || itemid == 0)
                       select new
                       {
                           i.ItemID,
@@ -276,14 +276,14 @@ namespace fqtd.Areas.Admin.Controllers
                     keyword_us = keyword_us + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.City);
                 }
 
-              
+
                 list = db.SP_GetKeyword1(item.Street, item.Distrist, item.City);
                 foreach (var key in list)
                 {
                     if (key.type == 1)//street
                     {
                         string[] words = key.street.Split(';');
-                        
+
                         foreach (var word in words)
                             if (words.Length > 0)
                                 keyword = keyword + ";" + item.BrandName + " " + word;
@@ -291,18 +291,18 @@ namespace fqtd.Areas.Admin.Controllers
                     else if (key.type == 2)//district
                     {
                         string[] words = key.district.Split(';');
-                        
+
                         foreach (var word in words)
                             if (words.Length > 0)
-                            keyword = keyword + ";" + item.BrandName + " " + word;
+                                keyword = keyword + ";" + item.BrandName + " " + word;
                     }
                     if (key.type == 3)//city
                     {
                         string[] words = key.city.Split(';');
-                       
+
                         foreach (var word in words)
                             if (words.Length > 0)
-                            keyword = keyword + ";" + item.BrandName + " " + word;
+                                keyword = keyword + ";" + item.BrandName + " " + word;
                     }
                     if (key.type == 1)//street
                     {
@@ -341,10 +341,8 @@ namespace fqtd.Areas.Admin.Controllers
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
-            return RedirectToAction("index","items");
+            return RedirectToAction("index", "items");
         }
-
-        
 
         public static string StripDiacritics(string accented)
         {
@@ -354,6 +352,46 @@ namespace fqtd.Areas.Admin.Controllers
             return regex.Replace(strFormD, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
         }
 
+        public ActionResult ItemProperties(int id = 0)
+        {
+            var result = db.SP_Item_Properties(id);
+            TempData["ItemID"] = id;
+            return View(result);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ItemProperties(string[] MyCheckList)
+        {
+            int itemid = Convert.ToInt32(TempData["ItemID"]);
+
+            db.SP_RemoveItemProperties(itemid);
+
+            db.SaveChanges();
+            foreach (var item in MyCheckList)
+            {
+                int propertyid = Convert.ToInt32(item);
+                var result = db.ItemProperties.Where(a => a.ItemID == itemid && a.PropertyID == propertyid);
+                ItemProperties ip = result.FirstOrDefault();
+                if (ip != null)
+                {
+                    ip.PropertyValue = true;
+                    db.Entry(ip).State = EntityState.Modified;
+                }
+                else
+                {
+                    ip = new ItemProperties();
+                    ip.ItemID = itemid;
+                    ip.PropertyID = propertyid;
+                    ip.PropertyValue = true;
+                    db.ItemProperties.Add(ip);
+                }
+                db.SaveChanges();
+                TempData["ItemID"] = null;
+            }
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
+            return RedirectToAction("index", "items");
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

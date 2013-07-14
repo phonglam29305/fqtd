@@ -20,7 +20,7 @@
 
     <fieldset>
         <legend>Item Infos</legend>
-        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.ItemName)
         </div>
@@ -44,7 +44,7 @@
             <input type="file" name="icon" />
             @Html.ValidationMessageFor(model => model.MarkerIcon)
         </div>
-        
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.OpenTime)
@@ -82,8 +82,8 @@
         </div>
         <div class="editor-field">
             @Html.TextAreaFor(model => model.Description, new { @id = "Description" })
-           <script type="text/javascript">
-               CKEDITOR.replace("Description");
+            <script type="text/javascript">
+                CKEDITOR.replace("Description");
             </script>
             @Html.ValidationMessageFor(model => model.Description)
         </div>
@@ -94,8 +94,8 @@
         </div>
         <div class="editor-field">
             @Html.TextAreaFor(model => model.Description_EN, new { @id = "Description_EN" })
-           <script type="text/javascript">
-               CKEDITOR.replace("Description_EN");
+            <script type="text/javascript">
+                CKEDITOR.replace("Description_EN");
             </script>
             @Html.ValidationMessageFor(model => model.Description_EN)
         </div>

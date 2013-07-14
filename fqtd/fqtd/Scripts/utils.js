@@ -226,6 +226,7 @@ var FQTD = (function () {
             urlResult += "&categoryid=" + $("#category").val();
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
+            urlResult += "&properties=0,2,3,4,5,6";
             urlResult += "&vn0_en1=0";
             console.log(urlResult);
             var result = $.getJSON(urlResult, null, function (items) {

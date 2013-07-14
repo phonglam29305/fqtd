@@ -309,6 +309,31 @@
           <Parameter Name="district" Type="nvarchar" Mode="In" />
           <Parameter Name="city" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_ItemSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mode" Type="int" Mode="In" />
+          <Parameter Name="CategoryID" Type="int" Mode="In" />
+          <Parameter Name="BrandID" Type="int" Mode="In" />
+          <Parameter Name="Keyword" Type="nvarchar" Mode="In" />
+          <Parameter Name="properties" Type="nvarchar" Mode="In" />
+          <Parameter Name="path" Type="nvarchar" Mode="In" />
+          <Parameter Name="c_path" Type="nvarchar" Mode="In" />
+          <Parameter Name="b_path" Type="nvarchar" Mode="In" />
+          <Parameter Name="i_path" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_RemoveItemProperties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SearchItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mode" Type="int" Mode="In" />
+          <Parameter Name="CategoryID" Type="int" Mode="In" />
+          <Parameter Name="BrandID" Type="int" Mode="In" />
+          <Parameter Name="Keyword" Type="nvarchar" Mode="In" />
+          <Parameter Name="properties" Type="nvarchar" Mode="In" />
+          <Parameter Name="path" Type="nvarchar" Mode="In" />
+          <Parameter Name="c_path" Type="nvarchar" Mode="In" />
+          <Parameter Name="b_path" Type="nvarchar" Mode="In" />
+          <Parameter Name="i_path" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_Category_Properties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="timdau_fqtd">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
         </Function>
@@ -372,6 +397,31 @@
             <Parameter Name="city" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tbl_SystemContent" EntityType="fqtdModel.tbl_SystemContent" />
+          <FunctionImport Name="SP_RemoveItemProperties">
+          <Parameter Name="ItemID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ItemSearch">
+            <Parameter Name="mode" Mode="In" Type="Int32" />
+            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="BrandID" Mode="In" Type="Int32" />
+            <Parameter Name="Keyword" Mode="In" Type="String" />
+            <Parameter Name="properties" Mode="In" Type="String" />
+            <Parameter Name="path" Mode="In" Type="String" />
+            <Parameter Name="c_path" Mode="In" Type="String" />
+            <Parameter Name="b_path" Mode="In" Type="String" />
+            <Parameter Name="i_path" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SearchItem">
+            <Parameter Name="mode" Mode="In" Type="Int32" />
+            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="BrandID" Mode="In" Type="Int32" />
+            <Parameter Name="Keyword" Mode="In" Type="String" />
+            <Parameter Name="properties" Mode="In" Type="String" />
+            <Parameter Name="path" Mode="In" Type="String" />
+            <Parameter Name="c_path" Mode="In" Type="String" />
+            <Parameter Name="b_path" Mode="In" Type="String" />
+            <Parameter Name="i_path" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BrandItems">
           <Key>
@@ -834,6 +884,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_RemoveItemProperties" FunctionName="fqtdModel.Store.SP_RemoveItemProperties" />
+          <FunctionImportMapping FunctionImportName="SP_ItemSearch" FunctionName="fqtdModel.Store.SP_ItemSearch" />
+          <FunctionImportMapping FunctionImportName="SP_SearchItem" FunctionName="fqtdModel.Store.SP_SearchItem" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
