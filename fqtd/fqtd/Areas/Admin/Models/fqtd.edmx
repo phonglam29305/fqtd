@@ -91,6 +91,8 @@
           <Property Name="BrandTypeID" Type="int" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
+          <Property Name="Keyword" Type="nvarchar(max)" />
+          <Property Name="Keyword_Unsign" Type="nvarchar(max)" StoreGeneratedPattern="Computed" />
           <Property Name="Logo" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
@@ -126,6 +128,8 @@
           <Property Name="CategoryName_EN" Type="nvarchar" MaxLength="250" />
           <Property Name="Description_EN" Type="nvarchar(max)" />
           <Property Name="MarkerIcon" Type="nvarchar" MaxLength="250" />
+          <Property Name="Keyword" Type="nvarchar(max)" />
+          <Property Name="Keyword_Unsign" Type="nvarchar(max)" StoreGeneratedPattern="Computed" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateUser" Type="nvarchar" Nullable="false" MaxLength="256" />
@@ -475,6 +479,8 @@
           <NavigationProperty Name="tbl_Categories" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Brands" ToRole="tbl_Categories" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Logo" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keyword" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keyword_Unsign" MaxLength="Max" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="BrandType">
           <Key>
@@ -512,6 +518,8 @@
           <NavigationProperty Name="tbl_Brands" Relationship="fqtdModel.FK_tbl_Brands_tbl_Categories" FromRole="tbl_Categories" ToRole="tbl_Brands" />
           <Property Type="String" Name="MarkerIcon" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tbl_Properties" Relationship="fqtdModel.tbl_Category_Properties" FromRole="Categories" ToRole="Properties" />
+          <Property Type="String" Name="Keyword" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keyword_Unsign" MaxLength="Max" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="ItemLocation">
           <Key>
@@ -721,6 +729,8 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="fqtdModel.Brands">
               <MappingFragment StoreEntitySet="tbl_Brands">
+                <ScalarProperty Name="Keyword_Unsign" ColumnName="Keyword_Unsign" />
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
@@ -760,6 +770,8 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="fqtdModel.Categories">
               <MappingFragment StoreEntitySet="tbl_Categories">
+                <ScalarProperty Name="Keyword_Unsign" ColumnName="Keyword_Unsign" />
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
                 <ScalarProperty Name="MarkerIcon" ColumnName="MarkerIcon" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />

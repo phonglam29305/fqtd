@@ -57,7 +57,23 @@ namespace fqtd.Controllers
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
             string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
 
-            //var brands = db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
+            string[] list = properties.Split(',');
+            List<int> items = new List<int>();
+            foreach (var x in list)
+                if (x != "")
+                {
+                    try
+                    {
+                        items.Add(Convert.ToInt32(x));
+                    }
+                    catch { }
+
+                }
+
+            var itemlist = (from i in db.ItemProperties
+                            where items.Contains(i.PropertyID)// >= 0
+                            select new { i.ItemID }).Distinct();
+
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -79,6 +95,13 @@ namespace fqtd.Controllers
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
+
+            if (itemlist.Count() > 0)
+                brands = from i in brands
+                         join ip in itemlist on i.ItemID equals ip.ItemID
+                         select i;
+
+
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -97,6 +120,23 @@ namespace fqtd.Controllers
             string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
             string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
+
+            string[] list = properties.Split(',');
+            List<int> items = new List<int>();
+            foreach (var x in list)
+                if (x != "")
+                {
+                    try
+                    {
+                        items.Add(Convert.ToInt32(x));
+                    }
+                    catch { }
+
+                }
+
+            var itemlist = (from i in db.ItemProperties
+                            where items.Contains(i.PropertyID)// >= 0
+                            select new { i.ItemID }).Distinct();
 
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
@@ -119,7 +159,11 @@ namespace fqtd.Controllers
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
-            //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
+            if (itemlist.Count() > 0)
+                brands = from i in brands
+                         join ip in itemlist on i.ItemID equals ip.ItemID
+                         select i;
+
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -159,11 +203,6 @@ namespace fqtd.Controllers
                     catch { }
 
                 }
-            //var xxx = items.AsQueryable();
-           // var itemlist = (from i in db.ItemProperties
-            //                join p in items on i.PropertyID equals p.ID
-           //                 select new {i.ItemID }).GroupBy(a => a.ItemID).Distinct().AsQueryable();
-               // db.ItemProperties.Where(a => xxx.Any(b => b.ID == a.ItemID)).ToList().Distinct().AsQueryable();
 
             var itemlist = (from i in db.ItemProperties
                             where items.Contains(i.PropertyID)// >= 0
@@ -173,8 +212,9 @@ namespace fqtd.Controllers
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
                          join lo in db.ItemLocations on i.ItemID equals lo.ItemID
-                         join ip in itemlist on i.ItemID equals ip.ItemID
-                         where i.Keyword_unsign.ToLower().Contains(keyword)/// && i.tbl_Item_Properties.Any(a=>a.ItemID = list.)
+                         where i.Keyword_unsign.ToLower().Contains(keyword) 
+                         || c.Keyword_Unsign.ToLower().Contains(keyword)
+                         || br.Keyword_Unsign.ToLower().Contains(keyword)
                          select new
                          {
                              i.ItemID,
@@ -191,9 +231,11 @@ namespace fqtd.Controllers
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
-            if (items.Count() == 0)
-                brands = from i in db.BrandItems
-                         join br in db.Brands on i.BrandID equals br.BrandID
+            if (itemlist.Count() > 0)
+                brands = from i in brands
+                         join ip in itemlist on i.ItemID equals ip.ItemID
+                         select i;
+                         /*join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
                          join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                          where i.Keyword_unsign.ToLower().Contains(keyword)
@@ -212,7 +254,7 @@ namespace fqtd.Controllers
                              lo.Latitude,
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
-                         };
+                         };*/
             //string count = "count: " + brands.Count();
             //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
             JsonNetResult jsonNetResult = new JsonNetResult();

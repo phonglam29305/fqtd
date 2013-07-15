@@ -35,6 +35,8 @@ namespace fqtd.Areas.Admin.Models
         public string DeleteUser { get; set; }
         public string MarkerIcon { get; set; }
         public string Logo { get; set; }
+        public string Keyword { get; set; }
+        public string Keyword_Unsign { get; set; }
     
         public virtual ICollection<BrandItems> tbl_Brand_Items { get; set; }
         public virtual BrandType tbl_BrandType { get; set; }

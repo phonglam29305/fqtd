@@ -187,7 +187,6 @@
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SystemContentController.cs" />
-    <Compile Include="Areas\Admin\Models\ItemLocationList.cs" />
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>

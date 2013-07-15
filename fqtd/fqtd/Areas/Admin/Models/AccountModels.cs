@@ -16,7 +16,6 @@ namespace fqtd.Areas.Admin.Models
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<ItemLocationList> ItemLocationList { get; set; }
     }
 
     [Table("UserProfile")]

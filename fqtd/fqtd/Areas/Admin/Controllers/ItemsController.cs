@@ -41,6 +41,8 @@ namespace fqtd.Areas.Admin.Controllers
             ViewBag.CurrentBrandID = BrandID;
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
+            
+
             return View(result.ToPagedList(currentPage, maxRecords));
         }
 
