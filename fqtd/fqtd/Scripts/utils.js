@@ -52,7 +52,8 @@ var FQTD = (function () {
             var urlProperty = "/result/PropertyByCategoryID";
             $.getJSON(urlProperty + "?id=-1", null, function (properties) {
                 for (i in properties) {
-                    $("#property").append('<input tabindex="' + i + '" type="checkbox" id="' + properties[i].PropertyID + '"><label for="' + properties[i].PropertyID + '">' + properties[i].PropertyName + '</label><br />');
+                    $("#property").append('<div class="propertyrow"><input tabindex="' + i + '" type="checkbox" id="' + properties[i].PropertyID + '"><label for="' + properties[i].PropertyID + '">' + properties[i].PropertyName + '</label></div>');
+                    $("#property").append('<div class="clearfix"></div>')
                     $('#' + properties[i].PropertyID).iCheck({
                         checkboxClass: 'icheckbox_square',
                         increaseArea: '20%' // optional
@@ -217,7 +218,7 @@ var FQTD = (function () {
             };
             $("#pagination").pagination(locations.length, opt);
         },
-        GetJSON: function () {
+        GetJSON: function (arr) {
             //Get data result
             var urlResult = "/result/search?";
             urlResult += "mode=" + $("#form").val();
@@ -226,9 +227,16 @@ var FQTD = (function () {
             urlResult += "&categoryid=" + $("#category").val();
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
-            urlResult += "&properties=0,2,3,4,5,6";
+            if (arr) {
+                if (arr.length > 0) {
+                    urlResult += "&properties=";
+                    for (var i = 0; i < arr.length; i++) {
+                        urlResult += arr[i] + ",";
+                    }
+                }
+            }
             urlResult += "&vn0_en1=0";
-            
+
             var result = $.getJSON(urlResult, null, function (items) {
                 //alert(items);
                 for (var i = 0; i < items.length; i++) {
@@ -246,8 +254,7 @@ var FQTD = (function () {
             });
 
             result.complete(function () {
-                FQTD.BindData()
-                FQTD.HideLoading()
+                FQTD.BindData()                
             });
         },
         BindData: function () {
@@ -304,7 +311,8 @@ var FQTD = (function () {
                     //set list display first
                     FQTD.displayMap()
                 }
-                FQTD.Pagination();
+                FQTD.Pagination()
+                FQTD.MoveFooter()
             }
             else {
                 FQTD.noRecord()
@@ -489,7 +497,9 @@ var FQTD = (function () {
         },
         HideLoading: function () {
             $("#loading").addClass("hidden");
-            $("#bottom").attr("class","bottom")
+        },
+        MoveFooter: function () {
+            $("#bottom").attr("class", "bottom")
         },
         Sticker: function () {
             var s = $("#cactienich");
@@ -504,6 +514,24 @@ var FQTD = (function () {
                     s.addClass("nostick");
                 }
             });
+        },
+        GetPropertyValue: function () {
+            var arr = [];
+
+            $(".checked").each(function () {
+                var checkbox = $(this).find("input:checkbox:first");                
+                arr.push(checkbox[0].id)
+            })
+
+            FQTD.GetJSON(arr)
+        },
+        ResetData: function () {
+            myplace = null;
+            directionsDisplay = null;
+            map = null;
+            locations = new Array();
+            limit = 0;
+            infobox = null;
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -529,7 +557,13 @@ var FQTD = (function () {
                     FQTD.DisplayMore(limit, locations);
                 }
             });
+            $("#btn_filter").bind("click", function () {
+                FQTD.ResetData()
+                FQTD.GetPropertyValue()
+            })
             FQTD.Sticker();
+            //footer
+            FQTD.HideLoading()
         },
         initHomepage: function () {
             ///event slide
@@ -617,8 +651,8 @@ var FQTD = (function () {
                     }
                     $("#tblSameCategory").html(samecategoryList)
 
-                    //footer
                     FQTD.HideLoading()
+                    FQTD.MoveFooter()
                 }
             });
         }
