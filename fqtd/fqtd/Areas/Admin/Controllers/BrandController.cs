@@ -239,6 +239,49 @@ namespace fqtd.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+        public ActionResult BrandCategories(int id = 0)
+        {
+            var result = db.SP_Brand_Categories(id);
+            TempData["BrandID"] = id;
+            return View(result);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BrandCategories(string[] MyCheckList)
+        {
+            int BrandID = Convert.ToInt32(TempData["BrandID"]);
+
+            db.SP_RemoveBrandCategories(BrandID);
+
+            db.SaveChanges();
+            foreach (var item in MyCheckList)
+            {
+                int CategoryID = Convert.ToInt32(item);
+                var result = db.tbl_Brand_Categories.Where(a => a.BrandID == BrandID && a.CategoryID == CategoryID);
+                BrandCategories ip = result.FirstOrDefault();
+                if (ip != null)
+                {
+                    ip.Checked = true;
+                    db.Entry(ip).State = EntityState.Modified;
+                }
+                else
+                {
+                    ip = new BrandCategories();
+                    ip.BrandID = BrandID;
+                    ip.CategoryID = CategoryID;
+                    ip.Checked = true;
+                    db.tbl_Brand_Categories.Add(ip);
+                }
+                db.SaveChanges();
+                TempData["BrandID"] = null;
+            }
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
+            return RedirectToAction("index", "items");
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

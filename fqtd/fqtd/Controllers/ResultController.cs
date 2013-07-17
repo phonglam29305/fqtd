@@ -77,21 +77,20 @@ namespace fqtd.Controllers
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
-                         join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                          where i.BrandID == id
                          select new
                          {
                              i.ItemID,
                              i.ItemName,
-                             lo.FullAddress,
+                             i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
                              i.ItemName_EN,
                              i.Description,
                              i.Description_EN,
-                             lo.Longitude,
-                             lo.Latitude,
+                             i.Longitude,
+                             i.Latitude,
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
@@ -141,21 +140,20 @@ namespace fqtd.Controllers
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
-                         join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                          where c.CategoryID == id
                          select new
                          {
                              i.ItemID,
                              i.ItemName,
-                             lo.FullAddress,
+                             i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
                              i.ItemName_EN,
                              i.Description,
                              i.Description_EN,
-                             lo.Longitude,
-                             lo.Latitude,
+                             i.Longitude,
+                             i.Latitude,
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
@@ -211,7 +209,6 @@ namespace fqtd.Controllers
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
-                         join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                          where i.Keyword_unsign.ToLower().Contains(keyword) 
                          || c.Keyword_Unsign.ToLower().Contains(keyword)
                          || br.Keyword_Unsign.ToLower().Contains(keyword)
@@ -219,15 +216,15 @@ namespace fqtd.Controllers
                          {
                              i.ItemID,
                              i.ItemName,
-                             lo.FullAddress,
+                             i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
                              i.ItemName_EN,
                              i.Description,
                              i.Description_EN,
-                             lo.Longitude,
-                             lo.Latitude,
+                             i.Longitude,
+                             i.Latitude,
                              Logo = path + "/" + br.Logo,
                              MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
                          };
@@ -299,7 +296,6 @@ namespace fqtd.Controllers
             var item = from i in db.BrandItems
                        join br in db.Brands on i.BrandID equals br.BrandID
                        join ca in db.Categories on br.CategoryID equals ca.CategoryID
-                       join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                        where i.ItemID == itemID
                        select new
                        {
@@ -323,11 +319,11 @@ namespace fqtd.Controllers
                            ,
                            Description_EN = i.Description_EN == "" ? br.Description_EN : i.Description_EN
                            ,
-                           lo.FullAddress
+                           i.FullAddress
                            ,
-                           lo.Longitude
+                           i.Longitude
                            ,
-                           lo.Latitude,
+                           i.Latitude,
                            ca.MarkerIcon,
                            B_MarkerIcon = br.MarkerIcon,
                            I_MarkerIcon = i.MarkerIcon,
@@ -357,7 +353,6 @@ namespace fqtd.Controllers
             var relateList = from a in db.BrandItems
                              join br in db.Brands on a.BrandID equals br.BrandID
                              join ca in db.Categories on br.CategoryID equals ca.CategoryID
-                             join lo in db.ItemLocations on a.ItemID equals lo.ItemID
                              where a.ItemID != temp.ItemID && a.BrandID == temp.BrandID
                              select new
                              {
@@ -368,7 +363,7 @@ namespace fqtd.Controllers
                                  ,
                                  a.Website
                                  ,
-                                 lo.FullAddress
+                                 a.FullAddress
                                  ,
                                  Logo = path + "/" + br.Logo
                              };
@@ -376,7 +371,6 @@ namespace fqtd.Controllers
             var items = from i in db.BrandItems
                         join br in db.Brands on i.BrandID equals br.BrandID
                         join ca in db.Categories on br.CategoryID equals ca.CategoryID
-                        join lo in db.ItemLocations on i.ItemID equals lo.ItemID
                         where i.ItemID != itemID && br.CategoryID == temp.CategoryID
                         select new
                         {
@@ -388,7 +382,7 @@ namespace fqtd.Controllers
                             ,
                             i.Website
                             ,
-                            lo.FullAddress
+                            i.FullAddress
                             ,
                             Logo = path + "/" + br.Logo
                         };

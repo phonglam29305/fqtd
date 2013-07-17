@@ -66,7 +66,6 @@ namespace fqtd.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
-            ViewBag.ItemID = new SelectList(db.ItemLocations, "ItemID", "FullAddress");
             return View();
         }
 
@@ -103,7 +102,6 @@ namespace fqtd.Areas.Admin.Controllers
             }
 
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", branditems.BrandID);
-            ViewBag.ItemID = new SelectList(db.ItemLocations, "ItemID", "FullAddress", branditems.ItemID);
             return View(branditems);
         }
 
@@ -118,7 +116,6 @@ namespace fqtd.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", branditems.BrandID);
-            ViewBag.ItemID = new SelectList(db.ItemLocations, "ItemID", "FullAddress", branditems.ItemID);
             return View(branditems);
         }
 
@@ -159,7 +156,6 @@ namespace fqtd.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName", branditems.BrandID);
-            ViewBag.ItemID = new SelectList(db.ItemLocations, "ItemID", "FullAddress", branditems.ItemID);
             return View(branditems);
         }
 
@@ -237,8 +233,7 @@ namespace fqtd.Areas.Admin.Controllers
         public ActionResult KeywordBuilder(int itemid = 0)
         {
             var xxx = from i in db.BrandItems
-                      join l in db.ItemLocations on i.ItemID equals l.ItemID
-                      where l.Street != null && l.Distrist != null && l.City != null && (i.ItemID == itemid || itemid == 0)
+                      where i.Street != null && i.District != null && i.City != null && (i.ItemID == itemid || itemid == 0)
                       select new
                       {
                           i.ItemID,
@@ -248,10 +243,10 @@ namespace fqtd.Areas.Admin.Controllers
                           i.tbl_Brands.BrandName_EN,
                           i.tbl_Brands.tbl_Categories.CategoryName,
                           i.tbl_Brands.tbl_Categories.CategoryName_EN,
-                          l.FullAddress,
-                          l.Street,
-                          l.Distrist,
-                          l.City
+                          i.FullAddress,
+                          i.Street,
+                          i.District,
+                          i.City
                       };
             var items = xxx.ToList();
             string keyword = "";
@@ -260,7 +255,7 @@ namespace fqtd.Areas.Admin.Controllers
             {
                 keyword = "";
                 keyword_us = "";
-                var list = db.SP_GetKeyword1(item.Street, item.Distrist, item.City);
+                var list = db.SP_GetKeyword1(item.Street, item.District, item.City);
                 var temp = list.ToList();
                 if (temp.Where(a => a.type == 1).ToList().Count == 0)
                 {
@@ -269,8 +264,8 @@ namespace fqtd.Areas.Admin.Controllers
                 }
                 if (temp.Where(a => a.type == 2).ToList().Count == 0)
                 {
-                    keyword = keyword + ";" + item.BrandName + " " + item.Distrist;
-                    keyword_us = keyword_us + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.Distrist);
+                    keyword = keyword + ";" + item.BrandName + " " + item.District;
+                    keyword_us = keyword_us + ";" + StripDiacritics(item.BrandName) + " " + StripDiacritics(item.District);
                 }
                 if (temp.Where(a => a.type == 3).ToList().Count == 0)
                 {
@@ -279,7 +274,7 @@ namespace fqtd.Areas.Admin.Controllers
                 }
 
 
-                list = db.SP_GetKeyword1(item.Street, item.Distrist, item.City);
+                list = db.SP_GetKeyword1(item.Street, item.District, item.City);
                 foreach (var key in list)
                 {
                     if (key.type == 1)//street
