@@ -284,6 +284,9 @@ body {
 
 input {
     padding: 3px;
+    height: 26px;
+    border: #bababa 1px solid;
+    color: #606060;
 }
 
 /*-----other---*/
@@ -359,6 +362,24 @@ input {
 #lienhe_form {
     margin-top: 50px;
     margin-bottom: 60px;
+}
+
+.contactrow {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.contactleft {
+    display: inline-block;
+    float: left;
+    width: 20%;
+}
+
+.contactright {
+    display: inline-block;
+    float: left;
+    width: 79%;
 }
 
 #btn_guidi {
@@ -467,7 +488,7 @@ input {
     background: #fff;
     padding-left: 10px;
     float: left;
-    height:100%;
+    height: 100%;
 }
 
 #gioithieuchung {
@@ -820,14 +841,14 @@ input {
     position: fixed;
     top: 0px;
     left: 0px;
-    height:50%;
+    height: 50%;
 }
 
 .nostick {
     position: absolute;
     left: 0px;
     top: 135px;
-    height:50%;
+    height: 50%;
 }
 
 .propertyrow {
@@ -849,8 +870,8 @@ input {
 
 #arrow {
     width: 25px;
-    float:left;
-    height:100%;  
+    float: left;
+    height: 100%;
     position: relative;
     top: 65%;
 }
@@ -860,8 +881,9 @@ input {
 }
 
 #hrfClose, #hrfOpen {
-    height:49px;
+    height: 49px;
 }
+
 /********************
 *   Mobile Styles   *
 ********************/

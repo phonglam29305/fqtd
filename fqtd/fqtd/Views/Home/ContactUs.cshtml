@@ -2,62 +2,60 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/MasterSub.cshtml";  
 }
-
-<h2>Create</h2>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>ContactUS</legend>
+    <div id="content_subdetail">
+        <div id="noidungchinh">
+            <h1>Liên hệ</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CustomerName)
+            <div id="lienhe_form">
+                <div class="contactrow">
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.CustomerName)</strong></div>
+                    <div class="contactright">@Html.EditorFor(model => model.CustomerName)
+                        @Html.ValidationMessageFor(model => model.CustomerName)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="contactrow">
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.Address)</strong></div>
+                    <div class="contactright">@Html.TextAreaFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="contactrow">
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.Email)</strong></div>
+                    <div class="contactright">@Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="contactrow">
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.ContactTitle)</strong></div>
+                    <div class="contactright">@Html.EditorFor(model => model.ContactTitle)
+                        @Html.ValidationMessageFor(model => model.ContactTitle)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="contactrow">
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.ContactContent)</strong></div>
+                    <div class="contactright">@Html.TextAreaFor(model => model.ContactContent)
+                        @Html.ValidationMessageFor(model => model.ContactContent)
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="contactrow">
+                    <input type="submit" id="btn_guidi" value="Gửi đi" /><input type="button" id="btn_nhaplai" value="Nhập lại" />
+                </div>
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CustomerName)
-            @Html.ValidationMessageFor(model => model.CustomerName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Address)
-            @Html.ValidationMessageFor(model => model.Address)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ContactTitle)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ContactTitle)
-            @Html.ValidationMessageFor(model => model.ContactTitle)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ContactContent)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.ContactContent)
-            @Html.ValidationMessageFor(model => model.ContactContent)
-        </div>
-
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    </div>
 }
 
 @section Scripts {

@@ -381,7 +381,8 @@ var FQTD = (function () {
             var urlCategory = "/admin/categories/Categories";
             $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
                 for (i in categories) {
-                    $("#category").append('<option value="' + categories[i].CategoryID + '">' + categories[i].CategoryName + '</option>');;
+                    $("#category").append('<option value="-1">Tất cả</option>');
+                    $("#category").append('<option value="' + categories[i].CategoryID + '">' + categories[i].CategoryName + '</option>');
                 }
             });
         },
@@ -390,6 +391,7 @@ var FQTD = (function () {
             var urlBrand = "/admin/brand/BrandsByCategory";
             $.getJSON(urlBrand + "?id=-1", null, function (brands) {
                 for (i in brands) {
+                    $("#brand").append('<option value="-1">Tất cả</option>');
                     $("#brand").append('<option value="' + brands[i].BrandID + '">' + brands[i].BrandName + '</option>');;
                 }
             });

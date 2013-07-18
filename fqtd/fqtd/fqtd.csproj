@@ -218,8 +218,6 @@
     <Compile Include="Areas\Admin\Models\tbl_SystemContent.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AboutController.cs" />
-    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Utils\Dynamic.cs" />
@@ -769,8 +767,6 @@
     <Content Include="Areas\Admin\Views\Account\Register.cshtml" />
     <Content Include="Areas\Admin\Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Areas\Admin\Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\About\Index.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
@@ -785,7 +781,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\MasterSub.cshtml" />
     <Content Include="Views\Detail\Index.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Introduction.cshtml" />
     <Content Include="Views\Home\TermAndConditionOfUse.cshtml" />
     <Content Include="Views\Home\Policy.cshtml" />
