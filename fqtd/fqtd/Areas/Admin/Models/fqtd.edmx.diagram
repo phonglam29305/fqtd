@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="fqtdModel.BrandCategories" Width="1.75" PointX="0.75" PointY="13.875" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brand_Categories_tbl_Brands" />
         <AssociationConnector Association="fqtdModel.FK_tbl_Brand_Categories_tbl_Categories" />
+        <EntityTypeShape EntityType="fqtdModel.ContactUS" Width="1.5" PointX="5.25" PointY="14.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

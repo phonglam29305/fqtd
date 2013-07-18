@@ -20,6 +20,7 @@
           <EntitySet Name="tbl_Item_Properties" EntityType="fqtdModel.Store.tbl_Item_Properties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_Properties" EntityType="fqtdModel.Store.tbl_Properties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbl_SystemContent" EntityType="fqtdModel.Store.tbl_SystemContent" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbl_ContactUS" EntityType="fqtdModel.Store.tbl_ContactUS" store:Type="Tables" Schema="timdau_fqtd" />
           <AssociationSet Name="FK_tbl_Brand_Categories_tbl_Brands" Association="fqtdModel.Store.FK_tbl_Brand_Categories_tbl_Brands">
             <End Role="tbl_Brands" EntitySet="tbl_Brands" />
             <End Role="tbl_Brand_Categories" EntitySet="tbl_Brand_Categories" />
@@ -205,6 +206,18 @@
           </Key>
           <Property Name="SystemID" Type="int" Nullable="false" />
           <Property Name="SystemContent" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_ContactUS">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Name="ContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="550" />
+          <Property Name="Email" Type="nvarchar" MaxLength="350" />
+          <Property Name="ContactTitle" Type="nvarchar" MaxLength="550" />
+          <Property Name="ContactContent" Type="nvarchar" MaxLength="1500" />
+          <Property Name="ContactDate" Type="datetime" />
         </EntityType>
         <Association Name="FK_tbl_Brand_Categories_tbl_Brands">
           <End Role="tbl_Brands" Type="fqtdModel.Store.tbl_Brands" Multiplicity="1" />
@@ -445,9 +458,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="tbl_Brand_Categories" EntitySet="tbl_Brand_Categories" />
           </AssociationSet>
-          <FunctionImport Name="SP_Brand_Categories" ReturnType="Collection(fqtdModel.SP_Brand_Categories_Result)">
+          <FunctionImport Name="SP_Brand_Categories" ReturnType="Collection(fqtdModel.SP_Brand_Categories_Result1)">
           <Parameter Name="BrandID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tbl_ContactUS" EntityType="fqtdModel.ContactUS" />
         </EntityContainer>
         <EntityType Name="BrandItems">
           <Key>
@@ -731,6 +745,25 @@
           <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="CategoryName_EN" Nullable="true" MaxLength="250" />
         </ComplexType>
+        <ComplexType Name="SP_Brand_Categories_Result1">
+          <Property Type="Int32" Name="BrandID" Nullable="true" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="CategoryName_EN" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="Checked" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="ContactUS">
+          <Key>
+            <PropertyRef Name="ContactID" />
+          </Key>
+          <Property Type="Int32" Name="ContactID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CustomerName" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactTitle" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactContent" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ContactDate" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -929,14 +962,28 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_Brand_Categories" FunctionName="fqtdModel.Store.SP_Brand_Categories">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="fqtdModel.SP_Brand_Categories_Result">
+              <ComplexTypeMapping TypeName="fqtdModel.SP_Brand_Categories_Result1">
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CategoryName_EN" ColumnName="CategoryName_EN" />
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_ContactUS">
+            <EntityTypeMapping TypeName="fqtdModel.ContactUS">
+              <MappingFragment StoreEntitySet="tbl_ContactUS">
+                <ScalarProperty Name="ContactDate" ColumnName="ContactDate" />
+                <ScalarProperty Name="ContactContent" ColumnName="ContactContent" />
+                <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -11,11 +11,12 @@ namespace fqtd.Areas.Admin.Models
 {
     using System;
     
-    public partial class SP_Brand_Categories_Result
+    public partial class SP_Brand_Categories_Result1
     {
         public Nullable<int> BrandID { get; set; }
-        public Nullable<int> CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public string CategoryName_EN { get; set; }
+        public Nullable<bool> Checked { get; set; }
     }
 }

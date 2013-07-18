@@ -36,6 +36,7 @@ namespace fqtd.Areas.Admin.Models
         public DbSet<Properties> Properties { get; set; }
         public DbSet<tbl_SystemContent> tbl_SystemContent { get; set; }
         public DbSet<BrandCategories> tbl_Brand_Categories { get; set; }
+        public DbSet<ContactUS> tbl_ContactUS { get; set; }
     
         public virtual ObjectResult<SP_Category_Properties_Result> SP_Category_Properties(Nullable<int> categoryID)
         {
@@ -172,13 +173,13 @@ namespace fqtd.Areas.Admin.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_RemoveBrandCategories", brandIDParameter);
         }
     
-        public virtual ObjectResult<SP_Brand_Categories_Result> SP_Brand_Categories(Nullable<int> brandID)
+        public virtual ObjectResult<SP_Brand_Categories_Result1> SP_Brand_Categories(Nullable<int> brandID)
         {
             var brandIDParameter = brandID.HasValue ?
                 new ObjectParameter("BrandID", brandID) :
                 new ObjectParameter("BrandID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Brand_Categories_Result>("SP_Brand_Categories", brandIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Brand_Categories_Result1>("SP_Brand_Categories", brandIDParameter);
         }
     }
 }

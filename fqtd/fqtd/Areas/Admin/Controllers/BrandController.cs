@@ -278,8 +278,7 @@ namespace fqtd.Areas.Admin.Controllers
                 TempData["BrandID"] = null;
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
-            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "BrandName");
-            return RedirectToAction("index", "items");
+            return RedirectToAction("index", "Brand");
         }
 
         protected override void Dispose(bool disposing)

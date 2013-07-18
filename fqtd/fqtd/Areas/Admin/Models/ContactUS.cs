@@ -10,12 +10,16 @@
 namespace fqtd.Areas.Admin.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_Brand_Categories_Result
+    public partial class ContactUS
     {
-        public Nullable<int> BrandID { get; set; }
-        public Nullable<int> CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public string CategoryName_EN { get; set; }
+        public int ContactID { get; set; }
+        public string CustomerName { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string ContactTitle { get; set; }
+        public string ContactContent { get; set; }
+        public Nullable<System.DateTime> ContactDate { get; set; }
     }
 }

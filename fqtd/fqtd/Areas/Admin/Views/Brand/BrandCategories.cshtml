@@ -1,4 +1,4 @@
-﻿@model IEnumerable<fqtd.Areas.Admin.Models.SP_Brand_Categories_Result>
+﻿@model IEnumerable<fqtd.Areas.Admin.Models.SP_Brand_Categories_Result1>
 
 @{
     ViewBag.Title = "Brand categories";
@@ -12,13 +12,13 @@
    
     @foreach (var item in Model)
     {
-        if (item.Checked)
+        if (item.Checked.HasValue&& item.Checked.Value)
         {
         <input id="@item.CategoryID" name="MyCheckList" value="@item.CategoryID" type="checkbox" checked="checked"/>
         }
         else
         {<input id="@item.CategoryID" name="MyCheckList" value="@item.CategoryID" type="checkbox" />}
-        <label for="@item.CategoryID">@item.CategoryName</label><br />
+        <label for="@item.CategoryID">@item.CategoryName</label>@item.Checked<br />
     }
     <input id="Submit1" type="submit" value="Submit" />
 </form>

@@ -54,5 +54,31 @@ namespace fqtd.Controllers
             }
             return View(tbl_SystemContent);
         }
+
+        //
+        // GET: /Admin/ContacUs/Create
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Admin/ContacUs/Create
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ContactUs(ContactUS contactus)
+        {
+            if (ModelState.IsValid)
+            {
+                contactus.ContactDate = DateTime.Now;
+                db.tbl_ContactUS.Add(contactus);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(contactus);
+        }
     }
 }

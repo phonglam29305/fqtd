@@ -184,13 +184,20 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SystemContentController.cs" />
     <Compile Include="Areas\Admin\Models\BrandCategories.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\ContactUS.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\SP_Brand_Categories_Result.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\SP_Brand_Categories_Result1.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\SP_Category_Properties_Result.cs">
@@ -663,6 +670,11 @@
     <Content Include="Areas\Admin\Views\SystemContent\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Items\ItemProperties.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\BrandCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactUs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactUs\Details.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactUs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactUs\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />
