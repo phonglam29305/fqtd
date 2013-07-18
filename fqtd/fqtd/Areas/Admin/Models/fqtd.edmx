@@ -758,7 +758,7 @@
           </Key>
           <Property Type="Int32" Name="ContactID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="CustomerName" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Address" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Email" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ContactTitle" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ContactContent" MaxLength="1500" FixedLength="false" Unicode="true" />
@@ -978,7 +978,7 @@
                 <ScalarProperty Name="ContactContent" ColumnName="ContactContent" />
                 <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Address" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="ContactID" ColumnName="ContactID" />
               </MappingFragment>

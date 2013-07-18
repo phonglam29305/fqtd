@@ -23,9 +23,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="contactrow">
-                    <div class="contactleft"><strong>@Html.LabelFor(model => model.Address)</strong></div>
-                    <div class="contactright">@Html.TextAreaFor(model => model.Address)
-                        @Html.ValidationMessageFor(model => model.Address)
+                    <div class="contactleft"><strong>@Html.LabelFor(model => model.Phone)</strong></div>
+                    <div class="contactright">@Html.EditorFor(model => model.Phone)
+                        @Html.ValidationMessageFor(model => model.Phone)
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -51,7 +51,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="contactrow">
-                    <input type="submit" id="btn_guidi" value="Gửi đi" /><input type="button" id="btn_nhaplai" value="Nhập lại" />
+                    <div class="contactleft">&nbsp;</div>
+                    <div class="contactright">
+                        <input type="submit" id="btn_guidi" value="Gửi đi" />
+                    </div>
                 </div>
             </div>
         </div>

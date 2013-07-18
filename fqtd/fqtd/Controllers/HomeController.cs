@@ -18,15 +18,7 @@ namespace fqtd.Controllers
             ViewBag.description = ConfigurationManager.AppSettings["metakeydescription"];
             return View("Index");
         }
-        public ActionResult Contact()
-        {
-            tbl_SystemContent tbl_SystemContent = db.tbl_SystemContent.Find(SystemContent.Contact);
-            if (tbl_SystemContent == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_SystemContent);
-        }
+        
         public ActionResult Introduction()
         {
             tbl_SystemContent tbl_SystemContent = db.tbl_SystemContent.Find(SystemContent.Introduction);

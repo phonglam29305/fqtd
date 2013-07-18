@@ -15,7 +15,8 @@ body {
 }
 
 #header {
-    height: 228px;
+    display:block;
+    height: 10%;
     width: 100%;
     background-image: url(../images/bg_top_main.jpg);
     background-repeat: repeat-x;
@@ -364,10 +365,20 @@ input {
     margin-bottom: 60px;
 }
 
+#lienhe_form input {
+    width:400px;
+}
+
+#lienhe_form textarea {
+    width:400px;
+    height:100px;
+}
+
+
 .contactrow {
     display: block;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .contactleft {
@@ -383,7 +394,7 @@ input {
 }
 
 #btn_guidi {
-    width: 100px;
+    width: 180px !important;
     height: 28px;
     background-image: url(../images/bg_button.png);
     background-repeat: repeat;
@@ -393,19 +404,6 @@ input {
     font-weight: bold;
     font-family: Verdana;
     margin-right: 10px;
-    cursor: pointer;
-}
-
-#btn_nhaplai {
-    width: 100px;
-    height: 28px;
-    background-image: url(../images/bg_button.png);
-    background-repeat: repeat;
-    border: none;
-    color: #404040;
-    text-transform: capitalize;
-    font-weight: bold;
-    font-family: Verdana;
     cursor: pointer;
 }
 
@@ -460,8 +458,9 @@ input {
 
 .btn_more {
     text-align: center;
-    margin: 25px 0px;
+    padding: 25px 0px;
     cursor: pointer;
+    background-color:#fff;
 }
 
 .button {
@@ -860,6 +859,7 @@ input {
 #property {
     height: 100%;
     overflow-x: auto;
+    background-color:#fff;
 }
 
 .clearfix {

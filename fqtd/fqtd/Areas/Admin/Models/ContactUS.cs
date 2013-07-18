@@ -16,7 +16,7 @@ namespace fqtd.Areas.Admin.Models
     {
         public int ContactID { get; set; }
         public string CustomerName { get; set; }
-        public string Address { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
         public string ContactTitle { get; set; }
         public string ContactContent { get; set; }

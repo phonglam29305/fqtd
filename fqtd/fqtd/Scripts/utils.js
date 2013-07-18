@@ -380,8 +380,8 @@ var FQTD = (function () {
             //Bind data to select box Category
             var urlCategory = "/admin/categories/Categories";
             $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
+                $("#category").append('<option value="-1">Tất cả</option>');
                 for (i in categories) {
-                    $("#category").append('<option value="-1">Tất cả</option>');
                     $("#category").append('<option value="' + categories[i].CategoryID + '">' + categories[i].CategoryName + '</option>');
                 }
             });
@@ -390,8 +390,8 @@ var FQTD = (function () {
             //Bind data to select box Brand
             var urlBrand = "/admin/brand/BrandsByCategory";
             $.getJSON(urlBrand + "?id=-1", null, function (brands) {
+                $("#brand").append('<option value="-1">Tất cả</option>');
                 for (i in brands) {
-                    $("#brand").append('<option value="-1">Tất cả</option>');
                     $("#brand").append('<option value="' + brands[i].BrandID + '">' + brands[i].BrandName + '</option>');;
                 }
             });
@@ -587,9 +587,9 @@ var FQTD = (function () {
                 $("#brand").empty();
                 //alert(siteurl+' '+data);               
                 $.getJSON(siteurl + data, null, function (brands) {
+                    $("#brand").append('<option value="-1">Tất cả</option>');
                     for (i in brands) {
                         brand = brands[i];
-                        $("#brand").append('<option value="-1">Tất cả</option>');
                         $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
                     }
                 });
@@ -633,7 +633,9 @@ var FQTD = (function () {
                     var relatelist = "";
                     if (object.RelateList.length > 0) {
                         for (var i = 0; i < 4; i++) {
-                            relatelist += "<td><a href='/detail/" + object.RelateList[i].ItemID + "'><img src='" + object.RelateList[i].Logo + "'/></a><br /><strong>" + object.RelateList[i].ItemName + "</strong></td>"
+                            if (object.RelateList[i]) {
+                                relatelist += "<td><a href='/detail/" + object.RelateList[i].ItemID + "'><img src='" + object.RelateList[i].Logo + "'/></a><br /><strong>" + object.RelateList[i].ItemName + "</strong></td>"
+                            }
                         }
                     }
                     $("#samebrand").html(relatelist)
@@ -641,7 +643,9 @@ var FQTD = (function () {
                     var propertylist = "";
                     if (object.PropertyList.length > 0) {
                         for (var i = 0; i < object.PropertyList.length; i++) {
-                            propertylist += "<tr><td class='row1'><img src='/images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
+                            if (object.PropertyList[i]) {
+                                propertylist += "<tr><td class='row1'><img src='/images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
+                            }
                         }
                     }
                     $("#tblproperty").html(propertylist)
@@ -649,7 +653,9 @@ var FQTD = (function () {
                     var samecategoryList = "";
                     if (object.SameCategoryList.length > 0) {
                         for (var i = 0; i < object.SameCategoryList.length; i++) {
-                            samecategoryList += "<tr><td class='row1'><a href='/detail/" + object.SameCategoryList[i].ItemID + "'><img class='samecategorylogo' src='" + object.SameCategoryList[i].Logo + "'></a></td><td class='row2'>" + object.SameCategoryList[i].ItemName + "<br /><a href='/detail/" + object.SameCategoryList[i].ItemID + "' class='chitiet'>Chi tiết</a><img src='/images/bullet_grey.png' /></td></tr>"
+                            if (object.SameCategoryList[i]) {
+                                samecategoryList += "<tr><td class='row1'><a href='/detail/" + object.SameCategoryList[i].ItemID + "'><img class='samecategorylogo' src='" + object.SameCategoryList[i].Logo + "'></a></td><td class='row2'>" + object.SameCategoryList[i].ItemName + "<br /><a href='/detail/" + object.SameCategoryList[i].ItemID + "' class='chitiet'>Chi tiết</a><img src='/images/bullet_grey.png' /></td></tr>"
+                            }
                         }
                     }
                     $("#tblSameCategory").html(samecategoryList)
