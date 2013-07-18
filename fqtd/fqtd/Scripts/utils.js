@@ -589,6 +589,7 @@ var FQTD = (function () {
                 $.getJSON(siteurl + data, null, function (brands) {
                     for (i in brands) {
                         brand = brands[i];
+                        $("#brand").append('<option value="-1">Tất cả</option>');
                         $("#brand").append('<option value="' + brand.BrandID + '">' + brand.BrandName + '</option>');;
                     }
                 });
