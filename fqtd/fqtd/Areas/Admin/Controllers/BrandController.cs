@@ -48,9 +48,16 @@ namespace fqtd.Areas.Admin.Controllers
                                      select new { a.BrandID, BrandName = a.BrandName_EN, Description = a.Description_EN };
             return jsonNetResult;
         }
+
         public ActionResult BrandsByCategory(int id = -1, int vn0_en1 = 0)
         {
-            var brands = db.Brands.Where(a => a.IsActive && (id == -1 || a.CategoryID == id)).Include(b => b.tbl_Categories);
+            var brands = from b in db.Brands
+                          //join c in db.tbl_Brand_Categories on new { BrandID = b.BrandID, CategoryID = b.CategoryID } equals new { BrandID=c.BrandID, CategoryID = id }
+                         //where (id == -1  || b.CategoryID == id) && b.IsActive
+                         from c in db.tbl_Brand_Categories.Where(a=>a.CategoryID == id && a.BrandID == b.BrandID).DefaultIfEmpty()
+                         where (id == -1  || b.CategoryID == id || c.CategoryID == id) && b.IsActive
+                         select b;
+                //db.Brands.Where(a => a.IsActive && (id == -1 || a.CategoryID == id)).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
