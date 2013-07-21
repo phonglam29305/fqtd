@@ -85,7 +85,7 @@ namespace fqtd.Areas.Admin.Controllers
                 if (icon != null)
                 {
                     char DirSeparator = System.IO.Path.DirectorySeparatorChar;
-                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocation"];
                     full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
                     branditems.MarkerIcon = FileUpload.UploadFile(icon, full_path);
                 }
@@ -135,7 +135,7 @@ namespace fqtd.Areas.Admin.Controllers
                 if (icon != null)
                 {
                     char DirSeparator = System.IO.Path.DirectorySeparatorChar;
-                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"];
+                    filesPath = ConfigurationManager.AppSettings["ItemMarkerIconLocation"];
                     full_path = Server.MapPath(filesPath).Replace("Brands", "").Replace("Admin", "");
                     branditems.MarkerIcon = FileUpload.UploadFile(icon, full_path);
                 }
@@ -176,7 +176,7 @@ namespace fqtd.Areas.Admin.Controllers
         public ViewResult ImageList(int id)
         {
             BrandItems item = db.BrandItems.Find(id);
-            string path = ConfigurationManager.AppSettings["ItemImageLocaion"] + "\\" + item.ItemID;
+            string path = ConfigurationManager.AppSettings["ItemImageLocation"] + "\\" + item.ItemID;
             path = Server.MapPath(path);
             List<string> list = new List<string>();
             if (Directory.Exists(path))
@@ -188,7 +188,7 @@ namespace fqtd.Areas.Admin.Controllers
                     string filename = Path.GetFileName(s);
                     System.IO.File.Move(s, s.Replace(" ", "_").Replace("-", "_"));
                     if (filename.ToLower().IndexOf(".jpg") >= 0 || filename.ToLower().IndexOf(".png") >= 0 || filename.ToLower().IndexOf(".gif") >= 0)
-                        list.Add(ConfigurationManager.AppSettings["ItemImageLocaion"].Replace("~", "../../../..") + "/" + item.ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
+                        list.Add(ConfigurationManager.AppSettings["ItemImageLocation"].Replace("~", "../../../..") + "/" + item.ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
 
                 }
             }
@@ -207,7 +207,7 @@ namespace fqtd.Areas.Admin.Controllers
                 if (file != null)
                 {
                     char DirSeparator = System.IO.Path.DirectorySeparatorChar;
-                    string FilesPath = ConfigurationManager.AppSettings["ItemImageLocaion"];
+                    string FilesPath = ConfigurationManager.AppSettings["ItemImageLocation"];
                     string full_path = Server.MapPath(FilesPath).Replace("Items", "").Replace("AddImages", "").Replace(" ", "_").Replace("-", "_") + "\\" + item.ItemID;
                     FileUpload.UploadFile(file, full_path);
                 }

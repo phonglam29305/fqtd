@@ -55,7 +55,7 @@ namespace fqtd.Controllers
             string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
             string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocation"].Replace("~", "");
 
             string[] list = properties.Split(',');
             List<int> items = new List<int>();
@@ -118,7 +118,7 @@ namespace fqtd.Controllers
             string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
             string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocation"].Replace("~", "");
 
             string[] list = properties.Split(',');
             List<int> items = new List<int>();
@@ -185,7 +185,7 @@ namespace fqtd.Controllers
             string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
             string c_path = ConfigurationManager.AppSettings["CategoryMarkerIconLocaion"].Replace("~", "");
             string b_path = ConfigurationManager.AppSettings["BrandMarkerIconLocation"].Replace("~", "");
-            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocaion"].Replace("~", "");
+            string i_path = ConfigurationManager.AppSettings["ItemMarkerIconLocation"].Replace("~", "");
 
             keyword = StripDiacritics(keyword).ToLower();
 
@@ -345,7 +345,7 @@ namespace fqtd.Controllers
             Dictionary<string, object> list = new Dictionary<string, object>();
             list.Add("ItemDetail", result);
             var temp = item.FirstOrDefault();
-            string markerIcon = temp.I_MarkerIcon + "" == "" ? temp.B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocaion"] + "/" + temp.I_MarkerIcon;
+            string markerIcon = temp.I_MarkerIcon + "" == "" ? temp.B_MarkerIcon + "" == "" ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocation"] + "/" + temp.I_MarkerIcon;
             list.Add("MakerIcon", markerIcon);
             list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"] + temp.Logo);
             list.Add("ItemImages", GetImageList(temp.ItemID));
@@ -396,8 +396,11 @@ namespace fqtd.Controllers
 
         private object GetImageList(int ItemID)
         {
+
             List<string> images = new List<string>();
-            string path = ConfigurationManager.AppSettings["ItemImageLocaion"] + "\\" + ItemID;
+            var item = db.BrandItems.Find(ItemID);
+            if (item == null) return images;
+            string path = ConfigurationManager.AppSettings["ItemImageLocation"] + "\\" + ItemID;
             path = Server.MapPath(path);
             if (Directory.Exists(path))
             {
@@ -408,7 +411,22 @@ namespace fqtd.Controllers
                     string filename = Path.GetFileName(s);
                     System.IO.File.Move(s, s.Replace(" ", "_").Replace("-", "_"));
                     if (filename.ToLower().IndexOf(".jpg") >= 0 || filename.ToLower().IndexOf(".png") >= 0 || filename.ToLower().IndexOf(".gif") >= 0)
-                        images.Add(ConfigurationManager.AppSettings["ItemImageLocaion"].Replace("~", "../../../..") + "/" + ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
+                        images.Add(ConfigurationManager.AppSettings["ItemImageLocation"].Replace("~", "../../../..") + "/" + ItemID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
+
+                }
+            }
+            path = ConfigurationManager.AppSettings["BrandImageLocation"] + "\\" + ItemID;
+            path = Server.MapPath(path);
+            if (Directory.Exists(path))
+            {
+                string[] files = Directory.GetFiles(path);
+
+                foreach (string s in files)
+                {
+                    string filename = Path.GetFileName(s);
+                    System.IO.File.Move(s, s.Replace(" ", "_").Replace("-", "_"));
+                    if (filename.ToLower().IndexOf(".jpg") >= 0 || filename.ToLower().IndexOf(".png") >= 0 || filename.ToLower().IndexOf(".gif") >= 0)
+                        images.Add(ConfigurationManager.AppSettings["BrandImageLocation"].Replace("~", "../../../..") + "/" + item.BrandID + "/" + filename.Replace(" ", "_").Replace("-", "_"));
 
                 }
             }
