@@ -254,7 +254,9 @@ var FQTD = (function () {
             });
 
             result.complete(function () {
-                FQTD.BindData()                
+                FQTD.BindData()
+                //set back link               
+                $("#backlink").attr("href", "/#" + $("#form").val())
             });
         },
         BindData: function () {
@@ -396,7 +398,7 @@ var FQTD = (function () {
                 }
             });
         },
-        SetupWatermarkValidation: function () {
+        SetupWatermarkValidationHomepage: function () {
             //watermark and validation
             $("#address").watermark("Nhập địa chỉ hiện tại của bạn");
             $("#search").watermark("Nhập tên hoặc địa chỉ quán bạn muốn tìm");
@@ -535,6 +537,14 @@ var FQTD = (function () {
             limit = 0;
             infobox = null;
         },
+        SetupWatermarkValidationContactus: function () {
+            //watermark and validation
+            $("#CustomerName").watermark("Nhập họ tên của bạn");
+            $("#Phone").watermark("Nhập số điện thoại của bạn");
+            $("#Email").watermark("Nhập email của bạn");
+            $("#ContactTitle").watermark("Nhập tiêu đề liên lạc");
+            $("#ContactContent").watermark("Nhập nội dung liên lạc");                 
+        },
         initResult: function () {
             $("#tabList").bind('click', function () {
                 $("#list").removeClass("hidden");
@@ -598,7 +608,7 @@ var FQTD = (function () {
             //Cascade select box Category
             $('#category').change(GetBrandByCategory);
 
-            FQTD.SetupWatermarkValidation()
+            FQTD.SetupWatermarkValidationHomepage()
             FQTD.BindTooltip()
             FQTD.GetCurrentPositionAddress()
 
@@ -608,6 +618,10 @@ var FQTD = (function () {
             //bind auto complete to keyword
             FQTD.BindKeywordAutocomplete()
 
+            //check if step2
+            if (window.location.hash == "#1") {
+                $('.next').click();
+            }
         },
         initDetail: function () {
             var id = $(location).attr('pathname').split('/')[2]
@@ -628,6 +642,10 @@ var FQTD = (function () {
                         if (isEmpty(object.ItemDetail[0].Latitude) != "" && isEmpty(object.ItemDetail[0].Longitude) != "") {
                             $("#staticmap").attr('src', 'http://maps.googleapis.com/maps/api/staticmap?center=' + isEmpty(object.ItemDetail[0].Latitude) + ',' + isEmpty(object.ItemDetail[0].Longitude) + '&zoom=15&size=682x300&maptype=roadmap&markers=color:blue%7Clabel:A%7C' + isEmpty(object.ItemDetail[0].Latitude) + ',' + isEmpty(object.ItemDetail[0].Longitude) + '&sensor=false')
                         }
+                        //facebook tags
+                        $('meta[name=og\\:title]').attr('content', object.ItemDetail[0].ItemName);
+                        //page title
+                        document.title = object.ItemDetail[0].ItemName;
                     }
                     //bind data to same brand list
                     var relatelist = "";
@@ -644,7 +662,8 @@ var FQTD = (function () {
                     if (object.PropertyList.length > 0) {
                         for (var i = 0; i < object.PropertyList.length; i++) {
                             if (object.PropertyList[i]) {
-                                propertylist += "<tr><td class='row1'><img src='/images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
+                                var hidden = object.PropertyList[i].PropertyValue == false ? " class='hidden'" : ""
+                                propertylist += "<tr " + hidden + "><td class='row1'><img src='/images/bullet_green.png' /></td><td>" + object.PropertyList[i].PropertyName + "</td></tr>"
                             }
                         }
                     }
@@ -664,7 +683,10 @@ var FQTD = (function () {
                     FQTD.MoveFooter()
                 }
             });
-        }
+        },
+        initContactUs: function () {
+            FQTD.SetupWatermarkValidationContactus()
+        }        
     };
 })();
 

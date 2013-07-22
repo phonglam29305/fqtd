@@ -15,7 +15,7 @@ body {
 }
 
 #header {
-    display:block;
+    display: block;
     height: 10%;
     width: 100%;
     background-image: url(../images/bg_top_main.jpg);
@@ -60,12 +60,20 @@ body {
 
 #facebook {
     height: 20px;
-    width: 99%;
+    width: 30%;
     text-align: left;
     position: absolute;
     bottom: 42px;
     padding-left: 5px;
     padding-bottom: 5px;
+}
+
+.notice {
+    height: 20px;
+    width: 50%;
+    position: absolute;
+    bottom: 42px;
+    right:0;   
 }
 
 #bottom_info {
@@ -150,14 +158,14 @@ body {
 }
 
 #home_right {
-    width: 110px;
+    width: 152px;
     display: block;
     float: right;
     margin-top: 80px;
 }
 
 #home_left2 {
-    width: 152px;
+    width: 110px;
     display: block;
     float: left;
     margin-right: 20px;
@@ -365,14 +373,14 @@ input {
     margin-bottom: 60px;
 }
 
-#lienhe_form input {
-    width:400px;
-}
+    #lienhe_form input {
+        width: 400px;
+    }
 
-#lienhe_form textarea {
-    width:400px;
-    height:100px;
-}
+    #lienhe_form textarea {
+        width: 400px;
+        height: 100px;
+    }
 
 
 .contactrow {
@@ -460,7 +468,7 @@ input {
     text-align: center;
     padding: 25px 0px;
     cursor: pointer;
-    background-color:#fff;
+    background-color: #fff;
 }
 
 .button {
@@ -779,6 +787,7 @@ input {
 #tblSameCategory .row1 {
     text-align: center;
     width: 50%;
+    height: 85px;
 }
 
     #tblSameCategory .row1 img {
@@ -859,7 +868,7 @@ input {
 #property {
     height: 100%;
     overflow-x: auto;
-    background-color:#fff;
+    background-color: #fff;
 }
 
 .clearfix {
