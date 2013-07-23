@@ -68,7 +68,7 @@ var FQTD = (function () {
                 title: 'Click to zoom',
                 icon: (isHome === true ? '/images/home.png' : '/images/MarkerIcon/Brand/schools_maps.png')
             });
-            
+
             google.maps.event.addListener(marker, 'click', function () {
                 if (infobox) infobox.close();
                 infobox = new InfoBox({
@@ -260,7 +260,7 @@ var FQTD = (function () {
             });
         },
         BindData: function () {
-            
+
             if (locations.length > 0) {
                 if ($("#form").val() == "1") {
                     var address = $("#address").val();
@@ -308,7 +308,7 @@ var FQTD = (function () {
                         FQTD.SortArray()
 
                         //bind marker to map
-                        FQTD.SetupMap(myplace, locations, 6 , 1);
+                        FQTD.SetupMap(myplace, locations, 6, 1);
                     };
                     //set list display first
                     FQTD.displayMap()
@@ -348,7 +348,7 @@ var FQTD = (function () {
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-                
+
                 //set my city
                 var myCity = new google.maps.Circle({
                     center: myplace,
@@ -358,7 +358,7 @@ var FQTD = (function () {
                     fillOpacity: 0.1
                 });
                 myCity.setMap(map);
-                
+
                 map.fitBounds(myCity.getBounds());
                 FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
             }
@@ -487,7 +487,7 @@ var FQTD = (function () {
                 locations[i][8] = compareDistance;
             }
             //sort by distance ascending
-            locations.sort(sortbyDistance)            
+            locations.sort(sortbyDistance)
         },
         BindKeywordAutocomplete: function () {
             //get all keyword
@@ -509,7 +509,7 @@ var FQTD = (function () {
             var s = $("#cactienich");
             var pos = s.position();
             $(window).scroll(function () {
-                var windowpos = $(window).scrollTop();                
+                var windowpos = $(window).scrollTop();
                 if (windowpos >= pos.top) {
                     s.removeClass("nostick");
                     s.addClass("stick");
@@ -523,7 +523,7 @@ var FQTD = (function () {
             var arr = [];
 
             $(".checked").each(function () {
-                var checkbox = $(this).find("input:checkbox:first");                
+                var checkbox = $(this).find("input:checkbox:first");
                 arr.push(checkbox[0].id)
             })
 
@@ -543,7 +543,7 @@ var FQTD = (function () {
             $("#Phone").watermark("Nhập số điện thoại của bạn");
             $("#Email").watermark("Nhập email của bạn");
             $("#ContactTitle").watermark("Nhập tiêu đề liên lạc");
-            $("#ContactContent").watermark("Nhập nội dung liên lạc");                 
+            $("#ContactContent").watermark("Nhập nội dung liên lạc");
         },
         initResult: function () {
             $("#tabList").bind('click', function () {
@@ -678,6 +678,16 @@ var FQTD = (function () {
                         }
                     }
                     $("#tblSameCategory").html(samecategoryList)
+                    //bind to image gallery
+                    var imagegallery = "";
+                    if (object.ItemImages.length > 0) {
+                        for (var i = 0; i < object.ItemImages.length; i+=2) {
+                            if (object.ItemImages[i]) {
+                                imagegallery += "<tr><td class='row1'><img src='" + object.ItemImages[i] + "'></td><td class='row1'><img src='" + object.ItemImages[i + 1] + "'></td></tr>"
+                            }
+                        }
+                    }
+                    $("#tblimagegallery").html(imagegallery)
 
                     FQTD.HideLoading()
                     FQTD.MoveFooter()
@@ -686,7 +696,7 @@ var FQTD = (function () {
         },
         initContactUs: function () {
             FQTD.SetupWatermarkValidationContactus()
-        }        
+        }
     };
 })();
 
