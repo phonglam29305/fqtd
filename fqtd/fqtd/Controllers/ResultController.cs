@@ -16,7 +16,7 @@ using System.Text;
 
 namespace fqtd.Controllers
 {
-    
+
     public class ResultController : Controller
     {
 
@@ -25,7 +25,7 @@ namespace fqtd.Controllers
         public ActionResult ShowResult(string address, int? range, int? category, int? brand, string search, int? form)
         {
             ViewBag.keywords = ConfigurationManager.AppSettings["metakeywords"];
-            ViewBag.description = ConfigurationManager.AppSettings["metakeydescription"];            
+            ViewBag.description = ConfigurationManager.AppSettings["metakeydescription"];
             ViewBag.address = address;
             ViewBag.range = range;
             ViewBag.category = category;
@@ -74,6 +74,11 @@ namespace fqtd.Controllers
                             where items.Contains(i.PropertyID)// >= 0
                             select new { i.ItemID }).Distinct();
 
+            var brandlist = (from i in db.tbl_Brand_Properties
+                             join b in db.BrandItems on i.BrandID equals b.BrandID
+                             where items.Contains(i.PropertyID)// >= 0
+                             select new { b.ItemID }).Distinct();
+
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -100,6 +105,10 @@ namespace fqtd.Controllers
                          join ip in itemlist on i.ItemID equals ip.ItemID
                          select i;
 
+            else if (brandlist.Count() > 0)
+                brands = from i in brands
+                         join ip in brandlist on i.ItemID equals ip.ItemID
+                         select i;
 
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
@@ -137,6 +146,11 @@ namespace fqtd.Controllers
                             where items.Contains(i.PropertyID)// >= 0
                             select new { i.ItemID }).Distinct();
 
+            var brandlist = (from i in db.tbl_Brand_Properties
+                             join b in db.BrandItems on i.BrandID equals b.BrandID
+                             where items.Contains(i.PropertyID)// >= 0
+                             select new { b.ItemID }).Distinct();
+
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
@@ -161,7 +175,10 @@ namespace fqtd.Controllers
                 brands = from i in brands
                          join ip in itemlist on i.ItemID equals ip.ItemID
                          select i;
-
+            else if (brandlist.Count() > 0)
+                brands = from i in brands
+                         join ip in brandlist on i.ItemID equals ip.ItemID
+                         select i;
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -204,12 +221,17 @@ namespace fqtd.Controllers
 
             var itemlist = (from i in db.ItemProperties
                             where items.Contains(i.PropertyID)// >= 0
-                            select new { i.ItemID}).Distinct();
+                            select new { i.ItemID }).Distinct();
+
+            var brandlist = (from i in db.tbl_Brand_Properties
+                             join b in db.BrandItems on i.BrandID equals b.BrandID
+                             where items.Contains(i.PropertyID)// >= 0
+                             select new { b.ItemID }).Distinct();
 
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
-                         where i.Keyword_unsign.ToLower().Contains(keyword) 
+                         where i.Keyword_unsign.ToLower().Contains(keyword)
                          || c.Keyword_Unsign.ToLower().Contains(keyword)
                          || br.Keyword_Unsign.ToLower().Contains(keyword)
                          select new
@@ -232,28 +254,12 @@ namespace fqtd.Controllers
                 brands = from i in brands
                          join ip in itemlist on i.ItemID equals ip.ItemID
                          select i;
-                         /*join br in db.Brands on i.BrandID equals br.BrandID
-                         join c in db.Categories on br.CategoryID equals c.CategoryID
-                         join lo in db.ItemLocations on i.ItemID equals lo.ItemID
-                         where i.Keyword_unsign.ToLower().Contains(keyword)
-                         select new
-                         {
-                             i.ItemID,
-                             i.ItemName,
-                             lo.FullAddress,
-                             i.Phone,
-                             i.Website,
-                             i.OpenTime,
-                             i.ItemName_EN,
-                             i.Description,
-                             i.Description_EN,
-                             lo.Longitude,
-                             lo.Latitude,
-                             Logo = path + "/" + br.Logo,
-                             MarkerIcon = i.MarkerIcon == null ? br.MarkerIcon == null ? c_path + "/" + c.MarkerIcon : b_path + "/" + br.MarkerIcon : i_path + "/" + i.MarkerIcon
-                         };*/
-            //string count = "count: " + brands.Count();
-            //db.BrandItems.Where(a => a.IsActive && (id == -1 || a.BrandID == id)).Include(b => b.tbl_Brands);
+
+            else if (brandlist.Count() > 0)
+                brands = from i in brands
+                         join ip in brandlist on i.ItemID equals ip.ItemID
+                         select i;
+
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -315,9 +321,9 @@ namespace fqtd.Controllers
                            ,
                            i.SearchCount
                            ,
-                           Description = i.Description == "" ? br.Description : i.Description
+                           Description = (i.Description == "" || i.Description == null) ? br.Description : i.Description
                            ,
-                           Description_EN = i.Description_EN == "" ? br.Description_EN : i.Description_EN
+                           Description_EN = (i.Description_EN == "" || i.Description_EN == null) ? br.Description_EN : i.Description_EN
                            ,
                            i.FullAddress
                            ,
@@ -345,7 +351,7 @@ namespace fqtd.Controllers
             Dictionary<string, object> list = new Dictionary<string, object>();
             list.Add("ItemDetail", result);
             var temp = item.FirstOrDefault();
-            string markerIcon = (temp.I_MarkerIcon ==null || temp.I_MarkerIcon + "" == "") ? (temp.B_MarkerIcon ==null || temp.B_MarkerIcon + "" == "") ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocation"] + "/" + temp.I_MarkerIcon;
+            string markerIcon = (temp.I_MarkerIcon == null || temp.I_MarkerIcon + "" == "") ? (temp.B_MarkerIcon == null || temp.B_MarkerIcon + "" == "") ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocation"] + "/" + temp.I_MarkerIcon;
             list.Add("MakerIcon", markerIcon);
             list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "") + "/" + temp.Logo);
             list.Add("ItemImages", GetImageList(temp.ItemID));
@@ -371,7 +377,7 @@ namespace fqtd.Controllers
             var items = from i in db.BrandItems
                         join br in db.Brands on i.BrandID equals br.BrandID
                         join ca in db.Categories on br.CategoryID equals ca.CategoryID
-                        where i.ItemID != itemID && br.CategoryID == temp.CategoryID
+                        where i.ItemID != itemID && br.CategoryID == temp.CategoryID && i.BrandID != temp.BrandID
                         select new
                         {
                             i.ItemID
