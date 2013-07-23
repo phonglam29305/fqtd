@@ -415,7 +415,7 @@ namespace fqtd.Controllers
 
                 }
             }
-            path = ConfigurationManager.AppSettings["BrandImageLocation"] + "\\" + ItemID;
+            path = ConfigurationManager.AppSettings["BrandImageLocation"] + "\\" + item.BrandID;
             path = Server.MapPath(path);
             if (Directory.Exists(path))
             {

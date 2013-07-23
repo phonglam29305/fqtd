@@ -352,8 +352,19 @@ namespace fqtd.Areas.Admin.Controllers
         public ActionResult ItemProperties(int id = 0)
         {
             var result = db.SP_Item_Properties(id);
+            if (result == null || result.Where(a=>a.PropertyValue).Count()==0)
+            {
+                ViewBag.ItemP_HasValue = false;
+                var item = db.BrandItems.Find(id);
+                if (item != null)
+                {
+                    var brandProperties = db.SP_Brand_Properties(item.BrandID);
+                    ViewBag.BrandProperties = brandProperties;
+                }
+            }
+            else ViewBag.ItemP_HasValue = true;
             TempData["ItemID"] = id;
-            return View(result);
+            return View(db.SP_Item_Properties(id));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
