@@ -676,6 +676,9 @@
     <Content Include="Areas\Admin\Views\Brand\BrandCategories.cshtml" />
     <Content Include="Areas\Admin\Views\ContactUs\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ContactUs\Details.cshtml" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\next.png" />
+    <Content Include="Images\prev.png" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Areas\Admin\Views\ContactUs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ContactUs\Delete.cshtml" />

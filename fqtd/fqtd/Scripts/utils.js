@@ -196,7 +196,7 @@ var FQTD = (function () {
 
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
-                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" height="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
+                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
                     + '<p>Địa chỉ : ' + isEmpty(locations[i][4]) + '<br/>Điện thoại : ' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
                     + ' | <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }
@@ -382,7 +382,6 @@ var FQTD = (function () {
             //Bind data to select box Category
             var urlCategory = "/admin/categories/Categories";
             $.getJSON(urlCategory + "?vn0_en1=0", null, function (categories) {
-                $("#category").append('<option value="-1">Tất cả</option>');
                 for (i in categories) {
                     $("#category").append('<option value="' + categories[i].CategoryID + '">' + categories[i].CategoryName + '</option>');
                 }
@@ -632,9 +631,11 @@ var FQTD = (function () {
                 if (object != null) {
                     //bind data to item detail
                     if (object.ItemDetail[0] != null) {
+                        console.log(object.BrandLogo)
+                        $("#brandlogo").attr('src', object.BrandLogo)
                         $("#brandname").html(object.ItemDetail[0].BrandName)
                         $("#branddescription").html(object.ItemDetail[0].Description)
-                        $("#tendiadiem").html("<h2>" + object.ItemDetail[0].ItemName + "</h2>")
+                        $("#tendiadiem").html("<h1>" + object.ItemDetail[0].ItemName + "</h1>")
                         $("#txtaddress").html(object.ItemDetail[0].FullAddress)
                         $("#txtphone").html(object.ItemDetail[0].Phone)
                         $("#txtwebsite").html(object.ItemDetail[0].Website)
@@ -681,9 +682,12 @@ var FQTD = (function () {
                     //bind to image gallery
                     var imagegallery = "";
                     if (object.ItemImages.length > 0) {
-                        for (var i = 0; i < object.ItemImages.length; i+=2) {
+                        for (var i = 0; i < object.ItemImages.length; i += 2) {
                             if (object.ItemImages[i]) {
-                                imagegallery += "<tr><td class='row1'><img src='" + object.ItemImages[i] + "'></td><td class='row1'><img src='" + object.ItemImages[i + 1] + "'></td></tr>"
+                                imagegallery += "<tr>"
+                                if (object.ItemImages[i]) imagegallery += "<td class='row1'><a href='" + object.ItemImages[i] + "' data-lightbox='imagegallery'><img src='" + object.ItemImages[i] + "'></a></td>"
+                                if (object.ItemImages[i + 1]) imagegallery += "<td class='row1'><a href='" + object.ItemImages[i + 1] + "' data-lightbox='imagegallery'><img src='" + object.ItemImages[i + 1] + "'></a></td>"
+                                imagegallery += "</tr>"
                             }
                         }
                     }

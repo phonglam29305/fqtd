@@ -347,7 +347,7 @@ namespace fqtd.Controllers
             var temp = item.FirstOrDefault();
             string markerIcon = (temp.I_MarkerIcon ==null || temp.I_MarkerIcon + "" == "") ? (temp.B_MarkerIcon ==null || temp.B_MarkerIcon + "" == "") ? ConfigurationManager.AppSettings["CategoryMarkerIconLocation"] + "/" + temp.MarkerIcon : ConfigurationManager.AppSettings["BrandMarkerIconLocaion"] + "/" + temp.B_MarkerIcon : ConfigurationManager.AppSettings["ItemMarkerIconLocation"] + "/" + temp.I_MarkerIcon;
             list.Add("MakerIcon", markerIcon);
-            list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "") + temp.Logo);
+            list.Add("BrandLogo", ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "") + "/" + temp.Logo);
             list.Add("ItemImages", GetImageList(temp.ItemID));
             string path = ConfigurationManager.AppSettings["BrandLogoLocation"].Replace("~", "");
             var relateList = from a in db.BrandItems
