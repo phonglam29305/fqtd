@@ -189,14 +189,14 @@ body {
 
 #address {
     width: 532px;
-    height: 26px;
+    height: 34px;
     border: #bababa 1px solid;
     color: #606060;
 }
 
 #search {
     width: 532px;
-    height: 26px;
+    height: 34px;
     border: #bababa 1px solid;
     color: #606060;
 }
@@ -220,7 +220,7 @@ body {
 
 #range {
     width: 140px;
-    height: 26px;
+    height: 34px;
     border: #bababa 1px solid;
     color: #606060;
 }
@@ -308,6 +308,8 @@ input {
 
     #noidungchinh h1 {
         color: #202020;
+        font-family: utm_bebasregular;
+        font-size: 32px;
     }
 
     #noidungchinh h2 {
