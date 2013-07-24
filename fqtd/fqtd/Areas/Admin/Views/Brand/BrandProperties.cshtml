@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<fqtd.Areas.Admin.Models.SP_Brand_Properties_Result>
 
 @{
-    ViewBag.Title = "BrandProperties";
+    ViewBag.Title = "Brand Properties:"+ @ViewBag.BrandName;
     int Brandid = Convert.ToInt32(ViewBag.BrandID);
 }
 
-<h2>BrandProperties</h2>
+<h2>Brand Properties: @ViewBag.BrandName</h2>
 
 @Html.Hidden("BrandID", Brandid)
 <form method="post" action="BrandProperties">

@@ -250,7 +250,16 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult BrandCategories(int id = 0)
         {
-            var result = db.SP_Brand_Categories(id);
+            
+            
+            var brand = db.Brands.Find(id);
+            if (brand != null)
+            {
+                ViewBag.BrandName = brand.BrandName;
+                ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brand.CategoryID);
+            }
+            else ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName");
+            var result = db.SP_Brand_Categories(id).OrderBy(a=>a.CategoryName);
             TempData["BrandID"] = id;
             return View(result);
         }
@@ -262,10 +271,23 @@ namespace fqtd.Areas.Admin.Controllers
 
             db.SP_RemoveBrandCategories(BrandID);
 
+            var CID = Request.Form["CategoryID"];
+            var brand = db.Brands.Find(CID);
+            if (brand != null)
+            {
+                brand.CategoryID = Convert.ToInt32(CID);
+                db.Entry(brand).State = EntityState.Modified;
+            }
             db.SaveChanges();
+            int i = 0;
             foreach (var item in MyCheckList)
             {
                 int CategoryID = Convert.ToInt32(item);
+                if (i == 0)
+                {
+                   
+                }
+                i += 1;
                 var result = db.tbl_Brand_Categories.Where(a => a.BrandID == BrandID && a.CategoryID == CategoryID);
                 BrandCategories ip = result.FirstOrDefault();
                 if (ip != null)
@@ -291,6 +313,9 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult BrandProperties(int id = 0)
         {
+
+            var brand = db.Brands.Find(id);
+            if (brand != null) ViewBag.BrandName = brand.BrandName;
             var result = db.SP_Brand_Properties(id);
             TempData["BrandID"] = id;
             return View(result);
