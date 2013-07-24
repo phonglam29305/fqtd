@@ -559,6 +559,7 @@
     <Content Include="ckeditor\skins\moono\images\mini.png" />
     <Content Include="ckeditor\styles.js" />
     <Content Include="Content\admin.css" />
+    <Content Include="Content\font\kenyancoffee_rg_it-webfont.svg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -683,6 +684,9 @@
     <Content Include="Areas\Admin\Views\ContactUs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ContactUs\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\BrandProperties.cshtml" />
+    <Content Include="Content\font\kenyancoffee_rg_it-webfont.eot" />
+    <Content Include="Content\font\kenyancoffee_rg_it-webfont.ttf" />
+    <Content Include="Content\font\kenyancoffee_rg_it-webfont.woff" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />

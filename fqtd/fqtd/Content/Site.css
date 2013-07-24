@@ -265,32 +265,6 @@ body {
         border: 0;
     }
 
-#btn_home1 {
-    width: 180px;
-    height: 28px;
-    background-image: url(../images/bg_button.png);
-    background-repeat: repeat;
-    border: none;
-    color: #404040;
-    text-transform: capitalize;
-    font-weight: bold;
-    font-family: Verdana;
-    cursor: pointer;
-}
-
-#btn_home2 {
-    width: 180px;
-    height: 28px;
-    background-image: url(../images/bg_button.png);
-    background-repeat: repeat;
-    border: none;
-    color: #404040;
-    text-transform: capitalize;
-    font-weight: bold;
-    font-family: Verdana;
-    cursor: pointer;
-}
-
 input {
     padding: 3px;
     height: 26px;
@@ -403,14 +377,13 @@ input {
 
 #btn_guidi {
     width: 180px !important;
-    height: 28px;
+    height: 32px;
     background-image: url(../images/bg_button.png);
     background-repeat: repeat;
     border: none;
     color: #404040;
-    text-transform: capitalize;
-    font-weight: bold;
-    font-family: Verdana;
+    font-family: utm_bebasregular;
+    font-size: 18px;
     margin-right: 10px;
     cursor: pointer;
 }
@@ -418,6 +391,8 @@ input {
 #menu {
     width: 200px;
     margin: 6px auto;
+    font-family: utm_bebasregular;
+    font-size: 18px;
 }
 
     #menu table {
@@ -436,6 +411,11 @@ input {
 #object {
     margin-top: 25px;
 }
+
+    #object h2 {
+        font-family: utm_bebasregular;
+        font-size: 19px;
+    }
 
     #object a {
         color: #606060;
@@ -467,8 +447,6 @@ input {
 .btn_more {
     text-align: center;
     padding: 25px 0px;
-    cursor: pointer;
-    background-color: #fff;
 }
 
 .button {
@@ -478,9 +456,8 @@ input {
     background-repeat: repeat;
     border: none;
     color: #404040;
-    text-transform: capitalize;
-    font-weight: bold;
-    font-family: Verdana;
+    font-family: utm_bebasregular;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -516,8 +493,9 @@ input {
 }
 
     #tendiadiem h1 {
-        color:red;
-        font-size:28px;
+        color: red;
+        font-size: 32px;
+        font-family: utm_bebasregular;
     }
 
 #thongtinchitiet {
@@ -671,6 +649,10 @@ input {
         margin-top: 10px;
         padding-bottom: 8px;
         border-bottom: 1px dotted;
+    }
+
+    .marker h2 {
+        font-family: utm_bebasregular;
     }
 
 .next {
@@ -1225,12 +1207,17 @@ body:after {
 
 /*font face*/
 @font-face {
-    font-family: 'kenyan_coffee_rgitalic';
-    src: url('../Content/font/kenyancoffee_rg_it-webfont.eot');
-    src: url('../Content/font/kenyancoffee_rg_it-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../Content/font/kenyancoffee_rg_it-webfont.woff') format('woff'),
-         url('../Content/font/kenyancoffee_rg_it-webfont.ttf') format('truetype'),
-         url('../Content/font/kenyancoffee_rg_it-webfont.svg#kenyan_coffee_rgitalic') format('svg');
+    font-family: 'utm_bebasregular';
+    src: url('../content/font/utm_bebas-webfont.eot');
+    src: url('../content/font/utm_bebas-webfont.eot?#iefix') format('embedded-opentype'), url('../content/font/utm_bebas-webfont.woff') format('woff'), url('../content/font/utm_bebas-webfont.ttf') format('truetype'), url('../content/font/utm_bebas-webfont.svg#utm_bebasregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'architectureregular';
+    src: url('architep-webfont.eot');
+    src: url('architep-webfont.eot?#iefix') format('embedded-opentype'), url('architep-webfont.woff') format('woff'), url('architep-webfont.ttf') format('truetype'), url('architep-webfont.svg#architectureregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
