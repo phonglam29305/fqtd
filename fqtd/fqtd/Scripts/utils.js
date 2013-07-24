@@ -196,7 +196,8 @@ var FQTD = (function () {
 
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
-                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + isEmpty(locations[i][3]) + '</h2>'
+                console.log((isEmpty(locations[i][3])))
+                newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + (isEmpty(locations[i][3])) + '</h2>'
                     + '<p>Địa chỉ : ' + isEmpty(locations[i][4]) + '<br/>Điện thoại : ' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
                     + ' | <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
             }

@@ -318,7 +318,7 @@ input {
 
     #noidungchinh p {
         color: #606060;
-        margin-top: 20px;
+        margin-top: 8px;
     }
 
 #cactienich p {
@@ -416,7 +416,7 @@ input {
 
     #object h2 {
         font-family: utm_bebasregular;
-        font-size: 19px;
+        font-size: 28px;
     }
 
     #object a {
@@ -449,6 +449,7 @@ input {
 .btn_more {
     text-align: center;
     padding: 25px 0px;
+    background-color: #fff;
 }
 
 .button {
@@ -655,6 +656,7 @@ input {
 
     .marker h2 {
         font-family: utm_bebasregular;
+        font-size:28px;
     }
 
 .next {
