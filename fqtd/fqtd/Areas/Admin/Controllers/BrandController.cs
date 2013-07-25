@@ -52,12 +52,12 @@ namespace fqtd.Areas.Admin.Controllers
         public ActionResult BrandsByCategory(int id = -1, int vn0_en1 = 0)
         {
             var brands = from b in db.Brands
-                          //join c in db.tbl_Brand_Categories on new { BrandID = b.BrandID, CategoryID = b.CategoryID } equals new { BrandID=c.BrandID, CategoryID = id }
+                         //join c in db.tbl_Brand_Categories on new { BrandID = b.BrandID, CategoryID = b.CategoryID } equals new { BrandID=c.BrandID, CategoryID = id }
                          //where (id == -1  || b.CategoryID == id) && b.IsActive
-                         from c in db.tbl_Brand_Categories.Where(a=>a.CategoryID == id && a.BrandID == b.BrandID).DefaultIfEmpty()
-                         where (id == -1  || b.CategoryID == id || c.CategoryID == id) && b.IsActive
+                         from c in db.tbl_Brand_Categories.Where(a => a.CategoryID == id && a.BrandID == b.BrandID).DefaultIfEmpty()
+                         where (id == -1 || b.CategoryID == id || c.CategoryID == id) && b.IsActive
                          select b;
-                //db.Brands.Where(a => a.IsActive && (id == -1 || a.CategoryID == id)).Include(b => b.tbl_Categories);
+            //db.Brands.Where(a => a.IsActive && (id == -1 || a.CategoryID == id)).Include(b => b.tbl_Categories);
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands
@@ -248,10 +248,10 @@ namespace fqtd.Areas.Admin.Controllers
 
 
 
-        public ActionResult BrandCategories(int id = 0)
+        public ActionResult BrandCategories(int id = 0, int page=1, string keyword="")
         {
-            
-            
+
+
             var brand = db.Brands.Find(id);
             if (brand != null)
             {
@@ -259,8 +259,10 @@ namespace fqtd.Areas.Admin.Controllers
                 ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brand.CategoryID);
             }
             else ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName");
-            var result = db.SP_Brand_Categories(id).OrderBy(a=>a.CategoryName);
+            var result = db.SP_Brand_Categories(id).OrderBy(a => a.CategoryName);
             TempData["BrandID"] = id;
+            TempData["CurrentKeyword"] = keyword;
+            TempData["CurrentPage"] = page;
             return View(result);
         }
         [HttpPost]
@@ -279,45 +281,43 @@ namespace fqtd.Areas.Admin.Controllers
                 db.Entry(brand).State = EntityState.Modified;
             }
             db.SaveChanges();
-            int i = 0;
-            foreach (var item in MyCheckList)
-            {
-                int CategoryID = Convert.ToInt32(item);
-                if (i == 0)
+            if (MyCheckList != null && MyCheckList.Length > 0)
+                foreach (var item in MyCheckList)
                 {
-                   
+                    int CategoryID = Convert.ToInt32(item);
+                    var result = db.tbl_Brand_Categories.Where(a => a.BrandID == BrandID && a.CategoryID == CategoryID);
+                    BrandCategories ip = result.FirstOrDefault();
+                    if (ip != null)
+                    {
+                        ip.Checked = true;
+                        db.Entry(ip).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        ip = new BrandCategories();
+                        ip.BrandID = BrandID;
+                        ip.CategoryID = CategoryID;
+                        ip.Checked = true;
+                        db.tbl_Brand_Categories.Add(ip);
+                    }
                 }
-                i += 1;
-                var result = db.tbl_Brand_Categories.Where(a => a.BrandID == BrandID && a.CategoryID == CategoryID);
-                BrandCategories ip = result.FirstOrDefault();
-                if (ip != null)
-                {
-                    ip.Checked = true;
-                    db.Entry(ip).State = EntityState.Modified;
-                }
-                else
-                {
-                    ip = new BrandCategories();
-                    ip.BrandID = BrandID;
-                    ip.CategoryID = CategoryID;
-                    ip.Checked = true;
-                    db.tbl_Brand_Categories.Add(ip);
-                }
-                db.SaveChanges();
-                TempData["BrandID"] = null;
-            }
+            db.SaveChanges();
+            TempData["BrandID"] = null;
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
-            return RedirectToAction("index", "Brand");
+            
+            return RedirectToAction("index", "Brand", new { keyword=TempData["CurrentKeyword"], page=TempData["CurrentPage"]});
         }
 
 
-        public ActionResult BrandProperties(int id = 0)
+        public ActionResult BrandProperties(int id = 0, int page = 1, string keyword = "")
         {
 
             var brand = db.Brands.Find(id);
             if (brand != null) ViewBag.BrandName = brand.BrandName;
             var result = db.SP_Brand_Properties(id);
             TempData["BrandID"] = id;
+            TempData["CurrentKeyword"] = keyword;
+            TempData["CurrentPage"] = page;
             return View(result);
         }
         [HttpPost]
@@ -351,7 +351,7 @@ namespace fqtd.Areas.Admin.Controllers
                 TempData["BrandID"] = null;
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
-            return RedirectToAction("index", "Brand");
+            return RedirectToAction("index", "Brand", new { keyword = TempData["CurrentKeyword"], page = TempData["CurrentPage"] });
         }
 
         protected override void Dispose(bool disposing)

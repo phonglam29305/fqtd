@@ -86,14 +86,14 @@ namespace fqtd.Controllers
                          select new
                          {
                              i.ItemID,
-                             i.ItemName,
+                             ItemName=i.ItemName.ToUpper(),
                              i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
-                             i.ItemName_EN,
-                             i.Description,
                              i.Description_EN,
+                             i.Description,
+                             ItemName_EN = i.ItemName_EN.ToUpper(),
                              i.Longitude,
                              i.Latitude,
                              Logo = path + "/" + br.Logo,
@@ -158,12 +158,12 @@ namespace fqtd.Controllers
                          select new
                          {
                              i.ItemID,
-                             i.ItemName,
+                             ItemName = i.ItemName.ToUpper(),
                              i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
-                             i.ItemName_EN,
+                             ItemName_EN=i.ItemName_EN.ToUpper(),
                              i.Description,
                              i.Description_EN,
                              i.Longitude,
@@ -237,12 +237,12 @@ namespace fqtd.Controllers
                          select new
                          {
                              i.ItemID,
-                             i.ItemName,
+                             ItemName=i.ItemName.ToUpper(),
                              i.FullAddress,
                              i.Phone,
                              i.Website,
                              i.OpenTime,
-                             i.ItemName_EN,
+                             ItemName_EN = i.ItemName_EN.ToUpper(),
                              i.Description,
                              i.Description_EN,
                              i.Longitude,
@@ -307,9 +307,9 @@ namespace fqtd.Controllers
                        {
                            i.ItemID
                            ,
-                           i.ItemName
+                            ItemName=i.ItemName.ToUpper()
                            ,
-                           i.ItemName_EN
+                           ItemName_EN = i.ItemName_EN.ToUpper()
                           ,
                            i.Phone
                            ,
@@ -341,6 +341,7 @@ namespace fqtd.Controllers
                            br.BrandName_EN
                        };
             JsonNetResult jsonNetResult = new JsonNetResult();
+            jsonNetResult.ContentEncoding = Encoding.UTF8;
             jsonNetResult.Formatting = Formatting.Indented;
 
             var result = from a in item
