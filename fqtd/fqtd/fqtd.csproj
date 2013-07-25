@@ -187,6 +187,7 @@
     <Compile Include="Areas\Admin\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SearchHistoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\SystemContentController.cs" />
     <Compile Include="Areas\Admin\Models\BrandCategories.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
@@ -201,9 +202,6 @@
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Categories.cs">
-      <DependentUpon>fqtd.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\ContactUS.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\ItemProperties.cs">
@@ -237,6 +235,12 @@
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\tbl_Brand_Properties.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\tbl_ContactUS.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\tbl_SearchHistory.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\tbl_SystemContent.cs">
@@ -691,6 +695,7 @@
     <Content Include="Content\font\architep-webfont.eot" />
     <Content Include="Content\font\architep-webfont.ttf" />
     <Content Include="Content\font\architep-webfont.woff" />
+    <Content Include="Areas\Admin\Views\SearchHistory\Index.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />
