@@ -272,7 +272,7 @@ namespace fqtd.Areas.Admin.Controllers
             db.SP_RemoveBrandCategories(BrandID);
 
             var CID = Request.Form["CategoryID"];
-            var brand = db.Brands.Find(CID);
+            var brand = db.Brands.Find(BrandID);
             if (brand != null)
             {
                 brand.CategoryID = Convert.ToInt32(CID);
