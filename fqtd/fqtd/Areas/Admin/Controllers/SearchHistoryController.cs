@@ -14,7 +14,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            return View(db.SearchHistory.ToList());
+            return View(db.SearchHistory.OrderByDescending(a=>a.SearchTime).ToList());
         }
 
     }

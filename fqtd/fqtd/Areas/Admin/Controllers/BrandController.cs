@@ -25,7 +25,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Index(string keyword = "", int page = 1)
         {
-            var result = from a in db.Brands where (a.BrandName.Contains(keyword) || a.BrandName_EN.Contains(keyword)) select a;
+            var result = from a in db.Brands where a.IsActive && (a.BrandName.Contains(keyword) || a.BrandName_EN.Contains(keyword)) select a;
             result = result.OrderBy("BrandName");
             ViewBag.CurrentKeyword = keyword;
             int maxRecords = 20;
@@ -238,7 +238,7 @@ namespace fqtd.Areas.Admin.Controllers
         {
             Brands brands = db.Brands.Find(id);
 
-            brands.IsActive = true;
+            brands.IsActive = false;
             brands.DeleteDate = DateTime.Now;
             brands.DeleteUser = User.Identity.Name;
             db.Entry(brands).State = EntityState.Modified;

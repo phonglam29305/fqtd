@@ -316,6 +316,16 @@ namespace fqtd.Controllers
 
         public ActionResult ItemDetail(int itemID, int vn0_en1 = 0)
         {
+            var bitem = db.BrandItems.Find(itemID);
+            if (bitem != null)
+            {
+                if(bitem.ClickCount.HasValue)
+                bitem.ClickCount += 1;
+                else bitem.ClickCount = 1;
+                db.Entry(bitem).State = System.Data.EntityState.Modified;
+                db.SaveChanges();
+            }
+
             var item = from i in db.BrandItems
                        join br in db.Brands on i.BrandID equals br.BrandID
                        join ca in db.Categories on br.CategoryID equals ca.CategoryID
@@ -415,13 +425,7 @@ namespace fqtd.Controllers
                              select new { a.PropertyID, a.PropertyValue, PropertyName = vn0_en1 == 0 ? a.PropertyName : a.PropertyName_EN };
             list.Add("PropertyList", properties);
             jsonNetResult.Data = list;
-            var bitem = db.BrandItems.Find(itemID);
-            if (bitem != null)
-            {
-                bitem.ClickCount += 1;
-                db.Entry(bitem).State = System.Data.EntityState.Modified;
-                db.SaveChanges();
-            }
+            
             return jsonNetResult;
         }
 

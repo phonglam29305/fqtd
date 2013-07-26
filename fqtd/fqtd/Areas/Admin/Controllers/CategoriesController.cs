@@ -25,7 +25,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         public ActionResult Index(string keyword = "", int page=1)
         {
-            var result = from a in db.Categories where (a.CategoryName.Contains(keyword) || a.CategoryName_EN.Contains(keyword) ) select a;
+            var result = from a in db.Categories where a.IsActive==true && (a.CategoryName.Contains(keyword) || a.CategoryName_EN.Contains(keyword) ) select a;
             result=result.OrderBy("CategoryName");
             ViewBag.CurrentKeyword = keyword;
             int maxRecords = 20;
@@ -198,8 +198,8 @@ namespace fqtd.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             Categories.IsActive = false;
-            //Categories.DeleteDate = DateTime.Now;
-            //Categories.DeleteUser = User.Identity.Name;
+            Categories.DeleteDate = DateTime.Now;
+            Categories.DeleteUser = User.Identity.Name;
             db.Entry(Categories).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
