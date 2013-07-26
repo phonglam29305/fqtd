@@ -227,13 +227,13 @@ namespace fqtd.Controllers
                              join b in db.BrandItems on i.BrandID equals b.BrandID
                              where items.Contains(i.PropertyID)// >= 0
                              select new { b.ItemID }).Distinct();
-
+            
             var brands = from i in db.BrandItems
                          join br in db.Brands on i.BrandID equals br.BrandID
                          join c in db.Categories on br.CategoryID equals c.CategoryID
                          where i.Keyword_unsign.ToLower().Contains(keyword)
-                         || c.Keyword_Unsign.ToLower().Contains(keyword)
-                         || br.Keyword_Unsign.ToLower().Contains(keyword)
+                         //|| c.Keyword_Unsign.ToLower().Contains(keyword)
+                         //|| br.Keyword_Unsign.ToLower().Contains(keyword)
                          select new
                          {
                              i.ItemID,
@@ -259,7 +259,7 @@ namespace fqtd.Controllers
                 brands = from i in brands
                          join ip in brandlist on i.ItemID equals ip.ItemID
                          select i;
-
+            
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in brands

@@ -257,6 +257,20 @@ namespace fqtd.Areas.Admin.Controllers
                 keyword_us = "";
                 var list = db.SP_GetKeyword1(item.Street, item.District, item.City);
                 var temp = list.ToList();
+                keyword += ";" + item.FullAddress;
+                keyword += ";" + item.ItemName_EN;
+                keyword += ";" + item.BrandName;
+                keyword += ";" + (item.BrandName_EN==null?"":item.BrandName_EN);
+                keyword += ";" + item.CategoryName;
+                keyword += ";" + item.CategoryName_EN;
+
+                keyword_us += ";" + StripDiacritics(item.FullAddress);
+                keyword_us += ";" + StripDiacritics(item.ItemName_EN);
+                keyword_us += ";" + StripDiacritics(item.BrandName);
+                keyword_us += ";" + StripDiacritics(item.BrandName_EN);
+                keyword_us += ";" + StripDiacritics(item.CategoryName);
+                keyword_us += ";" + StripDiacritics(item.CategoryName_EN);
+
                 if (temp.Where(a => a.type == 1).ToList().Count == 0)
                 {
                     keyword = keyword + ";" + item.BrandName + " " + item.Street;
@@ -343,6 +357,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         public static string StripDiacritics(string accented)
         {
+            if (accented == null) return "";
             Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
 
             string strFormD = accented.Normalize(NormalizationForm.FormD);
