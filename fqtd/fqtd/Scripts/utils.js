@@ -470,7 +470,7 @@ var FQTD = (function () {
             var bound = (listMarker.length - localLimit) >= 5 ? 5 : (listMarker.length - localLimit);
             bound = (parseInt(localLimit) + parseInt(bound));
             for (i = localLimit; i <= (bound - 1) ; i++) {
-                FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
+                FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], listMarker[i][9]);
                 localLimit++;
             }
             limit = localLimit;

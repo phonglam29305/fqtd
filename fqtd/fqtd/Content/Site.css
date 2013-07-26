@@ -762,7 +762,7 @@ input {
 }
 
 #samebrand img {
-    width: 150px;
+    width: 100px;
     border: 0px none;
 }
 
@@ -808,7 +808,7 @@ input {
 }
 
 .samecategorylogo {
-    width: 98px;
+    width: 75px;
 }
 
 #staticmap {
