@@ -61,12 +61,12 @@ var FQTD = (function () {
                 }
             });
         },
-        markOutLocation: function (lat, long, map, contentPopup, isHome) {
+        markOutLocation: function (lat, long, map, contentPopup, markerIcon) {
             var place = new google.maps.LatLng(lat, long);
             var marker = new google.maps.Marker({
                 position: place,
                 title: 'Click to zoom',
-                icon: (isHome === true ? '/images/home.png' : '/images/MarkerIcon/Brand/schools_maps.png')
+                icon: markerIcon
             });
 
             google.maps.event.addListener(marker, 'click', function () {
@@ -196,7 +196,6 @@ var FQTD = (function () {
 
             // Iterate through a selection of the content and build an HTML string
             for (var i = page_index * items_per_page; i < max_elem; i++) {
-                console.log((isEmpty(locations[i][3])))
                 newcontent += '<div id="object"><table style="width: 100%;"><tr><td valign="top" style="width:116px;"><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><img id="photo" width="150" src="' + isEmpty(checkImage(locations[i][6])) + '" /></a></td><td valign="top"><h2>' + (isEmpty(locations[i][3])) + '</h2>'
                     + '<p>Địa chỉ : ' + isEmpty(locations[i][4]) + '<br/>Điện thoại : ' + isEmpty(locations[i][5]) + '</p><p><a href="/detail/' + isEmpty(locations[i][7]) + '" target="_blank"><strong>Xem chi tiết</strong></a>'
                     + ' | <a href="javascript:void(0);" onclick="FQTD.DisplayDirection(' + isEmpty(checkImage(locations[i][0])) + ',' + isEmpty(checkImage(locations[i][1])) + ')" class="lienket"><strong>Đường đi</strong></a></p></td></tr></table></div>';
@@ -249,7 +248,7 @@ var FQTD = (function () {
                                      + '<li id="bus" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'bus\',' + $("#form").val() + ')\"></li>'
                                      + '<li id="walk" onclick=\"FQTD.calcRoute(' + items[i].Latitude + ',' + items[i].Longitude + ',\'walk\',' + $("#form").val() + ')\"></li></ul>'
                                      + '<div id="linkview"><a href="/detail/' + isEmpty(items[i].ItemID) + '" target="_blank">Xem chi tiết</a></div><div id="space"></div>';
-                        locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID), 0]);
+                        locations.push([items[i].Latitude, items[i].Longitude, contentmarker, isEmpty(items[i].ItemName), isEmpty(items[i].FullAddress), isEmpty(items[i].Phone), isEmpty(items[i].Logo), isEmpty(items[i].ItemID), 0, isEmpty(items[i].MarkerIcon)]);
                     }
                 }
             });
@@ -361,7 +360,7 @@ var FQTD = (function () {
                 myCity.setMap(map);
 
                 map.fitBounds(myCity.getBounds());
-                FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", true);
+                FQTD.markOutLocation(myplace.lat(), myplace.lng(), map, "<p class='currentplace'>Bạn đang ở đây.</p>", '/images/home.png');
             }
 
             //set direction
@@ -371,7 +370,7 @@ var FQTD = (function () {
             //add marker to map
             for (i = 0; i <= 4; i++) {
                 if (listMarker[i]) {
-                    FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], false);
+                    FQTD.markOutLocation(listMarker[i][0], listMarker[i][1], map, listMarker[i][2], listMarker[i][9]);
                     limit++;
                 }
             }
