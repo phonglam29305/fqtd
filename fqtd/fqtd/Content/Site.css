@@ -657,7 +657,7 @@ input {
 
     .marker h2 {
         font-family: utm_bebasregular;
-        font-size:28px;
+        font-size: 28px;
     }
 
 .next {
@@ -801,7 +801,8 @@ input {
 }
 
     #tblimagegallery .row1 img {
-        max-width: 98px;
+        width: 98px;
+        height: 98px;
     }
 
 .silverrow {

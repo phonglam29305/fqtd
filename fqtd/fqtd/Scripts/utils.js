@@ -49,6 +49,7 @@ var FQTD = (function () {
     function encrypt(value) {
         return $.rc4EncryptStr(value, "timdau")
     }
+
     function decrypt(value) {
         if (value == "0" || value == 0)
             return value;
@@ -232,7 +233,7 @@ var FQTD = (function () {
             //Get data result            
             var urlResult = "/result/search?";
             urlResult += "mode=" + $("#form").val();
-            urlResult += "&keyword=" +  decrypt($("#search").val());
+            urlResult += "&keyword=" + decrypt($("#search").val());
             urlResult += "&currentLocation=" + decrypt($("#address").val());
             urlResult += "&categoryid=" + $("#category").val();
             urlResult += "&brandid=" + $("#brand").val();
@@ -246,6 +247,7 @@ var FQTD = (function () {
                 }
             }
             urlResult += "&vn0_en1=0";
+            console.log(urlResult)
             var result = $.getJSON(urlResult, null, function (items) {
                 //alert(items);
                 for (var i = 0; i < items.length; i++) {
@@ -553,6 +555,21 @@ var FQTD = (function () {
             $("#ContactTitle").watermark("Nhập tiêu đề liên lạc");
             $("#ContactContent").watermark("Nhập nội dung liên lạc");
         },
+        SubmitForm: function () {
+            //direct to result page
+            var address = $('#address').val() != "" ? encrypt($('#address').val()) : "0"
+            var type = window.location.hash == "#1" ? "1" : "0"
+            var range = $('#range').val() != "" ? $('#range').val() : "0"
+            var category = $('#category').val() != "" ? $('#category').val() : "0"
+            var brand = $('#brand').val() != "" ? $('#brand').val() : "0"
+            var search = $('#search').val() != "" ? encrypt($('#search').val()) : "0"
+
+            if (type == "0" && search == "0") return false;
+
+            if (type == "1" && (address == "0" || (category == "0" || brand == "0") || range == "0")) return false;
+           
+            window.location.href = "result/index/" + type + "/" + category + "/" + brand + "/" + range + "/" + address + "/" + search
+        },
         initResult: function () {
             $("#tabList").bind('click', function () {
                 $("#list").removeClass("hidden");
@@ -621,7 +638,7 @@ var FQTD = (function () {
             FQTD.GetCurrentPositionAddress()
 
             //bind places autocomplete
-            $("#address").geocomplete({               
+            $("#address").geocomplete({
                 country: 'vn'
             });
 
@@ -634,23 +651,25 @@ var FQTD = (function () {
             }
 
             //button keyword click
-            $('#btn_home2').click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var value = $("#search").val();
-                var encrypted = encrypt(value);                
-                $("#search").val(encrypted)                
-                //$('#form2').submit()
-            });
-
-            //button range click
             $('#btn_home1').click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                var value = $("#address").val();
-                var encrypted = encrypt(value);
-                $("#address").val(encrypted)
                 $('#form1').submit()
+            });
+
+            $("#form1").submit(function () {
+                FQTD.SubmitForm()
+            });
+
+            //button range click
+            $('#btn_home2').click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('#form2').submit()
+            });
+
+            $("#form2").submit(function () {
+                FQTD.SubmitForm()
             });
         },
         initDetail: function () {
