@@ -462,6 +462,7 @@ input {
     font-family: utm_bebasregular;
     font-size: 18px;
     cursor: pointer;
+    padding: 5px 59px;
 }
 
 #tableTienich {
