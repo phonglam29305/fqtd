@@ -46,6 +46,16 @@ var FQTD = (function () {
         return a[8] - b[8];
     }
 
+    function encrypt(value) {
+        return $.rc4EncryptStr(value, "timdau")
+    }
+    function decrypt(value) {
+        if (value == "0" || value == 0)
+            return value;
+        else
+            return $.rc4DecryptStr(value, "timdau")
+    }
+
     return {
         BindPropertyData: function () {
             //Bind data to checkbox
@@ -219,11 +229,11 @@ var FQTD = (function () {
             $("#pagination").pagination(locations.length, opt);
         },
         GetJSON: function (arr) {
-            //Get data result
+            //Get data result            
             var urlResult = "/result/search?";
             urlResult += "mode=" + $("#form").val();
-            urlResult += "&keyword=" + $("#search").val();
-            urlResult += "&currentLocation=" + $("#address").val();
+            urlResult += "&keyword=" +  decrypt($("#search").val());
+            urlResult += "&currentLocation=" + decrypt($("#address").val());
             urlResult += "&categoryid=" + $("#category").val();
             urlResult += "&brandid=" + $("#brand").val();
             urlResult += "&radious=" + $("#range").val();
@@ -236,7 +246,6 @@ var FQTD = (function () {
                 }
             }
             urlResult += "&vn0_en1=0";
-
             var result = $.getJSON(urlResult, null, function (items) {
                 //alert(items);
                 for (var i = 0; i < items.length; i++) {
@@ -263,7 +272,7 @@ var FQTD = (function () {
 
             if (locations.length > 0) {
                 if ($("#form").val() == "1") {
-                    var address = $("#address").val();
+                    var address = decrypt($("#address").val());
                     var geocoder = new google.maps.Geocoder();
                     if (geocoder) {
                         geocoder.geocode({ 'address': address }, function (results, status, content) {
@@ -612,7 +621,9 @@ var FQTD = (function () {
             FQTD.GetCurrentPositionAddress()
 
             //bind places autocomplete
-            $("#address").geocomplete();
+            $("#address").geocomplete({               
+                country: 'vn'
+            });
 
             //bind auto complete to keyword
             FQTD.BindKeywordAutocomplete()
@@ -621,6 +632,26 @@ var FQTD = (function () {
             if (window.location.hash == "#1") {
                 $('.next').click();
             }
+
+            //button keyword click
+            $('#btn_home2').click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var value = $("#search").val();
+                var encrypted = encrypt(value);                
+                $("#search").val(encrypted)                
+                //$('#form2').submit()
+            });
+
+            //button range click
+            $('#btn_home1').click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var value = $("#address").val();
+                var encrypted = encrypt(value);
+                $("#address").val(encrypted)
+                $('#form1').submit()
+            });
         },
         initDetail: function () {
             var id = $(location).attr('pathname').split('/')[2]
