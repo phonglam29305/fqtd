@@ -548,12 +548,25 @@ var FQTD = (function () {
             infobox = null;
         },
         SetupWatermarkValidationContactus: function () {
-            //watermark and validation
-            $("#CustomerName").watermark("Nhập họ tên của bạn");
+            //watermark
+            //$("#CustomerName").watermark("Nhập họ tên của bạn");
             $("#Phone").watermark("Nhập số điện thoại của bạn");
             $("#Email").watermark("Nhập email của bạn");
             $("#ContactTitle").watermark("Nhập tiêu đề liên lạc");
             $("#ContactContent").watermark("Nhập nội dung liên lạc");
+            //validate
+            $('#CustomerName').closest('form').validate({
+                onChange: true,
+                sendFormPost: false,
+                eachValidField: function () {
+
+                    $(this).closest('div').removeClass('error').addClass('success');
+                },
+                eachInvalidField: function () {
+
+                    $(this).closest('div').removeClass('success').addClass('error');
+                }
+            });
         },
         SubmitForm: function () {
             //direct to result page

@@ -204,10 +204,16 @@
     <Compile Include="Areas\Admin\Models\Categories.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\ContactUS.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\ItemProperties.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\Properties.cs">
+      <DependentUpon>fqtd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\SearchHistory.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\SP_Brand_Categories_Result.cs">
@@ -235,12 +241,6 @@
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\tbl_Brand_Properties.cs">
-      <DependentUpon>fqtd.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\tbl_ContactUS.cs">
-      <DependentUpon>fqtd.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\tbl_SearchHistory.cs">
       <DependentUpon>fqtd.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\tbl_SystemContent.cs">

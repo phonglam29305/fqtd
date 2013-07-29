@@ -65,7 +65,7 @@ namespace fqtd.Controllers
             if (ModelState.IsValid)
             {
                 contactus.ContactDate = DateTime.Now;
-                db.tbl_ContactUS.Add(contactus);
+                db.ContactUS.Add(contactus);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
