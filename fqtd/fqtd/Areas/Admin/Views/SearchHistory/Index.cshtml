@@ -56,7 +56,13 @@
             @Html.DisplayFor(modelItem => item.Keyword)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CurrentLocation)
+            @if(item.CurrentLocation.Length>35){
+            <label title="@item.CurrentLocation">@Html.Substring(item.CurrentLocation, 30);</label>
+            }
+            else             
+            {
+                @item.CurrentLocation
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Radious)

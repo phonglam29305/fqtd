@@ -23,10 +23,10 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Category/
 
-        public ActionResult Index(string keyword = "", int page=1)
+        public ActionResult Index(string keyword = "", int page = 1)
         {
-            var result = from a in db.Categories where a.IsActive==true && (a.CategoryName.Contains(keyword) || a.CategoryName_EN.Contains(keyword) ) select a;
-            result=result.OrderBy("CategoryName");
+            var result = from a in db.Categories where a.IsActive == true && (a.CategoryName.Contains(keyword) || a.CategoryName_EN.Contains(keyword)) select a;
+            result = result.OrderBy("CategoryName");
             ViewBag.CurrentKeyword = keyword;
             int maxRecords = 20;
             int currentPage = page;
@@ -40,7 +40,7 @@ namespace fqtd.Areas.Admin.Controllers
             JsonNetResult jsonNetResult = new JsonNetResult();
             jsonNetResult.Formatting = Formatting.Indented;
             jsonNetResult.Data = from a in categories
-                                 select new { a.CategoryID, a.CategoryName};
+                                 select new { a.CategoryID, a.CategoryName };
             if (vn0_en1 == 1)
                 jsonNetResult.Data = from a in categories
                                      select new { a.CategoryID, CategoryName = a.CategoryName_EN };
@@ -79,7 +79,7 @@ namespace fqtd.Areas.Admin.Controllers
             {
                 Categories.IsActive = true;
                 Categories.CreateDate = DateTime.Now;
-                Categories.CreateUser = User.Identity.Name; 
+                Categories.CreateUser = User.Identity.Name;
                 string filesPath = "", full_path = "";
                 if (icon != null)
                 {
@@ -129,6 +129,7 @@ namespace fqtd.Areas.Admin.Controllers
                 {
                     Categories.ModifyDate = DateTime.Now;
                     Categories.ModifyUser = User.Identity.Name;
+                    if (Categories.CreateUser == null || Categories.CreateUser == "") Categories.CreateUser = "import";
                     string filesPath = "", full_path = "";
                     string marker = Categories.MarkerIcon;
                     if (icon != null)
@@ -144,7 +145,7 @@ namespace fqtd.Areas.Admin.Controllers
 
                     if (marker + "" != "")
                         FileUpload.DeleteFile(marker, full_path);
-                    
+
                     if (icon != null)
                     {
                         string filename = Categories.CategoryID + "_" + icon.FileName.Replace(" ", "_").Replace("-", "_");
@@ -156,18 +157,23 @@ namespace fqtd.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
+                var outputLines = new List<string>();
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    outputLines.Add(string.Format(
+                        "Entity of type \"{1}\" in state \"{2}\" has the following validation errors:",
+                         eve.Entry.Entity.GetType().Name, eve.Entry.State));
                     foreach (var ve in eve.ValidationErrors)
                     {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
+                        outputLines.Add(string.Format(
+                            "- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage));
                     }
                 }
+                foreach (var error in outputLines)
+                    HtmlHelpers.WriteErrorLogs(error);
                 throw;
             }
             return View(Categories);
