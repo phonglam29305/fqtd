@@ -22,7 +22,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         //
         // GET: /Category/
-
+        [Authorize]
         public ActionResult Index(string keyword = "", int page = 1)
         {
             var result = from a in db.Categories where a.IsActive == true && (a.CategoryName.Contains(keyword) || a.CategoryName_EN.Contains(keyword)) select a;
@@ -31,9 +31,10 @@ namespace fqtd.Areas.Admin.Controllers
             int maxRecords = 20;
             int currentPage = page;
             ViewBag.CurrentPage = page;
+            TempData["CurrentKeyword"] = keyword;
+            TempData["CurrentPage"] = page;
             return View(result.ToPagedList(currentPage, maxRecords));
         }
-
         public ActionResult Categories(int vn0_en1 = 0)
         {
             var categories = db.Categories.Where(a => a.IsActive);
@@ -50,7 +51,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         //
         // GET: /Category/Details/5
-
+        [Authorize]
         public ActionResult Details(int id = 0)
         {
             Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
@@ -64,6 +65,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Category/Create
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -72,6 +74,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Category/Create
 
+        [Authorize]
         [HttpPost, ValidateInput(false)]
         public ActionResult Create(Categories Categories, HttpPostedFileBase icon)
         {
@@ -98,7 +101,7 @@ namespace fqtd.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { keyword = TempData["CurrentKeyword"], page = TempData["CurrentPage"] });
             }
 
             return View(Categories);
@@ -107,6 +110,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Category/Edit/5
 
+        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
@@ -120,6 +124,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Category/Edit/5
 
+        [Authorize]
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(Categories Categories, HttpPostedFileBase icon)
         {
@@ -154,7 +159,7 @@ namespace fqtd.Areas.Admin.Controllers
                         db.SaveChanges();
                     }
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { keyword = TempData["CurrentKeyword"], page = TempData["CurrentPage"] });
                 }
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
@@ -182,6 +187,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Category/Delete/5
 
+        [Authorize]
         public ActionResult Delete(int id = 0)
         {
             Categories Categories = db.Categories.Where(a => a.IsActive && a.CategoryID == id).FirstOrDefault();
@@ -195,6 +201,7 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Category/Delete/5
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -208,7 +215,7 @@ namespace fqtd.Areas.Admin.Controllers
             Categories.DeleteUser = User.Identity.Name;
             db.Entry(Categories).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { keyword = TempData["CurrentKeyword"], page = TempData["CurrentPage"] });
         }
 
         protected override void Dispose(bool disposing)
