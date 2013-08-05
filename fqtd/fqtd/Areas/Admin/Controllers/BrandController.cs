@@ -22,7 +22,7 @@ namespace fqtd.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Brands/
-        [Authorize]
+
         public ActionResult Index(string keyword = "", int page = 1)
         {
             var result = from a in db.Brands where a.IsActive && (a.BrandName.Contains(keyword) || a.BrandName_EN.Contains(keyword)) select a;
@@ -31,8 +31,7 @@ namespace fqtd.Areas.Admin.Controllers
             int maxRecords = 20;
             int currentPage = page;
             ViewBag.CurrentPage = page;
-            TempData["CurrentKeyword"] = keyword;
-            TempData["CurrentPage"] = page;
+
             return View(result.ToPagedList(currentPage, maxRecords));
         }
 
@@ -73,7 +72,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Brands/Details/5
 
-        [Authorize]
         public ActionResult Details(int id = 0)
         {
             Brands brands = db.Brands.Find(id);
@@ -87,7 +85,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Brands/Create
 
-        [Authorize]
         public ActionResult Create()
         {
             ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName");
@@ -100,7 +97,6 @@ namespace fqtd.Areas.Admin.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost, ValidateInput(false)]
-        [Authorize]
         public ActionResult Create(Brands brands, HttpPostedFileBase icon, HttpPostedFileBase logo)
         {
             if (ModelState.IsValid)
@@ -151,7 +147,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Brands/Edit/5
 
-        [Authorize]
         public ActionResult Edit(int id = 0)
         {
             Brands brands = db.Brands.Find(id);
@@ -159,8 +154,6 @@ namespace fqtd.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-
-            
             ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
             ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName", brands.BrandTypeID);
             return View(brands);
@@ -169,7 +162,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Admin/Brands/Edit/5
 
-        [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost, ValidateInput(false)]
         public ActionResult Edit(Brands brands, HttpPostedFileBase icon, HttpPostedFileBase logo)
@@ -217,7 +209,7 @@ namespace fqtd.Areas.Admin.Controllers
                     db.Entry(brands).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index", new { keyword = TempData["CurrentKeyword"], page = TempData["CurrentPage"] });
+                return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName", brands.CategoryID);
             ViewBag.BrandTypeID = new SelectList(db.BrandTypes.Where(a => a.IsActive), "BrandTypeID", "BrandTypeName", brands.BrandTypeID);
@@ -227,7 +219,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // GET: /Admin/Brands/Delete/5
 
-        [Authorize]
         public ActionResult Delete(int id = 0)
         {
             Brands brands = db.Brands.Find(id);
@@ -241,7 +232,6 @@ namespace fqtd.Areas.Admin.Controllers
         //
         // POST: /Admin/Brands/Delete/5
 
-        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -258,7 +248,6 @@ namespace fqtd.Areas.Admin.Controllers
 
 
 
-        [Authorize]
         public ActionResult BrandCategories(int id = 0, int page=1, string keyword="")
         {
 
@@ -272,10 +261,11 @@ namespace fqtd.Areas.Admin.Controllers
             else ViewBag.CategoryID = new SelectList(db.Categories.Where(a => a.IsActive), "CategoryID", "CategoryName");
             var result = db.SP_Brand_Categories(id).OrderBy(a => a.CategoryName);
             TempData["BrandID"] = id;
+            TempData["CurrentKeyword"] = keyword;
+            TempData["CurrentPage"] = page;
             return View(result);
         }
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult BrandCategories(string[] MyCheckList)
         {
@@ -319,7 +309,6 @@ namespace fqtd.Areas.Admin.Controllers
         }
 
 
-        [Authorize]
         public ActionResult BrandProperties(int id = 0, int page = 1, string keyword = "")
         {
 
@@ -327,12 +316,11 @@ namespace fqtd.Areas.Admin.Controllers
             if (brand != null) ViewBag.BrandName = brand.BrandName;
             var result = db.SP_Brand_Properties(id);
             TempData["BrandID"] = id;
-            //TempData["CurrentKeyword"] = keyword;
-            //TempData["CurrentPage"] = page;
+            TempData["CurrentKeyword"] = keyword;
+            TempData["CurrentPage"] = page;
             return View(result);
         }
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult BrandProperties(string[] MyCheckList)
         {

@@ -696,7 +696,6 @@
     <Content Include="Content\font\architep-webfont.ttf" />
     <Content Include="Content\font\architep-webfont.woff" />
     <Content Include="Areas\Admin\Views\SearchHistory\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\SearchHistory\_Paging.cshtml" />
     <None Include="Properties\PublishProfiles\fqtd_test.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_bottom.jpg" />

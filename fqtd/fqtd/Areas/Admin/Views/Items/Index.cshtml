@@ -13,10 +13,10 @@
 <br />
 @using (Ajax.BeginForm("Index", new
 {
-    page = 1,
+    page = ViewBag.CurrentPage,
     Keyword = ViewBag.CurrentKeyword,
-    category = ViewBag.CurrentCategoryID,
-    brand = ViewBag.CurrentBrandID
+    category = ViewBag.CurrentCategory,
+    brand = ViewBag.CurrentBrand
         
     }, new AjaxOptions { UpdateTargetId = "main" }))
     {
@@ -111,7 +111,6 @@
             @Html.ActionLink("Details", "Details", new { id = item.ItemID }) |
             @Html.ActionLink("Images", "ImageList", new { id = item.ItemID }) |
             @Html.ActionLink("Properties", "ItemProperties", new { id = item.ItemID }) |
-            @Html.ActionLink("BuildKeyword", "KeywordBuilder", new { itemid = item.ItemID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ItemID })
         </td>
     </tr>
